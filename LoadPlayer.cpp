@@ -520,17 +520,12 @@ void LoadPlayer::OnCollision(const Actor3D* other)
 
 	if (other->GetName() == "Tree")
 	{
-		if (!m_cutTree)
-		{
+		
 			if (Input::GetInstance()->IsKeyPress(KEY_INPUT_F))
 			{
 				m_cutTree = true;
 			}
-		}
-		else if (m_cutTree)
-		{
-			m_cutTree = false;
-		}
+		
 	}
 }
 

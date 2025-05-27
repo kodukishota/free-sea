@@ -10,8 +10,8 @@ Ax::Ax(LoadPlayer* player, Camera* camera) : Actor3D("Ax"),
 	m_player(player),
 	m_camera(camera)
 {
-	m_skillCheckUi.Register("inventory_ui1.png");
-	m_skillCheckHandleUi.Register("inventory_ui1.png");
+	m_skillCheckUi.Register("check_bar_ui.png");
+	m_skillCheckHandleUi.Register("check_handle.png");
 	m_skillCheckUiPos.position = SkillCheckUiPos;
 	m_skillCheckHandleUiPos.position = SkillCheckUiPos;
 
@@ -79,5 +79,27 @@ void Ax::Draw()
 
 void Ax::CutTree()
 {
-	m_skillCheckHandleUiPos.position.x += 10;
+	bool turnHandle = false;
+
+	if (SkillCheckUiPos.x + SkillCheckUiPos.x / 2 
+		<= m_skillCheckHandleUiPos.position.x)
+	{
+		turnHandle = true;
+	}
+	else if (SkillCheckUiPos.x - SkillCheckUiPos.x / 2 
+		>= m_skillCheckHandleUiPos.position.x)
+	{
+		turnHandle = false;
+	}
+
+	if (turnHandle)
+	{
+		m_skillCheckHandleUiPos.position.x -= HandleSpeed;
+	}
+	else
+	{
+		m_skillCheckHandleUiPos.position.x += HandleSpeed;
+	}
+
+
 }

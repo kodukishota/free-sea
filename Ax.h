@@ -9,8 +9,9 @@ class Camera;
 class Ax : public Actor3D
 {
 private:
-	static constexpr Vector2 SkillCheckUiPos = Vector2(720, 600);
+	static constexpr Vector2 SkillCheckUiPos = Vector2(720, 750);
 	static constexpr Vector3 OffSet = Vector3(50,50,-30);
+	static constexpr float HandleSpeed = 10;
 	static constexpr int FristDurabilityValue = 100;	//‘Ï‹v—Í
 	static constexpr int AttackDamage = 10;				//UŒ‚—Í
 
