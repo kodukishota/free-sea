@@ -2,7 +2,6 @@
 #include "Actor3D.h" 
 #include "Vector3.h"
 
-class LoadPlayer;
 class Inventory;
 
 struct ItemData
@@ -12,7 +11,6 @@ struct ItemData
 	char m_iconName[256];
 	char m_flavorText[256];
 	int m_sellMoney;
-	int m_weight;
 };
 
 class Item : public Actor3D
@@ -44,7 +42,6 @@ private:
 	const char* m_itemName;
 	const char* m_flavorText;
 	int m_sellMoney;	//売った時の金額
-	int m_itemWeight;	//アイテムの重さ
 
 	static constexpr Vector3 CanGetRange = Vector3(100, 100, 100);	//拾える範囲
 
@@ -57,7 +54,6 @@ private:
 	ItemData m_itemData;
 
 	Inventory* m_inventory;
-	LoadPlayer* m_player;
 
 	float m_playerToDistance;	//プレイヤーとの距離
 
@@ -77,11 +73,6 @@ public:
 	int GetItemNum() const
 	{
 		return m_itemNumber;
-	}
-
-	int GetItemWeight() const
-	{
-		return m_itemData.m_weight;
 	}
 
 	int GetSellMoney() const

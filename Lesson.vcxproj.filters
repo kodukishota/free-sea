@@ -31,9 +31,6 @@
     <ClCompile Include="LoaderBase.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="LoadPlayer.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
@@ -56,9 +53,6 @@
       <Filter>ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="Time.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="UiResult.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="Vector2.cpp">
@@ -91,25 +85,7 @@
     <ClCompile Include="Collision.cpp">
       <Filter>ソースファイル\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="SceneMenu.cpp">
-      <Filter>ソースファイル\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Button.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="EnhanceInventory.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuInventory.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuItemIcon.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SellButton.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Shop.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="CheckRoot.cpp">
@@ -118,28 +94,10 @@
     <ClCompile Include="NavMesh.cpp">
       <Filter>ソースファイル\NavMesh</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>ソースファイル\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyFactory.cpp">
-      <Filter>ソースファイル\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Chest.cpp">
-      <Filter>ソースファイル\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="ChestItemIcon.cpp">
-      <Filter>ソースファイル\Item</Filter>
-    </ClCompile>
     <ClCompile Include="Item.cpp">
       <Filter>ソースファイル\Item</Filter>
     </ClCompile>
-    <ClCompile Include="ItemFactory.cpp">
-      <Filter>ソースファイル\Item</Filter>
-    </ClCompile>
     <ClCompile Include="Inventory.cpp">
-      <Filter>ソースファイル\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="ItemIcon.cpp">
       <Filter>ソースファイル\Item</Filter>
     </ClCompile>
     <ClCompile Include="Wallet.cpp">
@@ -148,50 +106,23 @@
     <ClCompile Include="DrawStageView.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="EscapePoint.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
     <ClCompile Include="ScreenFilter.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="EnhanceTheWorldTime.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="MoneyCount.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="UiTime.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="Audio3D.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="EnhanceStaminaDecrease.cpp">
-      <Filter>ソースファイル</Filter>
+    <ClCompile Include="ItemIcon.cpp">
+      <Filter>ソースファイル\Item</Filter>
     </ClCompile>
-    <ClCompile Include="EnhanceStaminaRecovery.cpp">
-      <Filter>ソースファイル</Filter>
+    <ClCompile Include="LoadPlayer.cpp">
+      <Filter>ソースファイル\Player</Filter>
     </ClCompile>
-    <ClCompile Include="EnhanceUseTheWorld.cpp">
-      <Filter>ソースファイル</Filter>
+    <ClCompile Include="Ax.cpp">
+      <Filter>ソースファイル\Player</Filter>
     </ClCompile>
-    <ClCompile Include="UiStamina.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="LightFactory.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="EnhanceHaveWeight.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="UiTheWorld.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneGameOver.cpp">
-      <Filter>ソースファイル\Scene</Filter>
+    <ClCompile Include="Tree.cpp">
+      <Filter>ソースファイル\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -237,13 +168,7 @@
     <ClInclude Include="LoaderBase.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
-    <ClInclude Include="LoadPlayer.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Math.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ModelLoader.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="Node.h">
@@ -271,9 +196,6 @@
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="Transform3D.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="UiResult.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="Vector2.h">
@@ -327,25 +249,10 @@
     <ClInclude Include="DrawStageView.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
-    <ClInclude Include="SceneMenu.h">
-      <Filter>ヘッダーファイル\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Button.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
-    <ClInclude Include="EnhanceInventory.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuInventory.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuItemIcon.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
     <ClInclude Include="SellButton.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Shop.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="CheckRoot.h">
@@ -354,25 +261,7 @@
     <ClInclude Include="NavMesh.h">
       <Filter>ヘッダーファイル\NavMesh</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>ヘッダーファイル\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyFactory.h">
-      <Filter>ヘッダーファイル\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Chest.h">
-      <Filter>ヘッダーファイル\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="ChestItemIcon.h">
-      <Filter>ヘッダーファイル\Item</Filter>
-    </ClInclude>
     <ClInclude Include="Item.h">
-      <Filter>ヘッダーファイル\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="ItemDate.h">
-      <Filter>ヘッダーファイル\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="ItemFactory.h">
       <Filter>ヘッダーファイル\Item</Filter>
     </ClInclude>
     <ClInclude Include="ItemIcon.h">
@@ -384,50 +273,23 @@
     <ClInclude Include="Wallet.h">
       <Filter>ヘッダーファイル\Item</Filter>
     </ClInclude>
-    <ClInclude Include="EscapePoint.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
     <ClInclude Include="ScreenFilter.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="EnhanceTheWorldTime.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="MoneyCount.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="UiTime.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="Audio3D.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
-    <ClInclude Include="EnhanceStaminaDecrease.h">
+    <ClInclude Include="ModelLoader.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
-    <ClInclude Include="EnhanceStaminaRecovery.h">
-      <Filter>ヘッダーファイル</Filter>
+    <ClInclude Include="Ax.h">
+      <Filter>ヘッダーファイル\Player</Filter>
     </ClInclude>
-    <ClInclude Include="EnhanceUseTheWorld.h">
-      <Filter>ヘッダーファイル</Filter>
+    <ClInclude Include="LoadPlayer.h">
+      <Filter>ヘッダーファイル\Player</Filter>
     </ClInclude>
-    <ClInclude Include="UiStamina.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="LightFactory.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="EnhanceHaveWeight.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="UiTheWorld.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneGameOver.h">
-      <Filter>ヘッダーファイル\Scene</Filter>
+    <ClInclude Include="Tree.h">
+      <Filter>ヘッダーファイル\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -452,20 +314,20 @@
     <Filter Include="ソースファイル\NavMesh">
       <UniqueIdentifier>{7fda8bbf-1548-4179-900b-c59507567e65}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソースファイル\Enemy">
-      <UniqueIdentifier>{f007a0e2-83be-4114-af92-0abd6ac6fc4a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソースファイル\Item">
       <UniqueIdentifier>{1fa9f279-42e7-467f-a4fe-c685d41bd758}</UniqueIdentifier>
     </Filter>
     <Filter Include="ヘッダーファイル\NavMesh">
       <UniqueIdentifier>{93dca5fa-3b3c-4e66-a71e-c16e89f7125c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダーファイル\Enemy">
-      <UniqueIdentifier>{1af0850e-c138-4be3-9f9e-1fbbf6eadf03}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダーファイル\Item">
       <UniqueIdentifier>{6fda6b66-16f4-4c89-94ac-979ed32fddbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\Player">
+      <UniqueIdentifier>{16bb88ba-9958-42c8-81f6-a246604c82d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\Player">
+      <UniqueIdentifier>{11c14f1c-09ef-4c46-ac9d-66a62fda103e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

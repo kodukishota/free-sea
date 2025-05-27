@@ -2,10 +2,8 @@
 #include "GameConfig.h"
 #include "Screen.h"
 #include "SceneManager.h"
-#include "SceneMenu.h"
 #include "SceneTitle.h"
 #include "SceneGame.h"
-#include "SceneGameOver.h"
 #include "Input.h"
 #include "Time.h"
 #include "ActorCollision.h"
@@ -50,7 +48,8 @@ void GameMain::Run()
 	SetSysCommandOffFlag(true);	// Alt or F10キーで一時停止する機能をオフ
 
 	// シーン起動
-	m_sceneManager = new SceneManager(new SceneTitle());
+	//m_sceneManager = new SceneManager(new SceneTitle());
+	m_sceneManager = new SceneManager(new SceneGame());
 
 	// スクリーン作成
 	m_screen = MakeScreen(Screen::Width, Screen::Height);

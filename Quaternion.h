@@ -123,4 +123,7 @@ public:
 
 	// 指定したモデルの回転（上下反転させた状態）
 	static void RotateAxisYZ(const int model, const float rotAngle, const Vector3& pos);
+
+	//軸指定のモデルの回転
+	static void AxisRotation(const int model, const float rotAngle, const Vector3 axisPos, const Vector3 pos);
 };

@@ -6,11 +6,6 @@
 #include "Actor.h"
 #include "PressAny.h"
 
-#include "Chest.h"
-#include "Wallet.h"
-#include "MoneyCount.h"
-#include "EnhanceType.h"
-
 // 初期化
 void SceneTitle::Initialize()
 {
@@ -36,11 +31,6 @@ void SceneTitle::Initialize()
 		"press_any_button.png",
 		Screen::BottomCenter - Vector2(0, Screen::Height / 4)
 	));
-
-	m_chest = new Chest();
-	m_wallet = new Wallet();
-	m_moneyCount = new MoneyCount(m_wallet, 3, 0);
-	m_enhanceType = new EnhanceType(FirstMaxHaveItem, FirstMaxHaveWeight, FirstTheWorldTime, FirstTheWorldCount, StaminaRecoveryAmount, StaminaDecreaseAmount);
 
 	// BGM
 	m_bgm = LoadSoundMem("Resource/sound/title_bgm.mp3");
@@ -77,7 +67,7 @@ SceneBase* SceneTitle::Update()
 
 	if (soundTime >= 2)
 	{
-		return new SceneGame(m_chest->GetItemList(), m_enhanceType, 0, m_moneyCount);
+		return new SceneGame();
 	}
 
 	// ノードの更新

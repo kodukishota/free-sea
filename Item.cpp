@@ -16,13 +16,15 @@ Item::Item(int itemNum, ItemData* item, Vector3 spownPos, Inventory* inventory) 
 	m_canGetItem(false),
 	m_playerToDistance(0),
 	m_iconName(),
-	m_itemData(*item)
+	m_itemData(*item),
+	m_sellMoney(0),
+	m_flavorText()
 {
 	//ポジションの設定
 	m_transform.position = spownPos;
 
 	//拾える範囲の設定
-	m_collider = new BoxCollider3D(CanGetRange, Vector3(0,0,0));
+	m_collider = new BoxCollider3D(CanGetRange);
 
 	//アイテムのモデルのロード
 	m_model = MV1LoadModel(item->m_modelName);

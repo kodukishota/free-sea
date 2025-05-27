@@ -1,6 +1,5 @@
 #include"Audio3D.h"
 #include"Time.h"
-#include"Enemy.h"
 #include "DxLib.h"
 
 Audio3D::Audio3D(const char* audioHundle, Enemy* enemy) :
@@ -8,7 +7,8 @@ Audio3D::Audio3D(const char* audioHundle, Enemy* enemy) :
 	m_durationTime(0),
 	m_enemy(enemy),
 	m_isSetCoolTime(true),
-	m_audioHundle(audioHundle)
+	m_audioHundle(audioHundle),
+	m_sound(0)
 {
 	m_playCoolTime = static_cast<float>(rand() % MinPlayCoolTime + RangePlayCoolTime);
 }
@@ -24,14 +24,14 @@ void Audio3D::Load()
 	Set3DRadiusSoundMem(SoundRange, m_sound);
 
 	// 音の再生するポイントを設定
-	Set3DPositionSoundMem(m_enemy->GetPosition(), m_sound);
+	//Set3DPositionSoundMem(m_enemy->GetPosition(), m_sound);
 
 }
 
 void Audio3D::Update()
 {
 	// 再生位置を更新
-	Set3DPositionSoundMem(m_enemy->GetPosition(), m_sound);
+	//Set3DPositionSoundMem(m_enemy->GetPosition(), m_sound);
 
 	if (!m_isSetCoolTime)
 	{

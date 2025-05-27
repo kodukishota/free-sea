@@ -45,14 +45,6 @@ void ScreenFilter::Update()
 
 void ScreenFilter::Draw()
 {
-	// ŽžŠÔ’âŽ~’†‚¾‚¯”’‚Á‚Û‚¢‰æ–Ê‚É‚È‚é
-	if (m_player->IsTheWorld())
-	{
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
-		m_whiteImg.Draw(m_transform);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 128);
-	}
-
 	// ƒvƒŒƒCƒ„[‚Ì‘Ì—Í‚ÌŠ„‡‚ðŽæ“¾
 	float ratio = m_player->GetHpRatio();
 	int pal = MaxPal - static_cast<int>(MaxPal * ratio);

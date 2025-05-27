@@ -9,8 +9,6 @@
 #include"CollisionStage.h"
 #include"BoxCollider3D.h"
 #include "Inventory.h"
-#include "EnhanceType.h"
-#include"ItemFactory.h"
 #include<math.h>
 
 // アニメーションリスト
@@ -25,9 +23,7 @@ const char* LoadPlayer::AnimList[AnimNum] =
 LoadPlayer::LoadPlayer(
 	CollisionStage* collisionStage,
 	Inventory* inventory,
-	EnhanceType* enhanceType,
-	const Vector3& pos,
-	ItemFactory* itemFactory
+	const Vector3& pos
 ) :
 	Actor3D("Player", pos),
 	m_model(MV1LoadModel("Resource/Man/Man.mv1")),
@@ -46,25 +42,16 @@ LoadPlayer::LoadPlayer(
 	m_duration(0),
 	m_isFall(false),
 	m_fallStartY(0),
-	m_stopTime(0),
-	m_useTheWorldCount(0),
-	m_isStop(false),
-	m_theWorldCoolDown(0),
-	m_nowStopTime(0),
 	m_isGetting(false),
 	m_inventory(inventory),
 	m_isDeath(false),
 	m_isDash(false),
 	m_stamina(MaxStamina),
-	m_enhanceType(enhanceType),
 	m_staminaRecovery(0),
 	m_staminaDecrease(0),
-	m_maxHaveWeight(0),
 	m_runSpeed(RunSpeed),
-	m_weightOver(false),
 	m_finish(false),
-	m_isCooldown(false),
-	m_itemFactory(itemFactory)
+	m_cutTree(false)
 {
 	//-----アニメーションの作成-----
 	// アニメーションクラスをリスト化する
@@ -99,16 +86,11 @@ LoadPlayer::LoadPlayer(
 
 	m_collider = new BoxCollider3D(ColSize, ColOffset);
 
-	//持てる最大容量の設定
-	m_maxHaveWeight = m_enhanceType->GetMaxHaveWeight();
-
 	// 体力の初期値を設定
 	m_hp = MaxHp;
 
 	// 音を聞くポイントを更新
 	Set3DSoundListenerPosAndFrontPos_UpVecY(this->GetPosition(), m_camNode->CamFrontPlaneVec());
-
-	m_stopTime = m_enhanceType->GetMaxTheWorldTime();
 }
 
 void LoadPlayer::Load()
@@ -217,23 +199,7 @@ void LoadPlayer::Update()
 	}
 	else
 	{
-		if (m_maxHaveWeight * 1.5 > m_inventory->GetHaveWeight())
-		{
-			// プレイヤーの移動
-			NormalMove();
-		}
-
-		DropItem();
-		TheWorld();
-	}
-
-	if (m_maxHaveWeight < m_inventory->GetHaveWeight())
-	{
-		m_weightOver = true;
-	}
-	else
-	{
-		m_weightOver = false;
+		NormalMove();
 	}
 
 	// アニメーションの切り替え
@@ -390,31 +356,6 @@ void LoadPlayer::CheckMove()
 		if (m_moveDirection.IsZero())
 		{
 			m_isDash = false;
-		}
-
-		
-
-		//重さオーバーしたら移動スピードを下げる。
-		if (m_weightOver)
-		{
-			m_runSpeed = WeightOverSpeed;
-		}
-		else
-		{
-			m_runSpeed = RunSpeed;
-
-			if (m_maxHaveWeight * 0.9f <= m_inventory->GetHaveWeight())
-			{
-				m_runSpeed = RunSpeed * 0.7f;
-			}
-			if (m_maxHaveWeight * 0.7f <= m_inventory->GetHaveWeight())
-			{
-				m_runSpeed = RunSpeed * 0.8f;
-			}
-			if (m_maxHaveWeight * 0.5f <= m_inventory->GetHaveWeight())
-			{
-				m_runSpeed = RunSpeed * 0.9f;
-			}
 		}
 
 		Vector3 nextPos = m_transform.position + m_moveDirection * (Input::GetInstance()->IsKeyPress(KEY_INPUT_LSHIFT) ? m_runSpeed : WalkSpeed);
@@ -576,6 +517,21 @@ void LoadPlayer::OnCollision(const Actor3D* other)
 			m_isGetting = false;
 		}
 	}
+
+	if (other->GetName() == "Tree")
+	{
+		if (!m_cutTree)
+		{
+			if (Input::GetInstance()->IsKeyPress(KEY_INPUT_F))
+			{
+				m_cutTree = true;
+			}
+		}
+		else if (m_cutTree)
+		{
+			m_cutTree = false;
+		}
+	}
 }
 
 // 落下した高さを計算する
@@ -603,55 +559,12 @@ void LoadPlayer::DecreaseHP(int damage)
 	}
 }
 
-//時間停止
-void LoadPlayer::TheWorld()
-{
-	if (m_useTheWorldCount < m_enhanceType->GetMaxUseTheWorldCount() && m_theWorldCoolDown > 0)
-	{
-		m_theWorldCoolDown -= Time::GetInstance()->GetDeltaTime();
-		if (m_theWorldCoolDown <= 0)
-		{
-			m_theWorldCoolDown = 0;
-			// クールダウン状態解除
-			m_isCooldown = false;
-		}
-	}
-
-	if (Input::GetInstance()->IsKeyDown(KEY_INPUT_C) && m_theWorldCoolDown <= 0)
-	{
-		m_isStop = true;
-		// 使用したらクールダウン中扱い
-		m_isCooldown = true;
-	}
-
-	if (m_isStop)
-	{
-		//m_stopTime = m_enhanceType->GetMaxTheWorldTime();
-
-		m_nowStopTime += Time::GetInstance()->GetDeltaTime();
-
-		if (m_nowStopTime >= m_stopTime)
-		{
-			m_theWorldCoolDown = TheWorldCoolDown;
-			m_useTheWorldCount += 1;
-			m_nowStopTime = 0;
-			m_isStop = false;
-		}
-	}
-}
-
 // スタミナ管理
 void LoadPlayer::StaminaManagement()
 {
 	if (m_isDash)
 	{
-		m_staminaDecrease =  m_enhanceType->GetStaminaDecrease();
-
-		//重量オーバーしたらスタミナ消費量を上げる
-		if (m_weightOver)
-		{
-			m_staminaDecrease = m_staminaDecrease * 2;
-		}
+		m_staminaDecrease = StaminaDecreaseAmount;
 
 		// 走っている間はスタミナを減らす
 		m_stamina -= m_staminaDecrease * Time::GetInstance()->GetDeltaTime();
@@ -663,13 +576,7 @@ void LoadPlayer::StaminaManagement()
 	}
 	else
 	{
-		m_staminaRecovery = m_enhanceType->GetStaminaRecovery();
-
-		//重量オーバーしたら回復量を下げる
-		if (m_weightOver)
-		{
-			m_staminaRecovery = m_staminaRecovery / 2;
-		}
+		m_staminaRecovery = StaminaRecoveryAmount;
 
 		// すでにスタミナが最大の時
 		if (m_stamina == MaxStamina) return;
@@ -689,25 +596,5 @@ void LoadPlayer::StaminaManagement()
 			m_stamina = MaxStamina;
 			m_duration = 0;
 		}
-	}
-}
-
-void LoadPlayer::DropItem()
-{
-	if (m_inventory->GetDropItem())
-	{
-		//捨てたオブジェクトを生成
-
-		int num = std::next(m_inventory->GetItemList().begin(), m_inventory->GetTakeItem())->GetItemNum();
-
-		GetParent()->AddChild(
-			new Item(
-				num,
-				m_itemFactory->GetItemData(num),
-				GetPosition(),
-				m_inventory
-			));
-
-		m_inventory->GetDropItemCompletion();
 	}
 }

@@ -6,8 +6,6 @@
 #include <list>
 #include <vector>
 
-class EnhanceType;
-
 class Inventory : public Node
 {
 private:
@@ -50,8 +48,6 @@ private:
 	Transform m_takeItemTransform;	// épê®
 	Transform m_slashTransform;	// épê®
 
-	EnhanceType* m_enhanceType;
-
 protected:
 	virtual void Load() override;
 	virtual void Release() override;
@@ -59,7 +55,7 @@ protected:
 	virtual void Draw() override;
 
 public:
-	Inventory(EnhanceType* enhanceType);
+	Inventory();
 
 	bool CanGetItem()
 	{

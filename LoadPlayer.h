@@ -8,8 +8,6 @@ class Camera;
 class Animation3D;
 class CollisionStage;
 class Inventory;
-class EnhanceType;
-class ItemFactory;
 
 class LoadPlayer : public Actor3D
 {
@@ -32,7 +30,6 @@ private:
 
 	static constexpr float WalkSpeed = 4.0f;	// 歩く速度
 	static constexpr float RunSpeed = 12.0f;	// 走る速度
-	static constexpr float WeightOverSpeed = 6.0f;	//容量オーバーしたときの走る速度
 	static constexpr float RotateSpeed = 10.0f;	// 回転速度
 	static constexpr float DurationTime = 1.0f;
 	static constexpr float JumpPower = 4.0f;	// 初速度
@@ -41,7 +38,6 @@ private:
 	static constexpr Vector3 ColOffset = Vector3(0, 90, 0);	// コライダーのオフセット
 	static constexpr Vector3 ColSize = Vector3(150, 180, 150);	// コライダーのサイズ
 	static constexpr int MaxHp = 100;	// 体力の最大値
-	static constexpr float TheWorldCoolDown = 30;		//スキルのクールダウン
 
 	// スタミナ関連
 	static constexpr float MaxStamina = 100;	// 走るのに必要なスタミナの最大値
@@ -64,17 +60,6 @@ private:
 	bool m_isFloating;
 	float m_fallStartY;	// 落下し始めの高さ
 
-	int m_maxHaveWeight;	//持てる最大容量
-	bool m_weightOver;		//持てる最大容量が超えたか
-
-	//時間停止に関する変数
-	int m_useTheWorldCount;	//何回使ったか
-	float m_theWorldCoolDown;
-	float m_nowStopTime;	//時間停止してから何秒経ったか
-	float m_stopTime;		//時間停止できる時間
-	bool m_isStop;			//時間停止してるか
-	bool m_isCooldown;		// クールダウン中か
-
 	bool m_isGetting;	//アイテムを拾ったか
 
 	int m_seDamage;	// 攻撃を受けたときのSE
@@ -82,12 +67,12 @@ private:
 	bool m_isDeath;	// 死亡フラグ
 	bool m_finish;	// 体力が0になったかどうか
 
+	bool m_cutTree; //木を伐り始めたか
+
 	Camera* m_camNode;
 	CollisionStage* m_collisionStage;
 
 	Inventory* m_inventory;
-	EnhanceType* m_enhanceType;
-	ItemFactory* m_itemFactory;
 
 	Vector3 m_playerPastPos;
 	Vector3 m_playerRotate;
@@ -128,9 +113,7 @@ public:
 	LoadPlayer(
 		CollisionStage* collisionStage, 
 		Inventory* inventory, 
-		EnhanceType* enhanceType,
-		const Vector3& pos,
-		ItemFactory* itemFactory
+		const Vector3& pos
 	);
 
 	// アニメーションを切り替える(Lerp)
@@ -155,46 +138,15 @@ public:
 	// プレイヤーの体力を減らす処理
 	void DecreaseHP(int damage);
 
-	//時間停止
-	void TheWorld();
-
 	bool IsJump()
 	{
 		return m_isJump;
 	}
-
-	// 時間が止まっているか
-	bool IsTheWorld()
-	{
-		return m_isStop;
-	}
-
-	// クールダウン中か
-	bool IsCoolDown()
-	{
-		return m_isCooldown;
-	}
-
-	// 停止できる時間を取得
-	float GetStopTime()
-	{
-		return m_stopTime;
-	}
-
+	
 	// 現在のHpの割合を返す
 	float GetHpRatio()
 	{
 		return static_cast<float>(m_hp) / static_cast<float>(MaxHp);
-	}
-
-	float GetTheWorldTime()
-	{
-		return m_stopTime;
-	}
-
-	float SetTheWorldTime(float theWorldTime)
-	{
-		m_stopTime = theWorldTime;
 	}
 
 	bool GetIsGetting()
@@ -234,6 +186,8 @@ public:
 		return m_finish;
 	}
 
-	//アイテムを落とした時
-	void DropItem();
+	bool GetCutTree()
+	{
+		return m_cutTree;
+	}
 };

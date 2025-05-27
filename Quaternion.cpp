@@ -107,3 +107,7 @@ void Quaternion::RotateAxisYZ(const int model, const float rotAngle, const Vecto
 	MV1SetMatrix(model, m);
 }
 
+void Quaternion::AxisRotation(const int model,const float rotAngle, const Vector3 axisPos, const Vector3 pos)
+{
+
+}
