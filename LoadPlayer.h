@@ -67,7 +67,8 @@ private:
 	bool m_isDeath;	// 死亡フラグ
 	bool m_finish;	// 体力が0になったかどうか
 
-	bool m_cutTree; //木を伐り始めたか
+	bool m_cutTree;		//木を伐り始めたか
+	bool m_fellDown;	//木を伐り終えたか
 
 	Camera* m_camNode;
 	CollisionStage* m_collisionStage;
@@ -189,5 +190,10 @@ public:
 	bool GetCutTree()
 	{
 		return m_cutTree;
+	}
+
+	void FellDownTree()
+	{
+		m_fellDown = true;
 	}
 };

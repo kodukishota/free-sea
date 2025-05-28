@@ -4,6 +4,7 @@
 #include"DxLib.h"
 
 class Ax;
+class LoadPlayer;
 
 class Tree : public Actor3D
 {
@@ -18,6 +19,7 @@ private:
 	int m_helth;
 
 	Ax* m_ax;
+	LoadPlayer* m_player;
 
 protected:
 	virtual void Update() override;
@@ -26,5 +28,5 @@ protected:
 	virtual void Release() override;
 
 public:
-	Tree(Ax* ax);
+	Tree(Ax* ax,LoadPlayer* player);
 };

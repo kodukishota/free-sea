@@ -3,11 +3,13 @@
 #include "BoxCollider3D.h"
 #include "ActorCollision3D.h"
 #include "Ax.h"
+#include "LoadPlayer.h"
 
-Tree::Tree(Ax* ax) : Actor3D("Tree"),
-m_helth(FristHelth),
-m_model(MV1LoadModel("Resource/Tree/tree.mv1")),
-m_ax(ax)
+Tree::Tree(Ax* ax, LoadPlayer* player) : Actor3D("Tree"),
+	m_helth(FristHelth),
+	m_model(MV1LoadModel("Resource/Tree/tree.mv1")),
+	m_ax(ax),
+	m_player(player)
 {
 	//E‚¦‚é”ÍˆÍ‚ÌÝ’è
 	m_collider = new BoxCollider3D(CanCutRange);
@@ -38,6 +40,13 @@ void Tree::Update()
 	if (m_ax->GetIsCutTree())
 	{
 		m_helth -= m_ax->GetCutDamage();
+
+		m_ax->OffIsCutTree();
+	}
+
+	if (m_helth <= 0)
+	{
+		m_player->FellDownTree();
 	}
 }
 
@@ -46,9 +55,14 @@ void Tree::Draw()
 	MV1DrawModel(m_model);
 
 #ifdef _DEBUG
-	DrawFormatString(0, 300, GetColor(255, 255, 255),
-		"Ax Vector3(%.0f, %.0f, %.0f)",
+	DrawFormatString(0, 400, GetColor(255, 255, 255),
+		"tree Vector3(%.0f, %.0f, %.0f)",
 		m_transform.position.x, m_transform.position.y, m_transform.position.z
+	);
+
+	DrawFormatString(0, 450, GetColor(255, 255, 255),
+		"tree helth %d",
+		m_helth
 	);
 
 #endif // _DEBUG

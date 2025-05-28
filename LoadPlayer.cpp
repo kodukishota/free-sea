@@ -51,7 +51,8 @@ LoadPlayer::LoadPlayer(
 	m_staminaDecrease(0),
 	m_runSpeed(RunSpeed),
 	m_finish(false),
-	m_cutTree(false)
+	m_cutTree(false),
+	m_fellDown(false)
 {
 	//-----アニメーションの作成-----
 	// アニメーションクラスをリスト化する
@@ -200,6 +201,12 @@ void LoadPlayer::Update()
 	else
 	{
 		NormalMove();
+
+		if (m_fellDown)
+		{
+			m_cutTree = false;
+			m_fellDown = true;
+		}
 	}
 
 	// アニメーションの切り替え
@@ -490,7 +497,6 @@ void LoadPlayer::CheckMove()
 
 }
 
-
 void LoadPlayer::Draw()
 {
 	// アニメーション再生
@@ -520,12 +526,10 @@ void LoadPlayer::OnCollision(const Actor3D* other)
 
 	if (other->GetName() == "Tree")
 	{
-		
-			if (Input::GetInstance()->IsKeyPress(KEY_INPUT_F))
-			{
-				m_cutTree = true;
-			}
-		
+		if (Input::GetInstance()->IsKeyPress(KEY_INPUT_F))
+		{
+			m_cutTree = true;
+		}
 	}
 }
 

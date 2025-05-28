@@ -62,7 +62,7 @@ void SceneGame::Initialize()
 	actorLayer->AddChild(m_ax);
 
 	//–Ø
-	m_tree = new Tree(m_ax);
+	m_tree = new Tree(m_ax,m_loadPlayer);
 	actorLayer->AddChild(m_tree);
 
 	/*
