@@ -38,9 +38,9 @@ void AxIcon::Update()
 void AxIcon::Draw()
 {	
 	// ‘Ï‹v—ÍƒQ[ƒW‚Ì”wŒi
-	DrawBox(GaugeLeft, GaugeY, GaugeRight, GaugeY + GaugeHeight, GetColor(100, 100, 100), true);
+	DrawBox(GaugeLeft, GaugeY, GaugeRight, GaugeY + GaugeHeight, GetColor(255, 255, 255), true);
 	// Œ»İ‚Ì‘Ï‹v—ÍƒQ[ƒWi’†‰›‚Ék‚Şj
-	DrawBox(GaugeLeft, GaugeY, m_rightX, GaugeY + GaugeHeight, GetColor(255, 255, 255), true);
+	DrawBox(GaugeLeft, GaugeY, m_rightX, GaugeY + GaugeHeight, GetColor(100, 100, 100), true);
 	
 
 	m_axIconUi.Draw(m_axIconTsransform);
