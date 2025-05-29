@@ -5,7 +5,7 @@
 #include "Input.h"
 
 Ax::Ax(LoadPlayer* player, Camera* camera) : Actor3D("Ax"),
-	m_durabilityValue(FristDurabilityValue),
+	m_durabilityValue(FirstDurabilityValue),
 	m_attackDamage(AttackDamage),
 	m_consumptionDurability(ConsumptionDurability),
 	m_model(MV1LoadModel("Resource/Ax/Ax.mv1")),
@@ -80,7 +80,7 @@ void Ax::Draw()
 		);
 
 		DrawFormatString(0, 350, GetColor(255, 255, 255),
-			"‘Ï‹v%d",
+			"‘Ï‹v%f",
 			m_durabilityValue
 		);
 

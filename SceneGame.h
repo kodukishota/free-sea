@@ -15,7 +15,10 @@ class DrawStageView;
 class Wallet;
 class ScreenFilter;
 class Ax;
+class AxIcon;
 class Tree;
+
+class Stump;
 
 // ゲームシーン
 class SceneGame : public SceneBase
@@ -32,7 +35,10 @@ private:
 	Wallet* m_wallet;
 	ScreenFilter* m_screenFilter;
 	Ax* m_ax;
+	AxIcon* m_axIcon;
 	Tree* m_tree;
+
+	Stump* m_stump;
 
 	std::vector<Item> m_chestItem;
 
@@ -50,7 +56,10 @@ public:
 		m_wallet(nullptr),
 		m_screenFilter(nullptr),
 		m_ax(nullptr),
-		m_tree(nullptr){};
+		m_axIcon(nullptr),
+		m_tree(nullptr),
+	
+	m_stump(nullptr){};
 
 	virtual void Initialize() override;		// 初期化
 	virtual void Finalize() override;		// 終了

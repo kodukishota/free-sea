@@ -124,6 +124,18 @@
     <ClCompile Include="Tree.cpp">
       <Filter>ソースファイル\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Stump.cpp">
+      <Filter>ソースファイル\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="AxIcon.cpp">
+      <Filter>ソースファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="FirePlace.cpp">
+      <Filter>ソースファイル\Home</Filter>
+    </ClCompile>
+    <ClCompile Include="UiBodyTemperature.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -291,6 +303,18 @@
     <ClInclude Include="Tree.h">
       <Filter>ヘッダーファイル\Item</Filter>
     </ClInclude>
+    <ClInclude Include="Stump.h">
+      <Filter>ヘッダーファイル\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="AxIcon.h">
+      <Filter>ヘッダーファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="FirePlace.h">
+      <Filter>ヘッダーファイル\Home</Filter>
+    </ClInclude>
+    <ClInclude Include="UiBodyTemperature.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ソースファイル">
@@ -328,6 +352,12 @@
     </Filter>
     <Filter Include="ヘッダーファイル\Player">
       <UniqueIdentifier>{11c14f1c-09ef-4c46-ac9d-66a62fda103e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\Home">
+      <UniqueIdentifier>{9465d0fb-1fe1-4da2-a9d4-bbd42351e479}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\Home">
+      <UniqueIdentifier>{fc7a621d-5a4d-49c8-88ea-7b6d64107d98}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

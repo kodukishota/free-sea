@@ -15,7 +15,7 @@ private:
 	static constexpr Vector2 SkillCheckUiPos = Vector2(720, 750);
 	static constexpr Vector3 OffSet = Vector3(50,50,-30);
 	static constexpr float HandleSpeed = 5;				//ハンドルが動くスピード
-	static constexpr int FristDurabilityValue = 100;	//耐久力
+	static constexpr float FirstDurabilityValue = 100;	//耐久力
 	static constexpr int AttackDamage = 10;				//攻撃力
 	static constexpr int GoodHandleSize = 150;		//グッドの画像横サイズ
 	static constexpr int PerfectHandleSize = 30;	//パーフェクトの画像横サイズ
@@ -24,7 +24,7 @@ private:
 
 	int m_model;
 
-	int m_durabilityValue;
+	float m_durabilityValue;
 	int m_attackDamage;
 	int m_consumptionDurability;
 
@@ -72,5 +72,15 @@ public:
 	void OffIsCutTree()
 	{
 		m_isCutTreeFlag = false;
+	}
+
+	float GetDurability()
+	{
+		return m_durabilityValue;
+	}
+
+	float GetMaxDurability()
+	{
+		return FirstDurabilityValue;
 	}
 };

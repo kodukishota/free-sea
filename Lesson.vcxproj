@@ -146,6 +146,7 @@
     <ClCompile Include="Animation3D.cpp" />
     <ClCompile Include="Audio3D.cpp" />
     <ClCompile Include="Ax.cpp" />
+    <ClCompile Include="AxIcon.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CheckRoot.cpp" />
@@ -154,6 +155,7 @@
     <ClCompile Include="CollisionStage.cpp" />
     <ClCompile Include="DrawStageView.cpp" />
     <ClCompile Include="Fade.cpp" />
+    <ClCompile Include="FirePlace.cpp" />
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="ImageLoader.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -175,8 +177,10 @@
     <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="ScreenFilter.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Stump.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="Tree.cpp" />
+    <ClCompile Include="UiBodyTemperature.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="Wallet.cpp" />
@@ -190,6 +194,7 @@
     <ClInclude Include="Animation3D.h" />
     <ClInclude Include="Audio3D.h" />
     <ClInclude Include="Ax.h" />
+    <ClInclude Include="AxIcon.h" />
     <ClInclude Include="BoxCollider2D.h" />
     <ClInclude Include="BoxCollider3D.h" />
     <ClInclude Include="Button.h" />
@@ -203,6 +208,7 @@
     <ClInclude Include="CollisionStage.h" />
     <ClInclude Include="DrawStageView.h" />
     <ClInclude Include="Fade.h" />
+    <ClInclude Include="FirePlace.h" />
     <ClInclude Include="GameConfig.h" />
     <ClInclude Include="GameMain.h" />
     <ClInclude Include="HitBox.h" />
@@ -230,10 +236,12 @@
     <ClInclude Include="SellButton.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Sprite3D.h" />
+    <ClInclude Include="Stump.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Transform3D.h" />
     <ClInclude Include="Tree.h" />
+    <ClInclude Include="UiBodyTemperature.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="Wallet.h" />

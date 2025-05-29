@@ -17,8 +17,11 @@
 #include "ScreenFilter.h"
 #include "Camera.h"
 #include "Ax.h"
+#include "AxIcon.h"
 #include "Tree.h"
 #include "DxLib.h"
+
+#include"Stump.h"
 
 #include "Item.h"
 
@@ -61,9 +64,13 @@ void SceneGame::Initialize()
 	m_ax = new Ax(m_loadPlayer,m_cam);
 	actorLayer->AddChild(m_ax);
 
+	m_axIcon = new AxIcon(m_ax);
+	uiLayer->AddChild(m_axIcon);
+
 	//–Ø
 	m_tree = new Tree(m_ax,m_loadPlayer);
 	actorLayer->AddChild(m_tree);
+
 
 	/*
 #ifdef _DEBUG

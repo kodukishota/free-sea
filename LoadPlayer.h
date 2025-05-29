@@ -39,11 +39,16 @@ private:
 	static constexpr Vector3 ColSize = Vector3(150, 180, 150);	// コライダーのサイズ
 	static constexpr int MaxHp = 100;	// 体力の最大値
 
+	static constexpr int MaxBodyTemperature = 100;	//プレイヤーの最大体温
+
 	// スタミナ関連
 	static constexpr float MaxStamina = 100;	// 走るのに必要なスタミナの最大値
 	static constexpr float StaminaRecoveryAmount = 10;	// スタミナの回復量
 	static constexpr float StaminaDecreaseAmount = 20;	// スタミナの消費量
 	static constexpr float TimeToRecoverStamina = 1;	// スタミナが回復し始めるまでの時間
+
+	static constexpr int FirstDownTemperature = 5;
+
 
 	Vector3 AxisY = Vector3(0.0f, 1.0f, 0.0f);	// 回転軸(Y軸で上方向)
 
@@ -90,11 +95,15 @@ private:
 	// プレイヤーの体力に関する変数
 	int m_hp;	// プレイヤーの体力
 
+	int m_bodyTemperature;	//プレイヤーの体温
+
 	float m_stamina;	// プレイヤーの現在のスタミナ	
 	bool m_isDash;		// 走っているか
 	float m_duration;	// 時間経過をカウントする用
 	float m_staminaRecovery;	// スタミナの回復量
 	float m_staminaDecrease;	// スタミナの消費量
+
+	int m_downTemperature;		//下がる体温
 
 	// プレイヤーのジャンプ処理
 	void Jumping();		// 自分でジャンプする処理
@@ -132,12 +141,13 @@ public:
 	// 移動先を決める
 	void CheckMove();
 
-
 	// 落下した高さを計算する
 	void CountFallHeight();
 
 	// プレイヤーの体力を減らす処理
 	void DecreaseHP(int damage);
+
+	void DownBodyTemperature();
 
 	bool IsJump()
 	{

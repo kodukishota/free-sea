@@ -4,6 +4,7 @@
 #include "ActorCollision3D.h"
 #include "Ax.h"
 #include "LoadPlayer.h"
+#include "Stump.h"
 
 Tree::Tree(Ax* ax, LoadPlayer* player) : Actor3D("Tree"),
 	m_helth(FristHelth),
@@ -44,9 +45,13 @@ void Tree::Update()
 		m_ax->OffIsCutTree();
 	}
 
-	if (m_helth <= 0)
+	if (m_helth <= 0 && !isdeth )
 	{
 		m_player->FellDownTree();
+
+		GetParent()->AddChild(new Stump(m_transform.position));
+
+		Destroy();
 	}
 }
 
@@ -55,10 +60,7 @@ void Tree::Draw()
 	MV1DrawModel(m_model);
 
 #ifdef _DEBUG
-	DrawFormatString(0, 400, GetColor(255, 255, 255),
-		"tree Vector3(%.0f, %.0f, %.0f)",
-		m_transform.position.x, m_transform.position.y, m_transform.position.z
-	);
+	
 
 	DrawFormatString(0, 450, GetColor(255, 255, 255),
 		"tree helth %d",

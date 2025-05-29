@@ -52,7 +52,8 @@ LoadPlayer::LoadPlayer(
 	m_runSpeed(RunSpeed),
 	m_finish(false),
 	m_cutTree(false),
-	m_fellDown(false)
+	m_fellDown(false),
+	m_bodyTemperature(MaxBodyTemperature)
 {
 	//-----アニメーションの作成-----
 	// アニメーションクラスをリスト化する
@@ -208,6 +209,8 @@ void LoadPlayer::Update()
 			m_fellDown = true;
 		}
 	}
+
+	DownBodyTemperature();
 
 	// アニメーションの切り替え
 	ChangeAnimLerp();
@@ -556,6 +559,11 @@ void LoadPlayer::DecreaseHP(int damage)
 	{
 		m_hp = 0;
 	}
+}
+
+void LoadPlayer::DownBodyTemperature()
+{
+	m_bodyTemperature -= m_downTemperature;
 }
 
 // スタミナ管理
