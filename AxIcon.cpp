@@ -32,16 +32,20 @@ void AxIcon::Update()
 	m_Durability = m_ax->GetDurability() / m_ax->GetMaxDurability();
 
 
-	m_rightX = static_cast<int>(GaugeRight - (GaugeWidth * m_Durability));
+	m_rightX = static_cast<int>(GaugeLeft + (GaugeWidth * m_Durability));
+
+	if (m_rightX <= GaugeLeft)
+	{
+		m_rightX = GaugeLeft;
+	}
 }
 
 void AxIcon::Draw()
 {	
-	// ‘Ï‹v—ÍƒQ[ƒW‚Ì”wŒi
+	// Œ»Ý‚Ì‘Ï‹v—ÍƒQ[ƒW
 	DrawBox(GaugeLeft, GaugeY, GaugeRight, GaugeY + GaugeHeight, GetColor(255, 255, 255), true);
-	// Œ»Ý‚Ì‘Ï‹v—ÍƒQ[ƒWi’†‰›‚Ék‚Þj
-	DrawBox(GaugeLeft, GaugeY, m_rightX, GaugeY + GaugeHeight, GetColor(100, 100, 100), true);
-	
+	// ‘Ï‹v—ÍƒQ[ƒW‚Ì”wŒi
+	DrawBox(GaugeRight, GaugeY, m_rightX, GaugeY + GaugeHeight, GetColor(100, 100, 100), true);
 
 	m_axIconUi.Draw(m_axIconTsransform);
 }

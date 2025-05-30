@@ -16,9 +16,12 @@
 #include "DrawStageView.h"
 #include "ScreenFilter.h"
 #include "Camera.h"
+#include "SkillCheak.h"
 #include "Ax.h"
 #include "AxIcon.h"
 #include "Tree.h"
+#include "UiBodyTemperature.h"
+#include "FirePlace.h"
 #include "DxLib.h"
 
 #include"Stump.h"
@@ -60,17 +63,25 @@ void SceneGame::Initialize()
 	m_cam = new Camera(m_loadPlayer, m_collisionStage);
 	actorLayer->AddChild(m_cam);
 
+	m_uiBodyTemperature = new UiBodyTemperature(m_loadPlayer);
+	uiLayer->AddChild(m_uiBodyTemperature);
+
+	m_firePlace = new FirePlace(m_loadPlayer);
+	actorLayer->AddChild(m_firePlace);
+	
+	m_skillCheck = new SkillCheck(m_loadPlayer);
+	uiLayer->AddChild(m_skillCheck);
+
 	//•€
-	m_ax = new Ax(m_loadPlayer,m_cam);
+	m_ax = new Ax(m_loadPlayer, m_cam,m_skillCheck);
 	actorLayer->AddChild(m_ax);
 
 	m_axIcon = new AxIcon(m_ax);
 	uiLayer->AddChild(m_axIcon);
 
 	//–Ø
-	m_tree = new Tree(m_ax,m_loadPlayer);
+	m_tree = new Tree(m_ax, m_loadPlayer,m_inventory);
 	actorLayer->AddChild(m_tree);
-
 
 	/*
 #ifdef _DEBUG

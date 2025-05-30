@@ -136,6 +136,9 @@
     <ClCompile Include="UiBodyTemperature.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="SkillCheck.cpp">
+      <Filter>ソースファイル\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -314,6 +317,9 @@
     </ClInclude>
     <ClInclude Include="UiBodyTemperature.h">
       <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillCheak.h">
+      <Filter>ヘッダーファイル\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

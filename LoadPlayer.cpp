@@ -53,7 +53,9 @@ LoadPlayer::LoadPlayer(
 	m_finish(false),
 	m_cutTree(false),
 	m_fellDown(false),
-	m_bodyTemperature(MaxBodyTemperature)
+	m_bodyTemperature(MaxBodyTemperature),
+	m_downTemperature(FirstDownTemperature),
+	m_downTemperatureCoolDown(0)
 {
 	//-----アニメーションの作成-----
 	// アニメーションクラスをリスト化する
@@ -211,6 +213,7 @@ void LoadPlayer::Update()
 	}
 
 	DownBodyTemperature();
+	WarmthBodyTemperature();
 
 	// アニメーションの切り替え
 	ChangeAnimLerp();
@@ -504,6 +507,11 @@ void LoadPlayer::Draw()
 {
 	// アニメーション再生
 	PlayAnim();
+
+	DrawFormatString(0, 500, GetColor(255, 255, 255),
+		"体温%f",
+		m_bodyTemperature
+	);
 }
 
 void LoadPlayer::OnCollision(const Actor3D* other)
@@ -534,6 +542,11 @@ void LoadPlayer::OnCollision(const Actor3D* other)
 			m_cutTree = true;
 		}
 	}
+
+	if (other->GetName() == "FirePlace")
+	{
+ 		m_isWarmthFlag = true;
+	}
 }
 
 // 落下した高さを計算する
@@ -561,9 +574,38 @@ void LoadPlayer::DecreaseHP(int damage)
 	}
 }
 
+//体温減少
 void LoadPlayer::DownBodyTemperature()
 {
-	m_bodyTemperature -= m_downTemperature;
+	if (!m_isWarmthFlag)
+	{
+		m_downTemperatureCoolDown += Time::GetInstance()->GetDeltaTime();
+	}
+
+	//五秒毎ごとに体温が減る
+	if (m_downTemperature >= 0 && m_downTemperatureCoolDown >= FirstDownTemperatureTime)
+	{
+		m_bodyTemperature -= m_downTemperature;
+		m_downTemperatureCoolDown = 0;
+	}
+}
+
+//体温回復
+void LoadPlayer::WarmthBodyTemperature()
+{
+	if (m_isWarmthFlag)
+	{
+		m_warmthTemperatureCoolDown += Time::GetInstance()->GetDeltaTime();
+	}
+
+	//五秒毎ごとに体温が増える
+	if (m_warmthTemperatureCoolDown >= FirstDownTemperatureTime &&
+		m_bodyTemperature < MaxBodyTemperature)
+	{
+		m_bodyTemperature += m_downTemperature;
+		m_warmthTemperatureCoolDown = 0;
+		m_isWarmthFlag = false;
+	}
 }
 
 // スタミナ管理

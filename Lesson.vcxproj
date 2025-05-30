@@ -176,6 +176,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="ScreenFilter.cpp" />
+    <ClCompile Include="SkillCheck.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Stump.cpp" />
     <ClCompile Include="Time.cpp" />
@@ -234,6 +235,7 @@
     <ClInclude Include="Screen.h" />
     <ClInclude Include="ScreenFilter.h" />
     <ClInclude Include="SellButton.h" />
+    <ClInclude Include="SkillCheak.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Sprite3D.h" />
     <ClInclude Include="Stump.h" />

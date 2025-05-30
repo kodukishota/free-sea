@@ -11,15 +11,16 @@ class Inventory : public Node
 private:
 	static constexpr Vector2 TakeItemUiPos = Vector2(60,890);
 	static constexpr Vector2 InventoryUiPos = Vector2(60, 890);
-	static constexpr Vector2 SlashUiPos = Vector2(105, 823);
+	static constexpr Vector2 WoodIconPos = Vector2(200, 890);
 	static constexpr Vector2 FontSize = Vector2(20, 35);	// 数字1文字の幅・高さ
 	static constexpr int FontMargin = 5;					// 数字と数字の間の余白
 
-	static constexpr int SquareSize = 90;
+	static constexpr int SquareSize = 100;
 
 	int m_maxHaveItem;
 
 	int m_haveItemCount;	//アイテムを持ってる数
+	int m_haveWoodCount;	//木を持っている数
 
 	int m_takeItem;			//今何のアイテムを持っているか
 	int m_dropItemNum;			//捨てたアイテムの番号
@@ -43,7 +44,7 @@ private:
 	std::vector<Item*> m_addItemList;
 	Sprite m_inventoryUi;
 	Sprite m_takeItemUi;
-	Sprite m_slashUi;
+	Sprite m_woodIcon;
 	Transform m_inventoryTransform;	// 姿勢
 	Transform m_takeItemTransform;	// 姿勢
 	Transform m_slashTransform;	// 姿勢
@@ -148,4 +149,9 @@ public:
 	}
 
 	void CheckCanAddItem();
+
+	void TakeCutWood(int woodValue)
+	{
+		m_haveWoodCount += woodValue;
+	}
 };

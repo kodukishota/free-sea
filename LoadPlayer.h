@@ -39,7 +39,7 @@ private:
 	static constexpr Vector3 ColSize = Vector3(150, 180, 150);	// コライダーのサイズ
 	static constexpr int MaxHp = 100;	// 体力の最大値
 
-	static constexpr int MaxBodyTemperature = 100;	//プレイヤーの最大体温
+	static constexpr float MaxBodyTemperature = 100;	//プレイヤーの最大体温
 
 	// スタミナ関連
 	static constexpr float MaxStamina = 100;	// 走るのに必要なスタミナの最大値
@@ -47,7 +47,9 @@ private:
 	static constexpr float StaminaDecreaseAmount = 20;	// スタミナの消費量
 	static constexpr float TimeToRecoverStamina = 1;	// スタミナが回復し始めるまでの時間
 
-	static constexpr int FirstDownTemperature = 5;
+	static constexpr float FirstDownTemperature = 5;	//下がる体温の初期値
+	static constexpr float FirstDownTemperatureTime = 5;//体温が下がる時間の初期値
+
 
 
 	Vector3 AxisY = Vector3(0.0f, 1.0f, 0.0f);	// 回転軸(Y軸で上方向)
@@ -95,7 +97,7 @@ private:
 	// プレイヤーの体力に関する変数
 	int m_hp;	// プレイヤーの体力
 
-	int m_bodyTemperature;	//プレイヤーの体温
+	float m_bodyTemperature;	//プレイヤーの体温
 
 	float m_stamina;	// プレイヤーの現在のスタミナ	
 	bool m_isDash;		// 走っているか
@@ -103,7 +105,11 @@ private:
 	float m_staminaRecovery;	// スタミナの回復量
 	float m_staminaDecrease;	// スタミナの消費量
 
-	int m_downTemperature;		//下がる体温
+	bool m_isWarmthFlag;	//暖炉の近くにいて温まれるか
+
+	float m_downTemperature;		//下がる体温
+	float m_downTemperatureCoolDown;	//体温が下がる時間
+	float m_warmthTemperatureCoolDown;	//体温が上がる時間
 
 	// プレイヤーのジャンプ処理
 	void Jumping();		// 自分でジャンプする処理
@@ -148,6 +154,8 @@ public:
 	void DecreaseHP(int damage);
 
 	void DownBodyTemperature();
+
+	void WarmthBodyTemperature();
 
 	bool IsJump()
 	{
@@ -205,5 +213,15 @@ public:
 	void FellDownTree()
 	{
 		m_fellDown = true;
+	}
+
+	float GetBodyTempature()
+	{
+		return m_bodyTemperature;
+	}
+
+	float GetMaxBodyTempature()
+	{
+		return MaxBodyTemperature;
 	}
 };

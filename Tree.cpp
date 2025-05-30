@@ -5,12 +5,14 @@
 #include "Ax.h"
 #include "LoadPlayer.h"
 #include "Stump.h"
+#include "Inventory.h"
 
-Tree::Tree(Ax* ax, LoadPlayer* player) : Actor3D("Tree"),
+Tree::Tree(Ax* ax, LoadPlayer* player, Inventory* inventory) : Actor3D("Tree"),
 	m_helth(FristHelth),
 	m_model(MV1LoadModel("Resource/Tree/tree.mv1")),
 	m_ax(ax),
-	m_player(player)
+	m_player(player),
+	m_inventory(inventory)
 {
 	//E‚¦‚é”ÍˆÍ‚ÌÝ’è
 	m_collider = new BoxCollider3D(CanCutRange);
@@ -41,6 +43,10 @@ void Tree::Update()
 	if (m_ax->GetIsCutTree())
 	{
 		m_helth -= m_ax->GetCutDamage();
+
+		int takeWoodValue = CutTreeTakeValue * m_ax->GetCutTreeMagnification();
+
+		m_inventory->TakeCutWood(takeWoodValue);
 
 		m_ax->OffIsCutTree();
 	}

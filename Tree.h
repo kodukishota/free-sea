@@ -5,6 +5,7 @@
 
 class Ax;
 class LoadPlayer;
+class Inventory;
 
 class Tree : public Actor3D
 {
@@ -12,7 +13,8 @@ private:
 	static constexpr Vector3 CanCutRange = Vector3(300, 150, 300);	//–Ø‚ğ”°‚ê‚é”ÍˆÍ
 
 	static constexpr Vector3 OffSet = Vector3(1000, 0, 600);
-	static constexpr int FristHelth = 10000;	//‘Ï‹v—Í
+	static constexpr int FristHelth = 100;	//‘Ï‹v—Í
+	static constexpr int CutTreeTakeValue = 5;	//ˆê‰ñ”°‚Á‚½‚ç—‚¿‚é–Ø‚Ì”B
 
 	int m_model;
 
@@ -20,6 +22,7 @@ private:
 
 	Ax* m_ax;
 	LoadPlayer* m_player;
+	Inventory* m_inventory;
 
 	bool isdeth = false;
 
@@ -30,5 +33,5 @@ protected:
 	virtual void Release() override;
 
 public:
-	Tree(Ax* ax,LoadPlayer* player);
+	Tree(Ax* ax,LoadPlayer* player,Inventory* m_inventory);
 };

@@ -14,9 +14,12 @@ class Item;
 class DrawStageView;
 class Wallet;
 class ScreenFilter;
+class SkillCheck;
 class Ax;
 class AxIcon;
 class Tree;
+class UiBodyTemperature;
+class FirePlace;
 
 class Stump;
 
@@ -34,9 +37,12 @@ private:
 	DrawStageView* m_drawStageView;
 	Wallet* m_wallet;
 	ScreenFilter* m_screenFilter;
+	SkillCheck* m_skillCheck;
 	Ax* m_ax;
 	AxIcon* m_axIcon;
 	Tree* m_tree;
+	UiBodyTemperature* m_uiBodyTemperature;
+	FirePlace* m_firePlace;
 
 	Stump* m_stump;
 
@@ -55,9 +61,12 @@ public:
 		m_drawStageView(nullptr),
 		m_wallet(nullptr),
 		m_screenFilter(nullptr),
+		m_skillCheck(nullptr),
 		m_ax(nullptr),
 		m_axIcon(nullptr),
 		m_tree(nullptr),
+		m_uiBodyTemperature(nullptr),
+		m_firePlace(nullptr),
 	
 	m_stump(nullptr){};
 
