@@ -22,6 +22,10 @@
 #include "Tree.h"
 #include "UiBodyTemperature.h"
 #include "FirePlace.h"
+#include "Treder.h"
+#include "TredeUi.h"
+#include "SellButton.h"
+#include "Wallet.h"
 #include "DxLib.h"
 
 #include"Stump.h"
@@ -63,12 +67,15 @@ void SceneGame::Initialize()
 	m_cam = new Camera(m_loadPlayer, m_collisionStage);
 	actorLayer->AddChild(m_cam);
 
+	//体温Ui
 	m_uiBodyTemperature = new UiBodyTemperature(m_loadPlayer);
 	uiLayer->AddChild(m_uiBodyTemperature);
 
+	//暖炉
 	m_firePlace = new FirePlace(m_loadPlayer);
 	actorLayer->AddChild(m_firePlace);
 	
+	//スキルチェックUi
 	m_skillCheck = new SkillCheck(m_loadPlayer);
 	uiLayer->AddChild(m_skillCheck);
 
@@ -82,6 +89,20 @@ void SceneGame::Initialize()
 	//木
 	m_tree = new Tree(m_ax, m_loadPlayer,m_inventory);
 	actorLayer->AddChild(m_tree);
+
+	//トレーダー
+	m_treder = new Treder();
+	actorLayer->AddChild(m_treder);
+	
+	m_wallet = new Wallet(m_loadPlayer);
+
+	//トレードUI系
+	m_sellButton = new SellButton(m_loadPlayer);
+	m_tredeUi = new TredeUi(m_loadPlayer,m_sellButton,m_wallet,m_inventory);
+	uiLayer->AddChild(m_tredeUi);
+
+	uiLayer->AddChild(m_wallet);
+	uiLayer->AddChild(m_sellButton);
 
 	/*
 #ifdef _DEBUG
@@ -110,9 +131,6 @@ void SceneGame::Initialize()
 	// スクリーンに掛けるフィルター
 	m_screenFilter = new ScreenFilter(m_loadPlayer);
 	uiLayer->AddChild(m_screenFilter);
-
-	// マウスカーソルを非表示にする
-	SetMouseDispFlag(false);
 }
 
 // 終了
@@ -133,6 +151,17 @@ SceneBase* SceneGame::Update()
 	if (Input::GetInstance()->IsKeyDown(KEY_INPUT_T))
 	{
 		return new SceneTitle();
+	}
+
+	if(!m_loadPlayer->GetNowTrede())
+	{
+		// マウスカーソルを非表示にする
+		SetMouseDispFlag(false);
+	}
+	else
+	{
+		// マウスカーソルを非表示にする
+		SetMouseDispFlag(true);
 	}
 
 	return this;

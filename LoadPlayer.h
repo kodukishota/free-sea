@@ -111,6 +111,8 @@ private:
 	float m_downTemperatureCoolDown;	//体温が下がる時間
 	float m_warmthTemperatureCoolDown;	//体温が上がる時間
 
+	bool m_nowTrede;	//トレード中かどうか
+
 	// プレイヤーのジャンプ処理
 	void Jumping();		// 自分でジャンプする処理
 
@@ -223,5 +225,15 @@ public:
 	float GetMaxBodyTempature()
 	{
 		return MaxBodyTemperature;
+	}
+
+	bool GetNowTrede()
+	{
+		return m_nowTrede;
+	}
+
+	void ResetNowTrede()
+	{
+		m_nowTrede = false;
 	}
 };

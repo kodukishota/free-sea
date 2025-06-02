@@ -277,6 +277,17 @@ void Camera::Update()
 	{
 		ChangeSightMode(m_loadPlayerNode->GetPosition());
 	}
+
+	//取引中ならマウスカーソルを自由に動かせれるようにする
+	if (m_loadPlayerNode->GetNowTrede())
+	{
+		m_isLocked = false;
+	}
+	else
+	{
+		m_isLocked = true;
+	}
+
 #ifdef _DEBUG
 	if(Input::GetInstance()->IsKeyDown(KEY_INPUT_B))
 	{

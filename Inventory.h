@@ -154,4 +154,14 @@ public:
 	{
 		m_haveWoodCount += woodValue;
 	}
+
+	int GetHaveWoodCount()
+	{
+		return m_haveWoodCount;
+	}
+
+	void LostHaveWood(int lostValue)
+	{
+		m_haveWoodCount -= lostValue;
+	}
 };

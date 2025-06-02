@@ -13,7 +13,7 @@ private:
 	//ƒOƒbƒh‚ÌˆÊ’u
 	static constexpr Vector3 OffSet = Vector3(50,50,-30);
 	static constexpr float FirstDurabilityValue = 100;	//‘Ï‹v—Í
-	static constexpr int AttackDamage = 10;				//UŒ‚—Í
+	static constexpr int AttackDamage = 5;				//UŒ‚—Í
 	static constexpr int ConsumptionDurability = 5;	//Á–Õ‘Ï‹v’l
 
 	int m_model;

@@ -1,11 +1,13 @@
 #include "Wallet.h"
 #include "Screen.h"
 #include "ImageLoader.h"
+#include "LoadPlayer.h"
 #include "DxLib.h"
 
-Wallet::Wallet() :
+Wallet::Wallet(LoadPlayer* player) :
 	m_fontTextureId(0),
-	m_haveMoney(0)
+	m_haveMoney(0),
+	m_player(player)
 {
 	m_transform.position = WalletPos;
 	m_transform.scale = 0.3f;
@@ -31,26 +33,31 @@ void Wallet::Update()
 
 void Wallet::Draw()
 {
-	// Walletを描画
-	m_walletImg.Draw(m_transform);
-
-	Vector2 dest = m_transform.position + Vector2(40, -17);
-	dest.y += FontMargin;
-	int score = m_haveMoney;
-	int digit = 1;
-	do
+	if (m_player->GetNowTrede())
 	{
-		int value = score % 10;	// 1の位の値を取り出す
+		// Walletを描画
+		m_walletImg.Draw(m_transform);
 
-		DrawRectGraph(
-			static_cast<int>(dest.x - FontSize.x * digit), static_cast<int>(dest.y),
-			static_cast<int>(FontSize.x) * value, 0,
-			static_cast<int>(FontSize.x), static_cast<int>(FontSize.y),
-			m_fontTextureId,
-			true
-		);
+		//持っている金額の描画
+		Vector2 dest = m_transform.position + Vector2(40, -17);
+		dest.y += FontMargin;
+		int score = m_haveMoney;
+		int digit = 1;
+		do
+		{
+			int value = score % 10;	// 1の位の値を取り出す
 
-		score /= 10;	// スコアの桁下げ
-		digit++;		// 次の桁へ
-	} while (score > 0);
+			DrawRectGraph(
+				static_cast<int>(dest.x - FontSize.x * digit), static_cast<int>(dest.y),
+				static_cast<int>(FontSize.x) * value, 0,
+				static_cast<int>(FontSize.x), static_cast<int>(FontSize.y),
+				m_fontTextureId,
+				true
+			);
+
+			score /= 10;	// スコアの桁下げ
+			digit++;		// 次の桁へ
+		} while (score > 0);
+	}
+
 }

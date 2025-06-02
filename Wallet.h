@@ -3,18 +3,22 @@
 #include "Transform.h"
 #include "Sprite.h"
 
+class LoadPlayer;
+
 class Wallet : public Node
 {
 private:
 	static constexpr Vector2 WalletSize = Vector2(40, 11);	// SCORE画像の幅・高さ
 	static constexpr Vector2 FontSize = Vector2(20, 35);	// 数字1文字の幅・高さ
-	static constexpr Vector2 WalletPos = Vector2(125, 70);		// 画面右上からの差分
+	static constexpr Vector2 WalletPos = Vector2(210, 80);		// 画面右上からの差分
 	static constexpr int FontMargin = 5;					// 数字と数字の間の余白
 
 	Sprite m_walletImg;		// Wallet画像
 	int m_fontTextureId;	// 数字フォント
 	Transform m_transform;	// 姿勢
 	int m_haveMoney;		// スコアの値
+
+	LoadPlayer* m_player;
 
 protected:
 	virtual void Load() override;
@@ -24,7 +28,7 @@ protected:
 
 public:
 	// コンストラクタ
-	Wallet();
+	Wallet(LoadPlayer* player);
 
 	/*
 	// 座標を設定

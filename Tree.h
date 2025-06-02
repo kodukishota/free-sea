@@ -13,8 +13,8 @@ private:
 	static constexpr Vector3 CanCutRange = Vector3(300, 150, 300);	//–Ø‚ğ”°‚ê‚é”ÍˆÍ
 
 	static constexpr Vector3 OffSet = Vector3(1000, 0, 600);
-	static constexpr int FristHelth = 100;	//‘Ï‹v—Í
-	static constexpr int CutTreeTakeValue = 5;	//ˆê‰ñ”°‚Á‚½‚ç—‚¿‚é–Ø‚Ì”B
+	static constexpr int FristHelth = 50;	//‘Ï‹v—Í
+	static constexpr int CutTreeTakeValue = 2;	//ˆê‰ñ”°‚Á‚½‚ç—‚¿‚é–Ø‚Ì”B
 
 	int m_model;
 

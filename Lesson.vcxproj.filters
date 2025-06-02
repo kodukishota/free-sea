@@ -100,9 +100,6 @@
     <ClCompile Include="Inventory.cpp">
       <Filter>ソースファイル\Item</Filter>
     </ClCompile>
-    <ClCompile Include="Wallet.cpp">
-      <Filter>ソースファイル\Item</Filter>
-    </ClCompile>
     <ClCompile Include="DrawStageView.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
@@ -138,6 +135,18 @@
     </ClCompile>
     <ClCompile Include="SkillCheck.cpp">
       <Filter>ソースファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Treder.cpp">
+      <Filter>ソースファイル\Trede</Filter>
+    </ClCompile>
+    <ClCompile Include="TredeUi.cpp">
+      <Filter>ソースファイル\Trede</Filter>
+    </ClCompile>
+    <ClCompile Include="SellButton.cpp">
+      <Filter>ソースファイル\Trede</Filter>
+    </ClCompile>
+    <ClCompile Include="Wallet.cpp">
+      <Filter>ソースファイル\Trede</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -267,9 +276,6 @@
     <ClInclude Include="Button.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
-    <ClInclude Include="SellButton.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
     <ClInclude Include="CheckRoot.h">
       <Filter>ヘッダーファイル\NavMesh</Filter>
     </ClInclude>
@@ -283,9 +289,6 @@
       <Filter>ヘッダーファイル\Item</Filter>
     </ClInclude>
     <ClInclude Include="Inventory.h">
-      <Filter>ヘッダーファイル\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Wallet.h">
       <Filter>ヘッダーファイル\Item</Filter>
     </ClInclude>
     <ClInclude Include="ScreenFilter.h">
@@ -320,6 +323,18 @@
     </ClInclude>
     <ClInclude Include="SkillCheak.h">
       <Filter>ヘッダーファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Treder.h">
+      <Filter>ヘッダーファイル\Trede</Filter>
+    </ClInclude>
+    <ClInclude Include="TredeUi.h">
+      <Filter>ヘッダーファイル\Trede</Filter>
+    </ClInclude>
+    <ClInclude Include="SellButton.h">
+      <Filter>ヘッダーファイル\Trede</Filter>
+    </ClInclude>
+    <ClInclude Include="Wallet.h">
+      <Filter>ヘッダーファイル\Trede</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -364,6 +379,12 @@
     </Filter>
     <Filter Include="ヘッダーファイル\Home">
       <UniqueIdentifier>{fc7a621d-5a4d-49c8-88ea-7b6d64107d98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\Trede">
+      <UniqueIdentifier>{471d3dbd-8ba8-4bc8-9014-fd74c2edb2ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\Trede">
+      <UniqueIdentifier>{52436fd6-e118-4b39-8ecd-a0f8f93bd3f1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

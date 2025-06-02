@@ -16,11 +16,14 @@ class Wallet;
 class ScreenFilter;
 class SkillCheck;
 class Ax;
-class AxIcon;
 class Tree;
 class UiBodyTemperature;
 class FirePlace;
+class Treder;
+class TredeUi;
+class SellButton;
 
+class AxIcon;
 class Stump;
 
 // ÉQÅ[ÉÄÉVÅ[Éì
@@ -39,11 +42,14 @@ private:
 	ScreenFilter* m_screenFilter;
 	SkillCheck* m_skillCheck;
 	Ax* m_ax;
-	AxIcon* m_axIcon;
 	Tree* m_tree;
 	UiBodyTemperature* m_uiBodyTemperature;
 	FirePlace* m_firePlace;
+	Treder* m_treder;
+	TredeUi* m_tredeUi;
+	SellButton* m_sellButton;
 
+	AxIcon* m_axIcon;
 	Stump* m_stump;
 
 	std::vector<Item> m_chestItem;
@@ -63,11 +69,14 @@ public:
 		m_screenFilter(nullptr),
 		m_skillCheck(nullptr),
 		m_ax(nullptr),
-		m_axIcon(nullptr),
 		m_tree(nullptr),
 		m_uiBodyTemperature(nullptr),
 		m_firePlace(nullptr),
+		m_treder(nullptr),
+		m_tredeUi(nullptr),
+		m_sellButton(nullptr),
 	
+		m_axIcon(nullptr),
 	m_stump(nullptr){};
 
 	virtual void Initialize() override;		// èâä˙âª

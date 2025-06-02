@@ -167,6 +167,7 @@ void LoadPlayer::PlayAnim()
 #endif // _DEBUG
 }
 
+//アップデート関数
 void LoadPlayer::Update()
 {
 #ifdef _DEBUG
@@ -203,7 +204,10 @@ void LoadPlayer::Update()
 	}
 	else
 	{
-		NormalMove();
+		if (!m_nowTrede)
+		{
+			NormalMove();
+		}
 
 		if (m_fellDown)
 		{
@@ -546,6 +550,14 @@ void LoadPlayer::OnCollision(const Actor3D* other)
 	if (other->GetName() == "FirePlace")
 	{
  		m_isWarmthFlag = true;
+	}
+
+	if (other->GetName() == "Treder")
+	{
+		if (Input::GetInstance()->IsKeyPress(KEY_INPUT_F))
+		{
+			m_nowTrede = true;
+		}
 	}
 }
 
