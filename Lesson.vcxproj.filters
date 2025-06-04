@@ -148,6 +148,18 @@
     <ClCompile Include="Wallet.cpp">
       <Filter>ソースファイル\Trede</Filter>
     </ClCompile>
+    <ClCompile Include="SelectProduct.cpp">
+      <Filter>ソースファイル\Trede</Filter>
+    </ClCompile>
+    <ClCompile Include="BuyButton.cpp">
+      <Filter>ソースファイル\Trede</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>ソースファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Food.cpp">
+      <Filter>ソースファイル\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -335,6 +347,21 @@
     </ClInclude>
     <ClInclude Include="Wallet.h">
       <Filter>ヘッダーファイル\Trede</Filter>
+    </ClInclude>
+    <ClInclude Include="TredeItem.h">
+      <Filter>ヘッダーファイル\Trede</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectProduct.h">
+      <Filter>ヘッダーファイル\Trede</Filter>
+    </ClInclude>
+    <ClInclude Include="BuyButton.h">
+      <Filter>ヘッダーファイル\Trede</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>ヘッダーファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Food.h">
+      <Filter>ヘッダーファイル\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

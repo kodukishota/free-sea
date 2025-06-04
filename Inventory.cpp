@@ -7,13 +7,12 @@
 
 Inventory::Inventory() :
 	m_maxHaveItem(0),
-	m_haveItemCount(0),
+	m_haveFoodCount(0),
 	m_canGetItem(false),
 	m_itemNum(0),
 	m_gettingItem(false),
 	m_takeItem(0),
 	m_dropItem(false),
-	m_nowHaveWeight(0),
 	m_dropItemNum(0),
 	m_dropItemCompletion(false),
 	m_seInventory(0),
@@ -66,10 +65,8 @@ void Inventory::Update()
 		m_gettingItem = false;
 	}
 
-	CheckCanAddItem();
-
 	//ƒAƒCƒeƒ€‚ğE‚¤‚±‚Æ‚ª‚Å‚«‚é‚©
-	if (m_haveItemCount < m_maxHaveItem)
+	if (m_haveFoodCount < m_maxHaveItem)
 	{
 		m_canGetItem = true;
 	}
@@ -121,28 +118,9 @@ void Inventory::Draw()
 
 void Inventory::TakeItem(Item* item)
 {
-	if (m_haveItemCount <= m_maxHaveItem)
+	if (m_haveFoodCount <= m_maxHaveItem)
 	{
-		AddChild(new ItemIcon(m_haveItemCount - 1, item, this));
+		AddChild(new ItemIcon(m_haveFoodCount - 1, item, this));
 
-	}
-}
-
-void Inventory::CheckCanAddItem()
-{
-	std::vector<Item*> addItemList = m_addItemList;
-	m_addItemList.clear();
-	for (Item* item : addItemList)
-	{
-		if (m_haveItemCount >= m_maxHaveItem) break;
-		Item i = *item;
-
-		m_itemList.push_back(i);
-
-		AddItemCount();
-
-		TakeItem(item);
-
-		item->DestroyMine();
 	}
 }

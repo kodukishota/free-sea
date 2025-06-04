@@ -1,5 +1,6 @@
 #pragma once
 #include "Item.h"
+#include "Food.h"
 #include "Node.h"
 #include "Sprite.h"
 #include "Transform.h"
@@ -19,13 +20,11 @@ private:
 
 	int m_maxHaveItem;
 
-	int m_haveItemCount;	//アイテムを持ってる数
+	int m_haveFoodCount;	//アイテムを持ってる数
 	int m_haveWoodCount;	//木を持っている数
 
 	int m_takeItem;			//今何のアイテムを持っているか
 	int m_dropItemNum;			//捨てたアイテムの番号
-
-	int m_nowHaveWeight;	//今どれぐらいの重さ持っているか
 
 	bool m_canGetItem;			//アイテムを拾えるか
 	bool m_gettingItem;			//アイテムを拾ったか
@@ -40,8 +39,7 @@ private:
 	Transform m_haveWeightTransform;	// 姿勢
 
 	//アイテム格納用
-	std::vector<Item> m_itemList;   
-	std::vector<Item*> m_addItemList;
+	std::vector<Food> m_foodList;
 	Sprite m_inventoryUi;
 	Sprite m_takeItemUi;
 	Sprite m_woodIcon;
@@ -91,17 +89,12 @@ public:
 		m_dropItemCompletion = true;
 	}
 
-	std::vector<Item> GetItemList()
+	std::vector<Food*> GetItemAddlessList()
 	{
-		return m_itemList;
-	}
-
-	std::vector<Item*> GetItemAddlessList()
-	{
-		std::vector<Item*> addList;
-		for (Item item : m_itemList)
+		std::vector<Food*> addList;
+		for (Food food : m_foodList)
 		{
-			Item* i = &item;
+			Food* i = &food;
 			addList.push_back(i);
 		}
 
@@ -113,42 +106,20 @@ public:
 		return m_takeItem;
 	}
 
-	void EnhanceInventory()
-	{
-		m_maxHaveItem++;
-	}
-
 	int GetMaxHaveItem()
 	{
 		return m_maxHaveItem;
 	}
 
-	int GetHaveItemCount()
+	int GetHaveFoodCount()
 	{
-		return m_haveItemCount;
+		return m_haveFoodCount;
 	}
 
-	int GetHaveWeight()
+	void AddFoodCount()
 	{
-		return m_nowHaveWeight;
+		m_haveFoodCount++;
 	}
-
-	void AddItemCount()
-	{
-		m_haveItemCount++;
-	}
-
-	void ItemClear()
-	{
-		m_itemList.clear();
-	}
-
-	void AddAdvanceItemList(Item* item)
-	{
-		m_addItemList.push_back(item);
-	}
-
-	void CheckCanAddItem();
 
 	void TakeCutWood(int woodValue)
 	{
