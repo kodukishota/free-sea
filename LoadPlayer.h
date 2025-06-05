@@ -7,7 +7,6 @@
 class Camera;
 class Animation3D;
 class CollisionStage;
-class Inventory;
 
 class LoadPlayer : public Actor3D
 {
@@ -41,6 +40,10 @@ private:
 
 	static constexpr float MaxBodyTemperature = 100;	//プレイヤーの最大体温
 
+	static constexpr float DownHungerLevelValue = 5;			//おなかが減る量の初期値
+	static constexpr float DownHungerLevelTime = 5;		//おなかが減る時間の初期値
+	static constexpr int FullStomach = 100;		//プレイヤーの満腹時
+
 	// スタミナ関連
 	static constexpr float MaxStamina = 100;	// 走るのに必要なスタミナの最大値
 	static constexpr float StaminaRecoveryAmount = 10;	// スタミナの回復量
@@ -49,8 +52,6 @@ private:
 
 	static constexpr float FirstDownTemperature = 5;	//下がる体温の初期値
 	static constexpr float FirstDownTemperatureTime = 5;//体温が下がる時間の初期値
-
-
 
 	Vector3 AxisY = Vector3(0.0f, 1.0f, 0.0f);	// 回転軸(Y軸で上方向)
 
@@ -67,7 +68,9 @@ private:
 	bool m_isFloating;
 	float m_fallStartY;	// 落下し始めの高さ
 
-	bool m_isGetting;	//アイテムを拾ったか
+	float m_hungerLevel;	//空腹度
+
+	float m_hungerTime;	//おなかが減るクールダウン
 
 	int m_seDamage;	// 攻撃を受けたときのSE
 
@@ -77,10 +80,10 @@ private:
 	bool m_cutTree;		//木を伐り始めたか
 	bool m_fellDown;	//木を伐り終えたか
 
+	bool m_isMenu;		//メニューを開いているか
+
 	Camera* m_camNode;
 	CollisionStage* m_collisionStage;
-
-	Inventory* m_inventory;
 
 	Vector3 m_playerPastPos;
 	Vector3 m_playerRotate;
@@ -129,8 +132,7 @@ protected:
 
 public:
 	LoadPlayer(
-		CollisionStage* collisionStage, 
-		Inventory* inventory, 
+		CollisionStage* collisionStage,
 		const Vector3& pos
 	);
 
@@ -168,16 +170,6 @@ public:
 	float GetHpRatio()
 	{
 		return static_cast<float>(m_hp) / static_cast<float>(MaxHp);
-	}
-
-	bool GetIsGetting()
-	{
-		return m_isGetting;
-	}
-
-	void GetEnd()
-	{
-		m_isGetting = false;
 	}
 
 	// 死亡フラグを取得
@@ -235,5 +227,32 @@ public:
 	void ResetNowTrede()
 	{
 		m_nowTrede = false;
+	}
+
+	void SwitchIsMenu()
+	{
+		m_isMenu = !m_isMenu;
+	}
+
+	bool GetIsMenu()
+	{
+		return m_isMenu;
+	}
+
+	void DownHungerLevel();
+
+	float GetHungerLevel()
+	{
+		return m_hungerLevel;
+	}
+
+	int GetMaxHungerLevel()
+	{
+		return FullStomach;
+	}
+
+	void EatingFood(int recoveryHungry)
+	{
+		m_hungerLevel += recoveryHungry;
 	}
 };

@@ -150,6 +150,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="BuyButton.cpp" />
     <ClCompile Include="Food.cpp" />
+    <ClCompile Include="HungerLevelUi.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="SelectProduct.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -208,6 +209,8 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="BuyButton.h" />
     <ClInclude Include="Food.h" />
+    <ClInclude Include="HungerLevelUi.h" />
+    <ClInclude Include="LoadFoodData.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="SelectProduct.h" />
     <ClInclude Include="Camera.h" />

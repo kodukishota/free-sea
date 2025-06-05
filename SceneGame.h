@@ -18,10 +18,13 @@ class SkillCheck;
 class Ax;
 class Tree;
 class UiBodyTemperature;
+class HungerLevelUi;
 class FirePlace;
 class Treder;
 class TredeUi;
 class SellButton;
+class Menu;
+class LoadFoodData;
 
 class AxIcon;
 class Stump;
@@ -44,10 +47,13 @@ private:
 	Ax* m_ax;
 	Tree* m_tree;
 	UiBodyTemperature* m_uiBodyTemperature;
+	HungerLevelUi* m_hungerlevelUi;
 	FirePlace* m_firePlace;
 	Treder* m_treder;
 	TredeUi* m_tredeUi;
 	SellButton* m_sellButton;
+	Menu* m_menu;
+	LoadFoodData* m_loadFoodData;
 
 	AxIcon* m_axIcon;
 	Stump* m_stump;
@@ -71,10 +77,14 @@ public:
 		m_ax(nullptr),
 		m_tree(nullptr),
 		m_uiBodyTemperature(nullptr),
+		m_hungerlevelUi(nullptr),
 		m_firePlace(nullptr),
 		m_treder(nullptr),
 		m_tredeUi(nullptr),
 		m_sellButton(nullptr),
+		m_menu(nullptr),
+		m_loadFoodData(nullptr),
+		
 	
 		m_axIcon(nullptr),
 	m_stump(nullptr){};

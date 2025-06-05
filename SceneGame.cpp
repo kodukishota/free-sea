@@ -21,11 +21,14 @@
 #include "AxIcon.h"
 #include "Tree.h"
 #include "UiBodyTemperature.h"
+#include "HungerLevelUi.h"
 #include "FirePlace.h"
 #include "Treder.h"
 #include "TredeUi.h"
 #include "SellButton.h"
 #include "Wallet.h"
+#include "Menu.h"
+#include "LoadFoodData.h"
 #include "DxLib.h"
 
 #include"Stump.h"
@@ -55,14 +58,21 @@ void SceneGame::Initialize()
 	m_collisionStage = new CollisionStage("Resource/nav_test_stage.mv1", "Resource/stage_wall.mv1", Vector3(0, 0, 0));
 	uiLayer->AddChild(m_collisionStage);
 
-	//インベントリ
-	m_inventory = new Inventory();
-	uiLayer->AddChild(m_inventory);
-	
+	//食べ物の情報をCSVから取得
+	m_loadFoodData = new LoadFoodData();
+	uiLayer->AddChild(m_loadFoodData);
+
 	// プレイヤー
-	m_loadPlayer = new LoadPlayer(m_collisionStage,m_inventory,Vector3(300, 0, 0));
+	m_loadPlayer = new LoadPlayer(m_collisionStage,Vector3(300, 0, 0));
 	actorLayer->AddChild(m_loadPlayer);
 	
+	m_menu = new Menu(m_loadPlayer);
+	uiLayer->AddChild(m_menu);
+
+	//インベントリ
+	m_inventory = new Inventory(m_loadPlayer,m_loadFoodData);
+	uiLayer->AddChild(m_inventory);
+
 	// カメラ
 	m_cam = new Camera(m_loadPlayer, m_collisionStage);
 	actorLayer->AddChild(m_cam);
@@ -70,6 +80,10 @@ void SceneGame::Initialize()
 	//体温Ui
 	m_uiBodyTemperature = new UiBodyTemperature(m_loadPlayer);
 	uiLayer->AddChild(m_uiBodyTemperature);
+
+	//空腹度Ui
+	m_hungerlevelUi = new HungerLevelUi(m_loadPlayer);
+	uiLayer->AddChild(m_hungerlevelUi);
 
 	//暖炉
 	m_firePlace = new FirePlace(m_loadPlayer);
@@ -98,7 +112,7 @@ void SceneGame::Initialize()
 
 	//トレードUI系
 	m_sellButton = new SellButton(m_loadPlayer);
-	m_tredeUi = new TredeUi(m_loadPlayer,m_sellButton,m_wallet,m_inventory);
+	m_tredeUi = new TredeUi(m_loadPlayer,m_sellButton,m_wallet,m_inventory, m_loadFoodData);
 	uiLayer->AddChild(m_tredeUi);
 
 	uiLayer->AddChild(m_wallet);
@@ -153,7 +167,7 @@ SceneBase* SceneGame::Update()
 		return new SceneTitle();
 	}
 
-	if(!m_loadPlayer->GetNowTrede())
+	if(!m_loadPlayer->GetNowTrede() && !m_loadPlayer ->GetIsMenu())
 	{
 		// マウスカーソルを非表示にする
 		SetMouseDispFlag(false);

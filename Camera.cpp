@@ -279,7 +279,8 @@ void Camera::Update()
 	}
 
 	//取引中ならマウスカーソルを自由に動かせれるようにする
-	if (m_loadPlayerNode->GetNowTrede())
+	//メニュー画面でも同じように
+	if (m_loadPlayerNode->GetNowTrede() || m_loadPlayerNode->GetIsMenu())
 	{
 		m_isLocked = false;
 	}

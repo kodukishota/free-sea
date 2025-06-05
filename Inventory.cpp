@@ -4,9 +4,10 @@
 #include "ItemIcon.h"
 #include "LoadPlayer.h"
 #include "Input.h"
+#include "LoadFoodData.h"
 
-Inventory::Inventory() :
-	m_maxHaveItem(0),
+Inventory::Inventory(LoadPlayer* player, LoadFoodData* loadFoodData) :
+	m_maxHaveItem(10),
 	m_haveFoodCount(0),
 	m_canGetItem(false),
 	m_itemNum(0),
@@ -17,13 +18,14 @@ Inventory::Inventory() :
 	m_dropItemCompletion(false),
 	m_seInventory(0),
 	m_fontTextureId(0),
-	m_haveWoodCount(0)
+	m_haveWoodCount(0),
+	m_player(player),
+	m_loadFoodData(loadFoodData)
 {
-	m_inventoryUi.Register("inventory_ui1.png");
+	m_axInventoryUi.Register("inventory_ui1.png");
+	m_foodInventoryUi.Register("inventory_ui1.png");
 	m_takeItemUi.Register("take_item.png");
 	m_woodIcon.Register("wood_icon.png");
-
-	m_slashTransform.position = WoodIconPos;
 }
 
 void Inventory::Load()
@@ -34,7 +36,8 @@ void Inventory::Load()
 
 	m_fontTextureId = ImageLoader::GetInstance()->Load("score_font.png");
 
-	m_inventoryUi.Load();
+	m_axInventoryUi.Load();
+	m_foodInventoryUi.Load();
 	m_takeItemUi.Load();
 	m_woodIcon.Load();
 }
@@ -45,14 +48,16 @@ void Inventory::Release()
 
 	ImageLoader::GetInstance()->Delete("score_font.png");
 
-	m_inventoryUi.Release();
+	m_axInventoryUi.Release();
+	m_foodInventoryUi.Release();
 	m_takeItemUi.Release();
 	m_woodIcon.Release();
 }
 
 void Inventory::Update()
 {
-	m_inventoryUi.Update();
+	m_axInventoryUi.Update();
+	m_foodInventoryUi.Update();
 	m_takeItemUi.Update();
 	m_woodIcon.Update();
 
@@ -78,21 +83,48 @@ void Inventory::Update()
 	//Uiのポジションの設定
 	m_takeItemTransform.position = TakeItemUiPos + Vector2(SquareSize * m_takeItem, 0);
 
-	
+	if (!m_player->GetIsMenu())
+	{
+		m_haveWoodTransform.position = WoodIconPos;
+	}
+	else
+	{
+		m_haveWoodTransform.position = WoodMenuIconPos;
+	}
 }
 
 void Inventory::Draw()
 {
-	//インベントリの枠の描画
-	for (int i = 0; i <= m_maxHaveItem -1; i++)
+	//斧インベントリの枠の描画
+	for (int i = 0; i <= MaxHaveAx - 1; i++)
 	{
-		m_inventoryTransform.position = InventoryUiPos + Vector2(SquareSize * i, 0);
+		m_axInventoryPos.position = AxInventoryUiPos + Vector2(SquareSize * i, 0);
 
-		m_inventoryUi.Draw(m_inventoryTransform);
+		if (m_player->GetIsMenu())
+		{
+			m_axInventoryPos.position = AxMenuInventoryUiPos + Vector2(SquareSize * i, 0);
+		}
+
+		m_axInventoryUi.Draw(m_axInventoryPos);
 	}
 
+	//食べ物インベントリの枠の描画
+	for (int i = 0; i <= MaxhaveFood - 1; i++)
+	{
+		m_foodInventoryPos.position = FoodInventoryUiPos + Vector2(SquareSize * i, 0);
+
+		if (m_player->GetIsMenu())
+		{
+			m_foodInventoryUi.Draw(m_foodInventoryPos);
+		}
+	}
+	m_takeItemUi.Draw(m_takeItemTransform);
+
+	//持っている木の描画
+	m_woodIcon.Draw(m_haveWoodTransform);
+
 	//現在の持っている木の数を描画
-	Vector2 nowHaveWoodCountUiPos = Vector2(300, 870);
+	Vector2 nowHaveWoodCountUiPos = m_haveWoodTransform.position + Vector2(110, -23);
 	nowHaveWoodCountUiPos.y += FontMargin;
 	int nowHaveWoodCount = m_haveWoodCount;
 	int nowhaveWoodDigit = 1;
@@ -108,19 +140,18 @@ void Inventory::Draw()
 			true
 		);
 
-		nowHaveWoodCount /= 10;	// スコアの桁下げ
+		nowHaveWoodCount /= 10;
 		nowhaveWoodDigit++;		// 次の桁へ
 	} while (nowHaveWoodCount > 0);
-
-	m_takeItemUi.Draw(m_takeItemTransform);
-	m_woodIcon.Draw(m_slashTransform);
 }
 
-void Inventory::TakeItem(Item* item)
+void Inventory::CreateFoodIcon(int foodId)
 {
 	if (m_haveFoodCount <= m_maxHaveItem)
 	{
-		AddChild(new ItemIcon(m_haveFoodCount - 1, item, this));
-
+		AddChild(new Food(foodId,
+			m_player,
+			&m_loadFoodData->m_foodData[foodId],
+			m_haveFoodCount));
 	}
 }

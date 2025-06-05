@@ -68,14 +68,7 @@ void Item::Draw()
 
 void Item::OnCollision(const Actor3D* other)
 {
-	//ƒvƒŒƒCƒ„[‚ªE‚¦‚é”ÍˆÍ‚É“ü‚Á‚½‚çE‚¦‚é
-	if (other->GetName() == "Player")
-	{
-		if (Input::GetInstance()->IsKeyPress(KEY_INPUT_F))
-		{
-			m_inventory->AddAdvanceItemList(this);
-		}
-	}
+	
 }
 
 void Item::DestroyMine()

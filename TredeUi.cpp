@@ -1,13 +1,18 @@
 #include "TredeUi.h"
 #include "Input.h"
 #include "LoadPlayer.h"
+#include "LoadFoodData.h"
 #include "SellButton.h"
 #include "SelectProduct.h"
 #include "Wallet.h"
 #include "BuyButton.h"
 #include "Inventory.h"
 
-TredeUi::TredeUi(LoadPlayer* player, SellButton* sellButton, Wallet* wallet, Inventory* inventory) :
+TredeUi::TredeUi(LoadPlayer* player,
+	SellButton* sellButton,
+	Wallet* wallet,
+	Inventory* inventory,
+	LoadFoodData* loadFoodData) :
 	m_nowTredeFlag(false),
 	m_player(player),
 	m_sellButton(sellButton),
@@ -15,9 +20,10 @@ TredeUi::TredeUi(LoadPlayer* player, SellButton* sellButton, Wallet* wallet, Inv
 	m_inventory(inventory),
 	m_seSell(0),
 	m_selectProductNum(0),
-	m_selectFlag(false)
+	m_selectFlag(false),
+	m_loadFoodData(loadFoodData)
 {
-	m_sprite.Register("shop_ui.png");
+	m_sprite.Register("background.png");
 	m_transform.position = UiPos;
 
 	//購入ボタンの生成
@@ -105,9 +111,9 @@ void TredeUi::LoadBuyItem()
 
 	for (int i = 0; i <= static_cast<int>(TredeItem::Length) - 1; i++)
 	{
-		FileRead_scanf(fileHandle, "%[^,],%[^,],%[^,],%d",
+		FileRead_scanf(fileHandle, "%[^,],%[^,],%[^,],%d,%d",
 			m_productData[i].m_itemName, m_productData[i].m_iconName,
-			m_productData[i].m_flavorText, &m_productData[i].m_needMoney);//読み込み
+			m_productData[i].m_flavorText, &m_productData[i].m_needMoney,&m_productData[i].m_productId);//読み込み
 	}
 
 	//ファイルを閉じる
@@ -153,5 +159,13 @@ void TredeUi::BuyProduct()
 	if (m_buyButton->GetCheckOnClick())
 	{
 		m_wallet->LostMoney(m_productData[m_selectProductNum].m_needMoney);
+		m_inventory->AddFoodCount();
+
+		m_inventory->TakeFood(Food(m_productData[m_selectProductNum].m_productId,
+			m_player,
+			&m_loadFoodData->m_foodData[m_selectProductNum]));
+
+		m_inventory->CreateFoodIcon(m_productData[m_selectProductNum].m_productId);
+
 	}
 }

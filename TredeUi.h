@@ -9,6 +9,7 @@ class Wallet;
 class Inventory;
 class SelectProduct;
 class BuyButton;
+class LoadFoodData;
 
 struct ProductData
 {
@@ -16,6 +17,7 @@ struct ProductData
 	char m_iconName[256];
 	char m_flavorText[256];
 	int m_needMoney;
+	int m_productId;
 };
 
 class TredeUi : public Node
@@ -53,6 +55,7 @@ private:
 	Inventory* m_inventory;
 	SelectProduct* m_selectProduct[static_cast<int>(TredeItem::Length)];
 	BuyButton* m_buyButton;
+	LoadFoodData* m_loadFoodData;
 
 	ProductData m_productData[static_cast<int>(TredeItem::Length)];
 
@@ -63,7 +66,11 @@ protected:
 	virtual void Release() override;
 
 public:
-	TredeUi(LoadPlayer* player,	SellButton* sellButton,	Wallet* wallet,	Inventory* inventory);
+	TredeUi(LoadPlayer* player,
+		SellButton* sellButton,
+		Wallet* wallet,	
+		Inventory* inventory,
+		LoadFoodData* loadFoodData);
 
 	void LoadBuyItem();
 

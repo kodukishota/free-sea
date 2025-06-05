@@ -8,7 +8,6 @@
 #include"Quaternion.h"
 #include"CollisionStage.h"
 #include"BoxCollider3D.h"
-#include "Inventory.h"
 #include<math.h>
 
 // アニメーションリスト
@@ -22,7 +21,6 @@ const char* LoadPlayer::AnimList[AnimNum] =
 
 LoadPlayer::LoadPlayer(
 	CollisionStage* collisionStage,
-	Inventory* inventory,
 	const Vector3& pos
 ) :
 	Actor3D("Player", pos),
@@ -42,8 +40,6 @@ LoadPlayer::LoadPlayer(
 	m_duration(0),
 	m_isFall(false),
 	m_fallStartY(0),
-	m_isGetting(false),
-	m_inventory(inventory),
 	m_isDeath(false),
 	m_isDash(false),
 	m_stamina(MaxStamina),
@@ -55,7 +51,9 @@ LoadPlayer::LoadPlayer(
 	m_fellDown(false),
 	m_bodyTemperature(MaxBodyTemperature),
 	m_downTemperature(FirstDownTemperature),
-	m_downTemperatureCoolDown(0)
+	m_downTemperatureCoolDown(0),
+	m_isMenu(false),
+	m_hungerLevel(FullStomach)
 {
 	//-----アニメーションの作成-----
 	// アニメーションクラスをリスト化する
@@ -204,7 +202,7 @@ void LoadPlayer::Update()
 	}
 	else
 	{
-		if (!m_nowTrede)
+		if (!m_nowTrede && !m_isMenu)
 		{
 			NormalMove();
 		}
@@ -218,6 +216,7 @@ void LoadPlayer::Update()
 
 	DownBodyTemperature();
 	WarmthBodyTemperature();
+	DownHungerLevel();
 
 	// アニメーションの切り替え
 	ChangeAnimLerp();
@@ -520,25 +519,6 @@ void LoadPlayer::Draw()
 
 void LoadPlayer::OnCollision(const Actor3D* other)
 {
-	//プレイヤーが拾える範囲に入ったら拾える
-	if (other->GetName() == "Item")
-	{
-		if (!m_isGetting)
-		{
-			if (Input::GetInstance()->IsKeyPress(KEY_INPUT_F) )
-			{
-				if (m_inventory->CanGetItem())
-				{
-					m_isGetting = true;
-				}
-			}
-		}
-		else if (m_isGetting)
-		{
-			m_isGetting = false;
-		}
-	}
-
 	if (other->GetName() == "Tree")
 	{
 		if (Input::GetInstance()->IsKeyPress(KEY_INPUT_F))
@@ -595,7 +575,7 @@ void LoadPlayer::DownBodyTemperature()
 	}
 
 	//五秒毎ごとに体温が減る
-	if (m_downTemperature >= 0 && m_downTemperatureCoolDown >= FirstDownTemperatureTime)
+	if (m_bodyTemperature >= 0 && m_downTemperatureCoolDown >= FirstDownTemperatureTime)
 	{
 		m_bodyTemperature -= m_downTemperature;
 		m_downTemperatureCoolDown = 0;
@@ -617,6 +597,18 @@ void LoadPlayer::WarmthBodyTemperature()
 		m_bodyTemperature += m_downTemperature;
 		m_warmthTemperatureCoolDown = 0;
 		m_isWarmthFlag = false;
+	}
+}
+
+void LoadPlayer::DownHungerLevel()
+{
+	m_hungerTime += Time::GetInstance()->GetDeltaTime();
+
+	//五秒毎ごとにおなかが減る
+	if (m_hungerLevel >= 0 && m_hungerTime >= DownHungerLevelTime)
+	{
+		m_hungerLevel -= DownHungerLevelValue;
+		m_hungerTime = 0;
 	}
 }
 

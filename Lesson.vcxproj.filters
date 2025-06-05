@@ -160,6 +160,9 @@
     <ClCompile Include="Food.cpp">
       <Filter>ソースファイル\Item</Filter>
     </ClCompile>
+    <ClCompile Include="HungerLevelUi.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -361,6 +364,12 @@
       <Filter>ヘッダーファイル\Player</Filter>
     </ClInclude>
     <ClInclude Include="Food.h">
+      <Filter>ヘッダーファイル\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="HungerLevelUi.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadFoodData.h">
       <Filter>ヘッダーファイル\Item</Filter>
     </ClInclude>
   </ItemGroup>

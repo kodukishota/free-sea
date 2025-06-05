@@ -1,14 +1,20 @@
 #include "Food.h"
-#include "TredeUi.h"
 #include "DxLib.h"
+#include "LoadPlayer.h"
+#include "Input.h"
 #include <cmath>
 
-Food::Food(int foodNum,TredeUi* tredeUi) :
+Food::Food(int foodNum, 
+	LoadPlayer* player,
+	FoodData* foodData,
+	int drawPosNum) :
 	m_canGetItem(false),
 	m_playerToDistance(0),
-	m_iconName(),
 	m_flavorText(),
-	m_tredeUi(tredeUi)
+	m_foodData(*foodData),
+	m_foodNumber(foodNum),
+	m_player(player),
+	m_foodName()
 {
 	/*
 	//–¼‘O‚ÌÝ’è
@@ -23,7 +29,12 @@ Food::Food(int foodNum,TredeUi* tredeUi) :
 	m_flavorText = item->m_flavorText;
 	*/
 
-	m_iconUi.Register(m_tredeUi->GetIconName());
+
+	m_iconUi.Register(foodData->m_iconName);
+
+	m_recoveryHungry = m_foodData.m_recoveryHungry;
+
+	m_iconPos.position = IconPos + IconSize * drawPosNum;
 }
 
 void Food::Load()
@@ -39,9 +50,28 @@ void Food::Release()
 void Food::Update()
 {
 	m_iconUi.Update();
+
+	GetMousePoint(&MouseX, &MouseY);
+
+	if (m_iconPos.position.x + (IconSize.x / 2) >= MouseX &&
+		m_iconPos.position.x - (IconSize.x / 2) <= MouseX)
+	{
+		if (m_iconPos.position.y + (IconSize.y / 2) >= MouseY &&
+			m_iconPos.position.y - (IconSize.y / 2) <= MouseY)
+		{
+			if (Input::GetInstance()->IsMouseDown(MOUSE_INPUT_1))
+			{
+				m_player->EatingFood(m_recoveryHungry);
+			}
+		}
+	}
+	
 }
 
 void Food::Draw()
 {
-	m_iconUi.Draw(m_iconPos);
+	if (m_player->GetIsMenu())
+	{
+		m_iconUi.Draw(m_iconPos);
+	}
 }
