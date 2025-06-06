@@ -163,6 +163,9 @@
     <ClCompile Include="HungerLevelUi.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="EatButton.cpp">
+      <Filter>ソースファイル\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -371,6 +374,9 @@
     </ClInclude>
     <ClInclude Include="LoadFoodData.h">
       <Filter>ヘッダーファイル\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="EatButton.h">
+      <Filter>ヘッダーファイル\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

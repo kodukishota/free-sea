@@ -5,6 +5,7 @@
 #include "LoadPlayer.h"
 #include "Input.h"
 #include "LoadFoodData.h"
+#include "EatButton.h"
 
 Inventory::Inventory(LoadPlayer* player, LoadFoodData* loadFoodData) :
 	m_maxHaveItem(10),
@@ -12,7 +13,7 @@ Inventory::Inventory(LoadPlayer* player, LoadFoodData* loadFoodData) :
 	m_canGetItem(false),
 	m_itemNum(0),
 	m_gettingItem(false),
-	m_takeItem(0),
+	m_takeFood(0),
 	m_dropItem(false),
 	m_dropItemNum(0),
 	m_dropItemCompletion(false),
@@ -20,12 +21,16 @@ Inventory::Inventory(LoadPlayer* player, LoadFoodData* loadFoodData) :
 	m_fontTextureId(0),
 	m_haveWoodCount(0),
 	m_player(player),
-	m_loadFoodData(loadFoodData)
+	m_loadFoodData(loadFoodData),
+	m_eatButton(nullptr)
 {
 	m_axInventoryUi.Register("inventory_ui1.png");
 	m_foodInventoryUi.Register("inventory_ui1.png");
 	m_takeItemUi.Register("take_item.png");
 	m_woodIcon.Register("wood_icon.png");
+
+	m_eatButton = new EatButton(m_player);
+	AddChild(m_eatButton);
 }
 
 void Inventory::Load()
@@ -80,9 +85,6 @@ void Inventory::Update()
 		m_canGetItem = false;
 	}
 
-	//Ui‚Ìƒ|ƒWƒVƒ‡ƒ“‚ÌÝ’è
-	m_takeItemTransform.position = TakeItemUiPos + Vector2(SquareSize * m_takeItem, 0);
-
 	if (!m_player->GetIsMenu())
 	{
 		m_haveWoodTransform.position = WoodIconPos;
@@ -91,6 +93,14 @@ void Inventory::Update()
 	{
 		m_haveWoodTransform.position = WoodMenuIconPos;
 	}
+
+	
+	if (m_haveFoodCount != 0)
+	{
+	
+		EatFood();
+	}
+
 }
 
 void Inventory::Draw()
@@ -149,9 +159,33 @@ void Inventory::CreateFoodIcon(int foodId)
 {
 	if (m_haveFoodCount <= m_maxHaveItem)
 	{
-		AddChild(new Food(foodId,
+		m_food[m_haveFoodCount] = new Food(foodId,
 			m_player,
 			&m_loadFoodData->m_foodData[foodId],
-			m_haveFoodCount));
+			m_haveFoodCount,
+			m_eatButton);
+
+		GetParent()->AddChild(m_food[m_haveFoodCount]);
+
+		m_haveFoodCount++;
+	}
+}
+
+void Inventory::EatFood()
+{
+	for (int i = 0; i <= m_haveFoodCount - 1; i++)
+	{
+		if (m_food[i]->GetIsSelect())
+		{
+			m_takeFood = i;
+
+			if (m_eatButton->GetCheckOnClick())
+			{
+				m_player->EatingFood(m_food[m_takeFood]->GetRecoveryHungry());
+
+				m_food[m_takeFood]->DestroyFood();
+				m_haveFoodCount--;
+			}
+		}
 	}
 }

@@ -71,7 +71,11 @@ void TredeUi::Update()
 		m_inventory->LostHaveWood(1);
 	}
 	
-	BuyProduct();
+
+	if (m_nowTredeFlag)
+	{
+		BuyProduct();
+	}
 }
 
 void TredeUi::Draw()
@@ -159,13 +163,7 @@ void TredeUi::BuyProduct()
 	if (m_buyButton->GetCheckOnClick())
 	{
 		m_wallet->LostMoney(m_productData[m_selectProductNum].m_needMoney);
-		m_inventory->AddFoodCount();
 
-		m_inventory->TakeFood(Food(m_productData[m_selectProductNum].m_productId,
-			m_player,
-			&m_loadFoodData->m_foodData[m_selectProductNum]));
-
-		m_inventory->CreateFoodIcon(m_productData[m_selectProductNum].m_productId);
-
+		m_inventory->CreateFoodIcon(m_productData[m_selectProductNum].m_productId);		
 	}
 }

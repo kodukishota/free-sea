@@ -25,17 +25,6 @@ void ItemIcon::Update()
 	m_itemIconUi.Update();
 	m_transform.position = SetPos + Vector2(90 * m_countGetItem, 0);
 
-	if (m_inventory->GetDropItem())
-	{
-		if (m_countGetItem == m_inventory->GetTakeItem())
-		{
-			Destroy();
-		}
-		if (m_countGetItem >= m_inventory->GetTakeItem())
-		{
-			m_countGetItem--;
-		}
-	}
 }
 
 void ItemIcon::Draw()

@@ -9,6 +9,8 @@
 
 class LoadFoodData;
 class LoadPlayer;
+class EatButton;
+class Food;
 
 class Inventory : public Node
 {
@@ -22,6 +24,8 @@ private:
 	static constexpr Vector2 FontSize = Vector2(20, 35);	// 数字1文字の幅・高さ
 	static constexpr int FontMargin = 5;					// 数字と数字の間の余白
 
+	static constexpr int MaxHaveItem = 10;
+
 	static constexpr int MaxHaveAx = 3;
 	static constexpr int MaxhaveFood = 10;
 
@@ -32,7 +36,7 @@ private:
 	int m_haveFoodCount;	//アイテムを持ってる数
 	int m_haveWoodCount;	//木を持っている数
 
-	int m_takeItem;			//今何のアイテムを持っているか
+	int m_takeFood;			//今何のアイテムを持っているか
 	int m_dropItemNum;			//捨てたアイテムの番号
 
 	bool m_canGetItem;			//アイテムを拾えるか
@@ -60,6 +64,8 @@ private:
 
 	LoadFoodData* m_loadFoodData;
 	LoadPlayer* m_player;
+	EatButton* m_eatButton;
+	Food* m_food[MaxHaveItem];
 
 protected:
 	virtual void Load() override;
@@ -73,16 +79,6 @@ public:
 	bool CanGetItem()
 	{
 		return m_canGetItem;
-	}
-
-	bool GetItemNow()
-	{
-		return m_gettingItem;
-	}
-
-	void GettingItem()
-	{
-		m_gettingItem = true;
 	}
 
 	bool GetDropItem()
@@ -100,41 +96,14 @@ public:
 		m_dropItemCompletion = true;
 	}
 
-	std::vector<Food*> GetItemAddlessList()
+	int GetTakeFood()
 	{
-		std::vector<Food*> addList;
-		for (Food food : m_foodList)
-		{
-			Food* i = &food;
-			addList.push_back(i);
-		}
-
-		return addList;
-	}
-
-	int GetTakeItem()
-	{
-		return m_takeItem;
-	}
-
-	int GetMaxHaveItem()
-	{
-		return m_maxHaveItem;
+		return m_takeFood;
 	}
 
 	int GetHaveFoodCount()
 	{
 		return m_haveFoodCount;
-	}
-
-	void AddFoodCount()
-	{
-		m_haveFoodCount++;
-	}
-
-	void TakeFood(Food food)
-	{
-		m_foodList.push_back(food);
 	}
 
 	void TakeCutWood(int woodValue)
@@ -153,4 +122,6 @@ public:
 	}
 
 	void CreateFoodIcon(int foodId);
+
+	void EatFood();
 };

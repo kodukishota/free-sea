@@ -6,6 +6,7 @@
 
 class LoadFoodData;
 class LoadPlayer;
+class EatButton;
 
 struct FoodData
 {
@@ -18,8 +19,11 @@ struct FoodData
 class Food : public Node
 {
 private:
-	static constexpr Vector2 IconPos = Vector2(200, 300);
+	static constexpr Vector2 IconPos = Vector2(150, 800);
 	static constexpr Vector2 IconSize = Vector2(100, 100);
+
+	static constexpr Vector2 InventoryPos = Vector2(550,800);
+	static constexpr Vector2 InventorySize = Vector2(1000, 100);
 
 	int m_foodNumber;	//食べ物を識別するための番号格納用
 	const char* m_foodName;
@@ -29,16 +33,16 @@ private:
 
 	bool m_canGetItem;
 
-	int MouseX;
-	int MouseY;
+	bool m_isSelect;
+
+	int m_mouseX;
+	int m_mouseY;
 
 	Sprite m_iconUi;
 	Transform m_iconPos;
 
-	LoadFoodData* m_loadFoodData;
 	LoadPlayer* m_player;
-
-	float m_playerToDistance;	//プレイヤーとの距離
+	EatButton* m_eatButton;
 
 	FoodData m_foodData;
 
@@ -52,6 +56,24 @@ public:
 	Food(int foodNum,
 		LoadPlayer* player = nullptr,
 		FoodData* foodData = nullptr,
-		int drawPosNum = 0
+		int drawPosNum = 0,
+		EatButton* eatButton = nullptr
 		);
+
+	void SelectEatFood();
+
+	bool GetIsSelect()
+	{
+		return m_isSelect;
+	}
+
+	int GetRecoveryHungry()
+	{
+		return m_recoveryHungry;
+	}
+
+	void DestroyFood()
+	{
+		Destroy();
+	}
 };

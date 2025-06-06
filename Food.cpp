@@ -2,19 +2,24 @@
 #include "DxLib.h"
 #include "LoadPlayer.h"
 #include "Input.h"
+#include "EatButton.h"
 #include <cmath>
 
 Food::Food(int foodNum, 
 	LoadPlayer* player,
 	FoodData* foodData,
-	int drawPosNum) :
+	int drawPosNum,
+	EatButton* eatButton) :
 	m_canGetItem(false),
-	m_playerToDistance(0),
 	m_flavorText(),
 	m_foodData(*foodData),
 	m_foodNumber(foodNum),
 	m_player(player),
-	m_foodName()
+	m_foodName(),
+	m_mouseX(0),
+	m_mouseY(0),
+	m_eatButton(eatButton),
+	m_isSelect(false)
 {
 	/*
 	//–¼‘O‚ÌÝ’è
@@ -34,7 +39,9 @@ Food::Food(int foodNum,
 
 	m_recoveryHungry = m_foodData.m_recoveryHungry;
 
-	m_iconPos.position = IconPos + IconSize * drawPosNum;
+	m_iconPos.position = IconPos;
+	m_iconPos.position.x += IconSize.x * drawPosNum;
+
 }
 
 void Food::Load()
@@ -51,21 +58,12 @@ void Food::Update()
 {
 	m_iconUi.Update();
 
-	GetMousePoint(&MouseX, &MouseY);
-
-	if (m_iconPos.position.x + (IconSize.x / 2) >= MouseX &&
-		m_iconPos.position.x - (IconSize.x / 2) <= MouseX)
-	{
-		if (m_iconPos.position.y + (IconSize.y / 2) >= MouseY &&
-			m_iconPos.position.y - (IconSize.y / 2) <= MouseY)
-		{
-			if (Input::GetInstance()->IsMouseDown(MOUSE_INPUT_1))
-			{
-				m_player->EatingFood(m_recoveryHungry);
-			}
-		}
-	}
+	GetMousePoint(&m_mouseX, &m_mouseY);
 	
+	if (m_player->GetIsMenu())
+	{
+		SelectEatFood();
+	}
 }
 
 void Food::Draw()
@@ -74,4 +72,38 @@ void Food::Draw()
 	{
 		m_iconUi.Draw(m_iconPos);
 	}
+}
+
+void Food::SelectEatFood()
+{
+	if (m_eatButton->GetCheckOnClick() && m_isSelect)
+	{
+		m_player->EatingFood(m_recoveryHungry);
+	}
+
+	if (InventoryPos.x + (InventorySize.x / 2) >= m_mouseX &&
+		InventoryPos.x - (InventorySize.x / 2) <= m_mouseX)
+	{
+		if (m_iconPos.position.y + (IconSize.y / 2) >= m_mouseY &&
+			m_iconPos.position.y - (IconSize.y / 2) <= m_mouseY)
+		{
+			if (Input::GetInstance()->IsMouseDown(MOUSE_INPUT_1) && m_isSelect)
+			{
+				m_isSelect = false;
+			}
+		}
+
+	}
+	if (m_iconPos.position.x + (IconSize.x / 2) >= m_mouseX &&
+			m_iconPos.position.x - (IconSize.x / 2) <= m_mouseX)
+		{
+			if (m_iconPos.position.y + (IconSize.y / 2) >= m_mouseY &&
+				m_iconPos.position.y - (IconSize.y / 2) <= m_mouseY)
+			{
+				if (Input::GetInstance()->IsMouseDown(MOUSE_INPUT_1) && !m_isSelect)
+				{
+					m_isSelect = true;
+				}
+			}
+		}
 }
