@@ -1,19 +1,29 @@
 #include "SellButton.h"
 #include "LoadPlayer.h"
 #include "SceneGame.h"
+#include "Inventory.h"
 #include "DxLib.h"
 
-SellButton::SellButton(LoadPlayer* player) :
+#include "Time.h"
+
+SellButton::SellButton(LoadPlayer* player,Inventory* inventory) :
 	Actor("SellButton", "sell_button.png", Position),
 	m_button(Size, MOUSE_INPUT_LEFT, std::bind(&SellButton::OnClick, this)),
 	m_checkOnClick(false),
-	m_player(player)
+	m_player(player),
+	m_inventory(inventory),
+	m_checkClick(false),
+	m_time(0)
 {
 }
 
 void SellButton::OnClick()
 {
-	m_checkOnClick = true;
+	if (CheckCondition() && m_player->GetNowTrede())
+	{
+		m_checkOnClick = true;
+		m_checkClick = true;
+	}
 }
 
 void SellButton::Update()
@@ -31,9 +41,48 @@ void SellButton::Update()
 
 void SellButton::Draw()
 {
+	//ðŒ‚ð–ž‚½‚µ‚Ä‚È‚¢ê‡‚Íƒ{ƒ^ƒ“‚ðˆÃ‰»‚³‚¹‚é
+	if (!CheckCondition())
+	{
+		//ˆÈ~A‹P“x‚ð‰º‚°‚Ä•`‰æ‚·‚é
+		SetDrawBright(50, 50, 50);
+	}
+
+
+	if (m_checkClick)
+	{
+		m_time += Time::GetInstance()->GetDeltaTime();
+
+		if (m_time <= 0.2f)
+		{
+			SetDrawBright(50, 50, 50);
+		}
+		else
+		{
+			m_time = 0;
+
+			m_checkClick = false;
+		}
+	}
+
 	if (m_player->GetNowTrede())
 	{
 		//–{—ˆ‚Ì•`‰æˆ—
 		Actor::Draw();
+	}
+
+	//‹P“x‚ÌÝ’è‚ðŒ³‚É–ß‚·
+	SetDrawBright(255, 255, 255);
+}
+
+bool SellButton::CheckCondition()
+{
+	if (m_inventory->GetHaveWoodCount() == 0)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
 	}
 }

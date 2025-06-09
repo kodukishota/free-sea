@@ -10,6 +10,7 @@
 #include "ActorCollision3D.h"
 #include "Fade.h"
 #include "ImageLoader.h"
+#include "EffectManager.h"
 #include "DxLib.h"
 
 // デストラクタ
@@ -47,6 +48,9 @@ void GameMain::Run()
 
 	SetSysCommandOffFlag(true);	// Alt or F10キーで一時停止する機能をオフ
 
+	//エフェクト
+	EffectManager::GetInstance()->Initialize();
+
 	// シーン起動
 	//m_sceneManager = new SceneManager(new SceneTitle());
 	m_sceneManager = new SceneManager(new SceneGame());
@@ -83,6 +87,12 @@ void GameMain::Run()
 		
 		// シーンの描画
 		m_sceneManager->Draw();
+
+		//エフェクトの更新
+		EffectManager::GetInstance()->Update();
+
+		//エフェクトの描画
+		EffectManager::GetInstance()->Draw();
 
 #ifdef _DEBUG
 		// 衝突形状の描画

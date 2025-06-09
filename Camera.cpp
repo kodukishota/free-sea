@@ -5,6 +5,7 @@
 #include"CollisionStage.h"
 #include"Screen.h"
 
+
 Camera::Camera(LoadPlayer* player ,CollisionStage* collisionStage) :
 	Actor3D("PlayerCam"),
 	m_loadPlayerNode(player),
@@ -306,6 +307,7 @@ void Camera::Draw()
 {
 	// ƒJƒƒ‰‚Ì•`‰æ‹——£‚ğ’²®
 	SetCamClipRange();
+
 
 #ifdef _DEBUG
 	DrawFormatString(0, 0, GetColor(255, 255, 255),

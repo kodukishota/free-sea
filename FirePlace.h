@@ -12,6 +12,10 @@ private:
 
 	static constexpr Vector3 FirePlacePos = Vector3(2000, 0, 800);
 
+	static constexpr float FireDuration = 45.0f;
+
+	float m_fireDuration;	//‰Î‚Ì‘±ŠÔ
+
 	int m_model;
 
 	LoadPlayer* m_player;

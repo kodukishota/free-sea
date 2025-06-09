@@ -111,7 +111,7 @@ void SceneGame::Initialize()
 	m_wallet = new Wallet(m_loadPlayer);
 
 	//ƒgƒŒ[ƒhUIŒn
-	m_sellButton = new SellButton(m_loadPlayer);
+	m_sellButton = new SellButton(m_loadPlayer,m_inventory);
 	m_tredeUi = new TredeUi(m_loadPlayer,m_sellButton,m_wallet,m_inventory, m_loadFoodData);
 	uiLayer->AddChild(m_tredeUi);
 

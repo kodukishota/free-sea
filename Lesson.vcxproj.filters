@@ -166,6 +166,12 @@
     <ClCompile Include="EatButton.cpp">
       <Filter>ソースファイル\Player</Filter>
     </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectManager.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -377,6 +383,12 @@
     </ClInclude>
     <ClInclude Include="EatButton.h">
       <Filter>ヘッダーファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectManager.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

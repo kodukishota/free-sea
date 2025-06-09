@@ -37,12 +37,15 @@ private:
 	int m_haveWoodCount;	//木を持っている数
 
 	int m_takeFood;			//今何のアイテムを持っているか
-	int m_dropItemNum;			//捨てたアイテムの番号
 
 	bool m_canGetItem;			//アイテムを拾えるか
 	bool m_gettingItem;			//アイテムを拾ったか
-	bool m_dropItem;			//アイテムを落としたか
 	bool m_dropItemCompletion;
+
+	int m_eatFoodPosNum;	//食べた食べ物の描画されている順番の番号
+	bool m_eatFoodFlag;		//食べ物を食べたか
+
+	int m_shiftIconCount;
 
 	int m_itemNum;		//アイテムの番号格納用
 
@@ -52,7 +55,7 @@ private:
 	Transform m_haveWeightTransform;	// 姿勢
 
 	//アイテム格納用
-	std::vector<Food> m_foodList;
+	std::vector<Food*> m_foodList;
 	Sprite m_axInventoryUi;
 	Sprite m_foodInventoryUi;
 	Sprite m_takeItemUi;
@@ -65,7 +68,7 @@ private:
 	LoadFoodData* m_loadFoodData;
 	LoadPlayer* m_player;
 	EatButton* m_eatButton;
-	Food* m_food[MaxHaveItem];
+	Food* m_food;
 
 protected:
 	virtual void Load() override;
@@ -79,16 +82,6 @@ public:
 	bool CanGetItem()
 	{
 		return m_canGetItem;
-	}
-
-	bool GetDropItem()
-	{
-		return m_dropItem;
-	}
-
-	int GetDropItemNum()
-	{
-		return m_dropItemNum;
 	}
 
 	void GetDropItemCompletion()
@@ -119,6 +112,21 @@ public:
 	void LostHaveWood(int lostValue)
 	{
 		m_haveWoodCount -= lostValue;
+	}
+
+	bool GetEatFoodFlag()
+	{
+		return m_eatFoodFlag;
+	}
+
+	int GetEatFoodPosNum()
+	{
+		return m_eatFoodPosNum;
+	}
+
+	void AddShiftIconCount()
+	{
+		m_shiftIconCount++;
 	}
 
 	void CreateFoodIcon(int foodId);

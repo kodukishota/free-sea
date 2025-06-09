@@ -11,7 +11,7 @@ class TredeUi;
 class BuyButton : public Actor
 {
 private:
-	static constexpr Vector2 Position = Vector2(1000, 800);
+	static constexpr Vector2 Position = Vector2(1220, 760);
 	static constexpr Vector2 Size = Vector2(200, 100);
 
 	bool m_checkOnClick;
@@ -21,6 +21,10 @@ private:
 	LoadPlayer* m_player;
 	Wallet* m_wallet;
 	TredeUi* m_tredeUi;
+
+
+	float m_time;
+	bool m_checkClick;
 
 protected:
 	Button m_button;	//ボタン機能	

@@ -25,9 +25,9 @@ class TredeUi : public Node
 public:
 	enum class TredeItem
 	{
-		test1,
-		test2,
-		test3,
+		Bread,
+		Onigiri,
+		Burger,
 
 		Length
 	};
@@ -41,13 +41,17 @@ private:
 
 	Sprite m_productUi;
 	Transform m_productTransform;
+	Sprite m_selectProductUi;
 
-	bool m_nowTredeFlag;
+
+	int m_selectProductValue;	//選んでいる商品の価格
+
+	bool m_nowTredeFlag;	//現在トレードをしているか
 
 	int m_seSell;
 
-	bool m_selectFlag;
-	int m_selectProductNum;
+	bool m_selectFlag;		//商品を選んでいるか
+	int m_selectProductNum;	//選んでいる商品は何か
 
 	LoadPlayer* m_player;
 	SellButton* m_sellButton;
@@ -91,5 +95,10 @@ public:
 	char* GetIconName()
 	{
 		return m_productData[m_selectProductNum].m_iconName;
+	}
+
+	int GetSelectProductValue()
+	{
+		return m_selectProductValue;
 	}
 };

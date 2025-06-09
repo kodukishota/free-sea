@@ -1,4 +1,4 @@
 ﻿アイテム名,アイコンパス,府レバーテキスト,金額,商品ID
-テスト1,product_icon_test.png,テスト1です。,10,0
-テスト2,product_icon_test.png,テスト2です。,20,1
-テスト3,product_icon_test.png,テスト3です。,30,2
+パン,bread.png,テスト1です。,10,0
+おにぎり,onigiri.png,テスト2です。,20,1
+ハンバーガー,burger.png,テスト3です。,30,2

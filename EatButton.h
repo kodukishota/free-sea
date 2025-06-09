@@ -14,6 +14,10 @@ private:
 
 	bool m_checkOnClick;
 
+	float m_time;
+	bool m_checkClick;
+
+
 	LoadPlayer* m_player;
 
 protected:

@@ -14,15 +14,16 @@ Inventory::Inventory(LoadPlayer* player, LoadFoodData* loadFoodData) :
 	m_itemNum(0),
 	m_gettingItem(false),
 	m_takeFood(0),
-	m_dropItem(false),
-	m_dropItemNum(0),
+	m_eatFoodPosNum(0),
+	m_eatFoodFlag(false),
 	m_dropItemCompletion(false),
 	m_seInventory(0),
 	m_fontTextureId(0),
 	m_haveWoodCount(0),
 	m_player(player),
 	m_loadFoodData(loadFoodData),
-	m_eatButton(nullptr)
+	m_eatButton(nullptr),
+	m_food()
 {
 	m_axInventoryUi.Register("inventory_ui1.png");
 	m_foodInventoryUi.Register("inventory_ui1.png");
@@ -66,10 +67,6 @@ void Inventory::Update()
 	m_takeItemUi.Update();
 	m_woodIcon.Update();
 
-	if (m_dropItem)
-	{
-		m_dropItem = false;
-	}
 	if (m_gettingItem)
 	{
 		m_gettingItem = false;
@@ -97,10 +94,10 @@ void Inventory::Update()
 	
 	if (m_haveFoodCount != 0)
 	{
-	
 		EatFood();
 	}
 
+	
 }
 
 void Inventory::Draw()
@@ -127,8 +124,20 @@ void Inventory::Draw()
 		{
 			m_foodInventoryUi.Draw(m_foodInventoryPos);
 		}
+	}	
+
+	for (int i = 0; i <= m_haveFoodCount - 1; i++)
+	{
+		if (m_haveFoodCount != 0)
+		{
+			if (m_foodList[i]->GetIsSelect())
+			{
+				m_takeItemTransform.position = m_foodList[i]->GetDrawPos();
+
+				m_takeItemUi.Draw(m_takeItemTransform);
+			}
+		}
 	}
-	m_takeItemUi.Draw(m_takeItemTransform);
 
 	//éùÇ¡ÇƒÇ¢ÇÈñÿÇÃï`âÊ
 	m_woodIcon.Draw(m_haveWoodTransform);
@@ -159,13 +168,16 @@ void Inventory::CreateFoodIcon(int foodId)
 {
 	if (m_haveFoodCount <= m_maxHaveItem)
 	{
-		m_food[m_haveFoodCount] = new Food(foodId,
+		m_food = new Food(foodId,
 			m_player,
 			&m_loadFoodData->m_foodData[foodId],
 			m_haveFoodCount,
-			m_eatButton);
+			m_eatButton,
+			this);
 
-		GetParent()->AddChild(m_food[m_haveFoodCount]);
+		GetParent()->AddChild(m_food);
+
+		m_foodList.push_back(m_food);
 
 		m_haveFoodCount++;
 	}
@@ -175,17 +187,28 @@ void Inventory::EatFood()
 {
 	for (int i = 0; i <= m_haveFoodCount - 1; i++)
 	{
-		if (m_food[i]->GetIsSelect())
+		if (m_foodList[i]->GetIsSelect())
 		{
 			m_takeFood = i;
+			m_eatFoodPosNum = m_foodList[m_takeFood]->GetDrawPosNum();
 
 			if (m_eatButton->GetCheckOnClick())
 			{
-				m_player->EatingFood(m_food[m_takeFood]->GetRecoveryHungry());
+				m_player->EatingFood(m_foodList[m_takeFood]->GetRecoveryHungry());
 
-				m_food[m_takeFood]->DestroyFood();
+				m_eatFoodFlag = true;
+
+				m_foodList[m_takeFood]->DestroyFood();
 				m_haveFoodCount--;
+
+				m_foodList.erase(m_foodList.begin() + m_takeFood);
 			}
+		}
+
+		if (m_shiftIconCount >= m_haveFoodCount)
+		{
+			m_eatFoodFlag = false;
+			m_shiftIconCount = 0;
 		}
 	}
 }

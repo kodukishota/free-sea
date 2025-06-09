@@ -26,6 +26,8 @@ TredeUi::TredeUi(LoadPlayer* player,
 	m_sprite.Register("background.png");
 	m_transform.position = UiPos;
 
+	m_selectProductUi.Register("take_item.png");
+
 	//購入ボタンの生成
 	m_buyButton = new BuyButton(m_player,m_wallet,this);
 	AddChild(m_buyButton);
@@ -42,17 +44,20 @@ void TredeUi::Load()
 	ChangeVolumeSoundMem(128, m_seSell);
 
 	m_sprite.Load();
+	m_selectProductUi.Load();
 }
 
 void TredeUi::Release()
 {
 	DeleteSoundMem(m_seSell);
 	m_sprite.Release();
+	m_selectProductUi.Release();
 }
 
 void TredeUi::Update()
 {
 	m_sprite.Update();
+	m_selectProductUi.Update();
 
 
 	m_nowTredeFlag = m_player->GetNowTrede();
@@ -100,6 +105,9 @@ void TredeUi::Draw()
 			DrawString(1000, 500,
 				m_productData[m_selectProductNum].m_flavorText,
 				GetColor(255, 255, 255));
+
+			m_selectProductUi.Draw
+			(m_selectProduct[m_selectProductNum]->GetTransform());
 		}
 	}
 }
@@ -133,7 +141,6 @@ void TredeUi::ProductDisplay()
 
 	for (int i = 0; i <= static_cast<int>(TredeItem::Length) - 1; i++)
 	{
-
 		m_selectProduct[i] = new SelectProduct(
 			m_player,
 			m_productTransform.position,
@@ -142,7 +149,7 @@ void TredeUi::ProductDisplay()
 
 		AddChild(m_selectProduct[i]);
 
-		m_productTransform.position += Vector2(0, 90);
+		m_productTransform.position += Vector2(0, 100);
 	}
 }
 
@@ -156,14 +163,18 @@ void TredeUi::BuyProduct()
 		{
 			m_selectProductNum = m_selectProduct[i]->GetProductNum();
 
+			//価格の保存
+			m_selectProductValue = m_productData[m_selectProductNum].m_needMoney;
+
 			m_selectFlag = true;
 		}
 	}
 	//商品を選んだ状態で購入ボタンを押したら購入
 	if (m_buyButton->GetCheckOnClick())
 	{
+		//お金の消費
 		m_wallet->LostMoney(m_productData[m_selectProductNum].m_needMoney);
-
+		//買った食べ物のアイコンを設定したり
 		m_inventory->CreateFoodIcon(m_productData[m_selectProductNum].m_productId);		
 	}
 }

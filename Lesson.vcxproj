@@ -150,6 +150,8 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="BuyButton.cpp" />
     <ClCompile Include="EatButton.cpp" />
+    <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Food.cpp" />
     <ClCompile Include="HungerLevelUi.cpp" />
     <ClCompile Include="Menu.cpp" />
@@ -210,6 +212,8 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="BuyButton.h" />
     <ClInclude Include="EatButton.h" />
+    <ClInclude Include="Effect.h" />
+    <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Food.h" />
     <ClInclude Include="HungerLevelUi.h" />
     <ClInclude Include="LoadFoodData.h" />

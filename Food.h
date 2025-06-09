@@ -7,6 +7,7 @@
 class LoadFoodData;
 class LoadPlayer;
 class EatButton;
+class Inventory;
 
 struct FoodData
 {
@@ -31,9 +32,9 @@ private:
 
 	int m_recoveryHungry;	//空腹回復量
 
-	bool m_canGetItem;
+	int m_drawPosNum;	//自身がインベントリの何番目に描画されるか
 
-	bool m_isSelect;
+	bool m_isSelect;	//今選択されているか
 
 	int m_mouseX;
 	int m_mouseY;
@@ -43,6 +44,7 @@ private:
 
 	LoadPlayer* m_player;
 	EatButton* m_eatButton;
+	Inventory* m_inventory;
 
 	FoodData m_foodData;
 
@@ -57,7 +59,8 @@ public:
 		LoadPlayer* player = nullptr,
 		FoodData* foodData = nullptr,
 		int drawPosNum = 0,
-		EatButton* eatButton = nullptr
+		EatButton* eatButton = nullptr,
+		Inventory* inventory = nullptr
 		);
 
 	void SelectEatFood();
@@ -75,5 +78,22 @@ public:
 	void DestroyFood()
 	{
 		Destroy();
+	}
+
+	int GetDrawPosNum()
+	{
+		return m_drawPosNum;
+	}
+
+	void ShiftDrawPos()
+	{
+		m_drawPosNum--;
+		m_iconPos.position = IconPos;
+		m_iconPos.position.x = m_iconPos.position.x + IconSize.x * m_drawPosNum;
+	}
+
+	Vector2 GetDrawPos()
+	{
+		return m_iconPos.position;
 	}
 };
