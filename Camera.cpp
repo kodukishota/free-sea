@@ -4,6 +4,7 @@
 #include"Input.h"
 #include"CollisionStage.h"
 #include"Screen.h"
+#include "EffekseerForDXLib.h"
 
 
 Camera::Camera(LoadPlayer* player ,CollisionStage* collisionStage) :
@@ -308,6 +309,7 @@ void Camera::Draw()
 	// ƒJƒƒ‰‚Ì•`‰æ‹——£‚ğ’²®
 	SetCamClipRange();
 
+	Effekseer_Sync3DSetting();
 
 #ifdef _DEBUG
 	DrawFormatString(0, 0, GetColor(255, 255, 255),

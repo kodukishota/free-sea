@@ -5,17 +5,26 @@
 #include "Ax.h"
 #include "LoadPlayer.h"
 #include "Stump.h"
+#include "Effect.h"
+#include "Time.h"
+#include "Inventory.h"
+#include "Input.h"
 
-FirePlace::FirePlace(LoadPlayer* player) : Actor3D("FirePlace"),
+FirePlace::FirePlace(LoadPlayer* player, Inventory* inventory) : Actor3D("FirePlace"),
 m_model(MV1LoadModel("Resource/home/firePlace.mv1")),
-m_player(player)
+m_player(player),
+m_inventory(inventory),
+m_effect(nullptr),
+m_fireDuration(FireDuration)
 {
-	//拾える範囲の設定
+	//範囲の設定
 	m_collider = new BoxCollider3D(CanWarmthRange , WarmthRangeOffset);
 
 	m_transform.position = FirePlacePos;
 
 	MV1SetPosition(m_model, m_transform.position);
+
+	m_effect = new Effect("Resource/home/fire.efk",10,50);
 }
 
 void FirePlace::Load()
@@ -25,8 +34,10 @@ void FirePlace::Load()
 
 void FirePlace::Release()
 {
-	// プレイヤーのモデルを削除
+	//モデルを削除
 	MV1DeleteModel(m_model);
+
+	m_effect->~Effect();
 
 	Actor3D::Release();
 }
@@ -34,6 +45,27 @@ void FirePlace::Release()
 void FirePlace::Update()
 {
 	Actor3D::Update();
+	
+
+	m_fireDuration -= Time::GetInstance()->GetDeltaTime();
+
+	if (m_fireDuration >= 0)
+	{
+		m_effect->Play(true);
+	}
+	else
+	{
+		m_effect->Stop();
+
+		if (m_inventory->GetHaveWoodCount() >= 5 &&
+			Input::GetInstance()->IsKeyDown(KEY_INPUT_F))
+		{
+			m_inventory->LostHaveWood(5);
+			m_fireDuration = FireDuration;
+		}
+	}
+	m_effect->Update(m_transform.position);
+
 }
 
 void FirePlace::Draw()

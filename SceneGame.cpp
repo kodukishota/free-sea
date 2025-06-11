@@ -86,7 +86,7 @@ void SceneGame::Initialize()
 	uiLayer->AddChild(m_hungerlevelUi);
 
 	//暖炉
-	m_firePlace = new FirePlace(m_loadPlayer);
+	m_firePlace = new FirePlace(m_loadPlayer,m_inventory);
 	actorLayer->AddChild(m_firePlace);
 	
 	//スキルチェックUi

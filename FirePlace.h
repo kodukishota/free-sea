@@ -3,6 +3,8 @@
 #include"Vector3.h"
 
 class LoadPlayer;
+class Effect;
+class Inventory;
 
 class FirePlace : public Actor3D
 {
@@ -12,13 +14,16 @@ private:
 
 	static constexpr Vector3 FirePlacePos = Vector3(2000, 0, 800);
 
-	static constexpr float FireDuration = 45.0f;
+	static constexpr float FireDuration = 10.0f;
 
 	float m_fireDuration;	//âŒÇÃéùë±éûä‘
 
 	int m_model;
 
+	Effect* m_effect;
+
 	LoadPlayer* m_player;
+	Inventory* m_inventory;
 
 	bool isdeth = false;
 
@@ -29,5 +34,5 @@ protected:
 	virtual void Release() override;
 
 public:
-	FirePlace(LoadPlayer* player);
+	FirePlace(LoadPlayer* player,Inventory* inventory);
 };
