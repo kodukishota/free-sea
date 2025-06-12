@@ -7,17 +7,18 @@
 #include "Stump.h"
 #include "Inventory.h"
 
-Tree::Tree(Ax* ax, LoadPlayer* player, Inventory* inventory) : Actor3D("Tree"),
+Tree::Tree(Ax* ax, LoadPlayer* player, Inventory* inventory,Vector3 Position) : Actor3D("Tree"),
 	m_helth(FristHelth),
 	m_model(MV1LoadModel("Resource/Tree/tree.mv1")),
 	m_ax(ax),
 	m_player(player),
-	m_inventory(inventory)
+	m_inventory(inventory),
+	m_isDeth(false)
 {
 	//E‚¦‚é”ÍˆÍ‚ÌÝ’è
 	m_collider = new BoxCollider3D(CanCutRange);
 
-	m_transform.position = OffSet;
+	m_transform.position = Position;
 
 	MV1SetPosition(m_model,m_transform.position);
 
@@ -40,6 +41,7 @@ void Tree::Update()
 {
 	Actor3D::Update();
 
+	//”°‚ç‚ê‚½‚ç‘Ì—Í‚ðŒ¸‚ç‚µ‚ÄƒCƒ“‚×ƒ“ƒgƒŠ‚É–Ø‚ð‚¢‚ê‚é
 	if (m_ax->GetIsCutTree())
 	{
 		m_helth -= m_ax->GetCutDamage();
@@ -51,7 +53,8 @@ void Tree::Update()
 		m_ax->OffIsCutTree();
 	}
 
-	if (m_helth <= 0 && !isdeth )
+	//‘Ì—Í‚ªƒ[ƒ‚É‚È‚Á‚½‚ç
+	if (m_helth <= 0 && !m_isDeth)
 	{
 		m_player->FellDownTree();
 
@@ -66,13 +69,10 @@ void Tree::Draw()
 	MV1DrawModel(m_model);
 
 #ifdef _DEBUG
-	
-
 	DrawFormatString(0, 450, GetColor(255, 255, 255),
 		"tree helth %d",
 		m_helth
 	);
-
 #endif // _DEBUG
 
 

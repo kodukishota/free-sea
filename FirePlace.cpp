@@ -15,7 +15,8 @@ m_model(MV1LoadModel("Resource/home/firePlace.mv1")),
 m_player(player),
 m_inventory(inventory),
 m_effect(nullptr),
-m_fireDuration(FireDuration)
+m_fireDuration(FireDuration),
+m_isFire(false)
 {
 	//範囲の設定
 	m_collider = new BoxCollider3D(CanWarmthRange , WarmthRangeOffset);
@@ -46,17 +47,22 @@ void FirePlace::Update()
 {
 	Actor3D::Update();
 	
+	//エフェクトの位置設定
+	m_effect->Update(m_transform.position);
 
 	m_fireDuration -= Time::GetInstance()->GetDeltaTime();
-
+	
 	if (m_fireDuration >= 0)
 	{
+		//エフェクトの再生
 		m_effect->Play(true);
+		m_isFire = true;
 	}
 	else
 	{
-		m_effect->Stop();
+		m_isFire = false;
 
+		//木を五個いれたら火がまたつけれる
 		if (m_inventory->GetHaveWoodCount() >= 5 &&
 			Input::GetInstance()->IsKeyDown(KEY_INPUT_F))
 		{
@@ -64,8 +70,6 @@ void FirePlace::Update()
 			m_fireDuration = FireDuration;
 		}
 	}
-	m_effect->Update(m_transform.position);
-
 }
 
 void FirePlace::Draw()
@@ -73,4 +77,12 @@ void FirePlace::Draw()
 	MV1DrawModel(m_model);
 
 	Actor3D::Draw();
+}
+
+void FirePlace::OnCollision(const Actor3D* other)
+{
+	if (other->GetName() == "Player" && m_isFire)
+	{
+		m_player->WarmthBodyTemperature();
+	}
 }

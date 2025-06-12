@@ -55,7 +55,7 @@ void SceneGame::Initialize()
 	//uiLayer->AddChild(m_drawStageView);
 
 	// ステージの当たり判定を作成
-	m_collisionStage = new CollisionStage("Resource/nav_test_stage.mv1", "Resource/stage_wall.mv1", Vector3(0, 0, 0));
+	m_collisionStage = new CollisionStage("Resource/stage.mv1", "Resource/stage_wall.mv1", Vector3(0, 0, 0));
 	uiLayer->AddChild(m_collisionStage);
 
 	//食べ物の情報をCSVから取得
@@ -63,7 +63,7 @@ void SceneGame::Initialize()
 	uiLayer->AddChild(m_loadFoodData);
 
 	// プレイヤー
-	m_loadPlayer = new LoadPlayer(m_collisionStage,Vector3(300, 0, 0));
+	m_loadPlayer = new LoadPlayer(m_collisionStage,Vector3(-500, 0, -500));
 	actorLayer->AddChild(m_loadPlayer);
 	
 	m_menu = new Menu(m_loadPlayer);
@@ -101,7 +101,7 @@ void SceneGame::Initialize()
 	uiLayer->AddChild(m_axIcon);
 
 	//木
-	m_tree = new Tree(m_ax, m_loadPlayer,m_inventory);
+	m_tree = new Tree(m_ax, m_loadPlayer,m_inventory,Vector3(-3000,0,-500));
 	actorLayer->AddChild(m_tree);
 
 	//トレーダー

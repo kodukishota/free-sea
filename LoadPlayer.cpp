@@ -53,7 +53,10 @@ LoadPlayer::LoadPlayer(
 	m_downTemperature(FirstDownTemperature),
 	m_downTemperatureCoolDown(0),
 	m_isMenu(false),
-	m_hungerLevel(FullStomach)
+	m_hungerLevel(FullStomach),
+	m_isWarmthFlag(false),
+	m_warmthTemperatureCoolDown(0),
+	m_hungerTime(0)
 {
 	//-----アニメーションの作成-----
 	// アニメーションクラスをリスト化する
@@ -215,7 +218,6 @@ void LoadPlayer::Update()
 	}
 
 	DownBodyTemperature();
-	WarmthBodyTemperature();
 	DownHungerLevel();
 
 	// アニメーションの切り替え
@@ -534,7 +536,7 @@ void LoadPlayer::OnCollision(const Actor3D* other)
 
 	if (other->GetName() == "Treder")
 	{
-		if (Input::GetInstance()->IsKeyPress(KEY_INPUT_F))
+		if (Input::GetInstance()->IsKeyPress(KEY_INPUT_F) && !m_isMenu)
 		{
 			m_nowTrede = true;
 		}
@@ -569,6 +571,7 @@ void LoadPlayer::DecreaseHP(int damage)
 //体温減少
 void LoadPlayer::DownBodyTemperature()
 {
+	//暖炉の近くにいると体温は下がらない
 	if (!m_isWarmthFlag)
 	{
 		m_downTemperatureCoolDown += Time::GetInstance()->GetDeltaTime();
@@ -585,11 +588,8 @@ void LoadPlayer::DownBodyTemperature()
 //体温回復
 void LoadPlayer::WarmthBodyTemperature()
 {
-	if (m_isWarmthFlag)
-	{
-		m_warmthTemperatureCoolDown += Time::GetInstance()->GetDeltaTime();
-	}
-
+	m_warmthTemperatureCoolDown += Time::GetInstance()->GetDeltaTime();
+	
 	//五秒毎ごとに体温が増える
 	if (m_warmthTemperatureCoolDown >= FirstDownTemperatureTime &&
 		m_bodyTemperature < MaxBodyTemperature)

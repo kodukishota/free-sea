@@ -172,6 +172,9 @@
     <ClCompile Include="EffectManager.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Seedling.cpp">
+      <Filter>ソースファイル\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -389,6 +392,9 @@
     </ClInclude>
     <ClInclude Include="Effect.h">
       <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Seedling.h">
+      <Filter>ヘッダーファイル\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
