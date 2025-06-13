@@ -175,6 +175,9 @@
     <ClCompile Include="Seedling.cpp">
       <Filter>ソースファイル\Item</Filter>
     </ClCompile>
+    <ClCompile Include="TreeFactory.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -395,6 +398,9 @@
     </ClInclude>
     <ClInclude Include="Seedling.h">
       <Filter>ヘッダーファイル\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeFactory.h">
+      <Filter>ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

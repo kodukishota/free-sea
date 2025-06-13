@@ -21,7 +21,6 @@ Tree::Tree(Ax* ax, LoadPlayer* player, Inventory* inventory,Vector3 Position) : 
 	m_transform.position = Position;
 
 	MV1SetPosition(m_model,m_transform.position);
-
 }
 
 void Tree::Load()

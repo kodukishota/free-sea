@@ -11,6 +11,7 @@ class LoadFoodData;
 class LoadPlayer;
 class EatButton;
 class Food;
+class Ax;
 
 class Inventory : public Node
 {
@@ -35,6 +36,7 @@ private:
 
 	int m_haveFoodCount;	//アイテムを持ってる数
 	int m_haveWoodCount;	//木を持っている数
+	int m_haveSeedlingCount;	//苗木を持っている数
 
 	int m_takeFood;			//今何のアイテムを持っているか
 
@@ -69,6 +71,7 @@ private:
 	LoadPlayer* m_player;
 	EatButton* m_eatButton;
 	Food* m_food;
+	Ax* m_ax;
 
 protected:
 	virtual void Load() override;
@@ -77,7 +80,7 @@ protected:
 	virtual void Draw() override;
 
 public:
-	Inventory(LoadPlayer* player,LoadFoodData* loadFoodData);
+	Inventory(LoadPlayer* player,LoadFoodData* loadFoodData, Ax* ax);
 
 	bool CanGetItem()
 	{
@@ -129,7 +132,12 @@ public:
 		m_shiftIconCount++;
 	}
 
+	//買った食べ物をメニューで表示させる
 	void CreateFoodIcon(int foodId);
 
+	//選択した食べ物を食べる
 	void EatFood();
+
+	//苗木を植える
+	void PlantSeedling();
 };

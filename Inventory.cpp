@@ -6,8 +6,10 @@
 #include "Input.h"
 #include "LoadFoodData.h"
 #include "EatButton.h"
+#include "Seedling.h"
+#include "Ax.h"
 
-Inventory::Inventory(LoadPlayer* player, LoadFoodData* loadFoodData) :
+Inventory::Inventory(LoadPlayer* player, LoadFoodData* loadFoodData, Ax* ax) :
 	m_maxHaveItem(10),
 	m_haveFoodCount(0),
 	m_canGetItem(false),
@@ -23,7 +25,9 @@ Inventory::Inventory(LoadPlayer* player, LoadFoodData* loadFoodData) :
 	m_player(player),
 	m_loadFoodData(loadFoodData),
 	m_eatButton(nullptr),
-	m_food()
+	m_food(),
+	m_haveSeedlingCount(0),
+	m_ax(ax)
 {
 	m_axInventoryUi.Register("inventory_ui1.png");
 	m_foodInventoryUi.Register("inventory_ui1.png");
@@ -67,11 +71,6 @@ void Inventory::Update()
 	m_takeItemUi.Update();
 	m_woodIcon.Update();
 
-	if (m_gettingItem)
-	{
-		m_gettingItem = false;
-	}
-
 	//アイテムを拾うことができるか
 	if (m_haveFoodCount < m_maxHaveItem)
 	{
@@ -82,6 +81,7 @@ void Inventory::Update()
 		m_canGetItem = false;
 	}
 
+	//メニューを開いた時に持っている木の数を表示してくれるUiの位置を変更
 	if (!m_player->GetIsMenu())
 	{
 		m_haveWoodTransform.position = WoodIconPos;
@@ -97,6 +97,11 @@ void Inventory::Update()
 		EatFood();
 	}
 
+	//苗木を植えれる位置に来たら
+	if (m_player->GetCanPlantSeedling())
+	{
+		PlantSeedling();
+	}
 	
 }
 
@@ -168,6 +173,7 @@ void Inventory::CreateFoodIcon(int foodId)
 {
 	if (m_haveFoodCount <= m_maxHaveItem)
 	{
+		//食べ物のアイコンを生成
 		m_food = new Food(foodId,
 			m_player,
 			&m_loadFoodData->m_foodData[foodId],
@@ -177,6 +183,7 @@ void Inventory::CreateFoodIcon(int foodId)
 
 		GetParent()->AddChild(m_food);
 
+		//持っている食べ物リストにいれる
 		m_foodList.push_back(m_food);
 
 		m_haveFoodCount++;
@@ -187,6 +194,7 @@ void Inventory::EatFood()
 {
 	for (int i = 0; i <= m_haveFoodCount - 1; i++)
 	{
+		//選択した食べ物を覚えて得ておく
 		if (m_foodList[i]->GetIsSelect())
 		{
 			m_takeFood = i;
@@ -194,21 +202,33 @@ void Inventory::EatFood()
 
 			if (m_eatButton->GetCheckOnClick())
 			{
+				//食べるボタンを押したら空腹ゲージを回復
 				m_player->EatingFood(m_foodList[m_takeFood]->GetRecoveryHungry());
 
 				m_eatFoodFlag = true;
 
+				//持っている食べ物リストから削除
 				m_foodList[m_takeFood]->DestroyFood();
-				m_haveFoodCount--;
-
 				m_foodList.erase(m_foodList.begin() + m_takeFood);
+
+				m_haveFoodCount--;
 			}
 		}
 
+		//食べたアイテムより後ろにあるアイコンを前にずらす
 		if (m_shiftIconCount >= m_haveFoodCount)
 		{
 			m_eatFoodFlag = false;
 			m_shiftIconCount = 0;
 		}
+	}
+}
+
+void Inventory::PlantSeedling()
+{
+	//Fを押したら苗木を植える
+	if (Input::GetInstance()->IsKeyDown(KEY_INPUT_F))
+	{
+		AddChild(new Seedling(m_ax, m_player, this, m_player->GetPosition()));
 	}
 }

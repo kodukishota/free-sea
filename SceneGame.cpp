@@ -69,13 +69,24 @@ void SceneGame::Initialize()
 	m_menu = new Menu(m_loadPlayer);
 	uiLayer->AddChild(m_menu);
 
-	//インベントリ
-	m_inventory = new Inventory(m_loadPlayer,m_loadFoodData);
-	uiLayer->AddChild(m_inventory);
-
 	// カメラ
 	m_cam = new Camera(m_loadPlayer, m_collisionStage);
 	actorLayer->AddChild(m_cam);
+
+	//スキルチェックUi
+	m_skillCheck = new SkillCheck(m_loadPlayer);
+	uiLayer->AddChild(m_skillCheck);
+
+	//斧
+	m_ax = new Ax(m_loadPlayer, m_cam, m_skillCheck);
+	actorLayer->AddChild(m_ax);
+
+	m_axIcon = new AxIcon(m_ax);
+	uiLayer->AddChild(m_axIcon);
+
+	//インベントリ
+	m_inventory = new Inventory(m_loadPlayer,m_loadFoodData,m_ax);
+	uiLayer->AddChild(m_inventory);
 
 	//体温Ui
 	m_uiBodyTemperature = new UiBodyTemperature(m_loadPlayer);
@@ -88,17 +99,6 @@ void SceneGame::Initialize()
 	//暖炉
 	m_firePlace = new FirePlace(m_loadPlayer,m_inventory);
 	actorLayer->AddChild(m_firePlace);
-	
-	//スキルチェックUi
-	m_skillCheck = new SkillCheck(m_loadPlayer);
-	uiLayer->AddChild(m_skillCheck);
-
-	//斧
-	m_ax = new Ax(m_loadPlayer, m_cam,m_skillCheck);
-	actorLayer->AddChild(m_ax);
-
-	m_axIcon = new AxIcon(m_ax);
-	uiLayer->AddChild(m_axIcon);
 
 	//木
 	m_tree = new Tree(m_ax, m_loadPlayer,m_inventory,Vector3(-3000,0,-500));

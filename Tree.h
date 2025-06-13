@@ -14,15 +14,15 @@ private:
 	static constexpr int FristHelth = 50;	//‘Ï‹v—Í
 	static constexpr int CutTreeTakeValue = 2;	//ˆê‰ñ”°‚Á‚½‚ç—‚¿‚é–Ø‚Ì”B
 
-	int m_model;
+	int m_model;	//ƒ‚ƒfƒ‹
 
-	int m_helth;
+	int m_helth;	//‘Ì—Í
 
 	Ax* m_ax;
 	LoadPlayer* m_player;
 	Inventory* m_inventory;
 
-	bool m_isDeth;
+	bool m_isDeth;	//”°‚ç‚ê‚½‚©
 
 protected:
 	virtual void Update() override;
@@ -31,5 +31,5 @@ protected:
 	virtual void Release() override;
 
 public:
-	Tree(Ax* ax,LoadPlayer* player,Inventory* m_inventory,Vector3 Position);
+	Tree(Ax* ax,LoadPlayer* player,Inventory* inventory,Vector3 position);
 };

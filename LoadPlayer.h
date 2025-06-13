@@ -80,6 +80,8 @@ private:
 	bool m_cutTree;		//木を伐り始めたか
 	bool m_fellDown;	//木を伐り終えたか
 
+	bool m_canPlantSeedling;	//苗木を植えることができる位置にいるか
+
 	bool m_isMenu;		//メニューを開いているか
 
 	Camera* m_camNode;
@@ -254,5 +256,10 @@ public:
 	void EatingFood(int recoveryHungry)
 	{
 		m_hungerLevel += recoveryHungry;
+	}
+
+	bool GetCanPlantSeedling()
+	{
+		return m_canPlantSeedling;
 	}
 };
