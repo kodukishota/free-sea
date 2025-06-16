@@ -4,7 +4,6 @@
 #include "ActorCollision3D.h"
 #include "Ax.h"
 #include "LoadPlayer.h"
-#include "Stump.h"
 #include "Inventory.h"
 
 Tree::Tree(Ax* ax, LoadPlayer* player, Inventory* inventory,Vector3 Position) : Actor3D("Tree"),
@@ -55,11 +54,9 @@ void Tree::Update()
 	//ëÃóÕÇ™É[ÉçÇ…Ç»Ç¡ÇΩÇÁ
 	if (m_helth <= 0 && !m_isDeth)
 	{
-		m_player->FellDownTree();
+		m_helth = FristHelth;
 
-		GetParent()->AddChild(new Stump(m_transform.position));
-
-		Destroy();
+		m_isDeth = true;
 	}
 }
 

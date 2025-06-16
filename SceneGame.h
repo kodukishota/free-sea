@@ -25,9 +25,9 @@ class TredeUi;
 class SellButton;
 class Menu;
 class LoadFoodData;
+class TreeFactory;
 
 class AxIcon;
-class Stump;
 
 // ゲームシーン
 class SceneGame : public SceneBase
@@ -54,9 +54,9 @@ private:
 	SellButton* m_sellButton;
 	Menu* m_menu;
 	LoadFoodData* m_loadFoodData;
+	TreeFactory* m_treeFactory;
 
 	AxIcon* m_axIcon;
-	Stump* m_stump;
 
 	std::vector<Item> m_chestItem;
 
@@ -84,10 +84,10 @@ public:
 		m_sellButton(nullptr),
 		m_menu(nullptr),
 		m_loadFoodData(nullptr),
+		m_treeFactory(nullptr),
 		
 	
-		m_axIcon(nullptr),
-	m_stump(nullptr){};
+		m_axIcon(nullptr){};
 
 	virtual void Initialize() override;		// 初期化
 	virtual void Finalize() override;		// 終了

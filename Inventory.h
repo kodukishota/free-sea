@@ -137,7 +137,4 @@ public:
 
 	//‘I‘ğ‚µ‚½H‚×•¨‚ğH‚×‚é
 	void EatFood();
-
-	//•c–Ø‚ğA‚¦‚é
-	void PlantSeedling();
 };

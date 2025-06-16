@@ -4,13 +4,20 @@
 #include "Ax.h"
 #include "LoadPlayer.h"
 #include "Inventory.h"
+#include "TreeFactory.h"
 
-Seedling::Seedling(Ax* ax, LoadPlayer* player, Inventory* inventory, Vector3 position) : Actor3D("Seedling"),
+Seedling::Seedling(Ax* ax,
+	LoadPlayer* player,
+	Inventory* inventory,
+	TreeFactory* treeFactory,
+	Vector3 position) : Actor3D("Seedling"),
 	m_growthTime(GrowthTime),
 	m_model(MV1LoadModel("Resource/Tree/seedling.mv1")),
 	m_ax(ax),
 	m_player(player),
-	m_inventory(inventory)
+	m_inventory(inventory),
+	m_treeFactory(treeFactory),
+	m_tree(nullptr)
 {
 	m_transform.position = position;
 
@@ -35,17 +42,6 @@ void Seedling::Update()
 	Actor3D::Update();
 
 	m_growthTime -= Time::GetInstance()->GetDeltaTime();
-
-	if (m_growthTime <= 0)
-	{
-		GetParent()->AddChild(new Tree(m_ax,
-			m_player,
-			m_inventory,
-			m_transform.position
-		));
-
-		Destroy();
-	}
 }
 
 void Seedling::Draw()
@@ -53,4 +49,16 @@ void Seedling::Draw()
 	MV1DrawModel(m_model);
 
 	Actor3D::Draw();
+}
+
+bool Seedling::GetIsGrow()
+{
+	if (m_growthTime <= 0)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }

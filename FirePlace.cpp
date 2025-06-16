@@ -4,7 +4,6 @@
 #include "ActorCollision3D.h"
 #include "Ax.h"
 #include "LoadPlayer.h"
-#include "Stump.h"
 #include "Effect.h"
 #include "Time.h"
 #include "Inventory.h"

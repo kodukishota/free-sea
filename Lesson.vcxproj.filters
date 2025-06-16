@@ -121,9 +121,6 @@
     <ClCompile Include="Tree.cpp">
       <Filter>ソースファイル\Item</Filter>
     </ClCompile>
-    <ClCompile Include="Stump.cpp">
-      <Filter>ソースファイル\Item</Filter>
-    </ClCompile>
     <ClCompile Include="AxIcon.cpp">
       <Filter>ソースファイル\Player</Filter>
     </ClCompile>
@@ -337,9 +334,6 @@
       <Filter>ヘッダーファイル\Player</Filter>
     </ClInclude>
     <ClInclude Include="Tree.h">
-      <Filter>ヘッダーファイル\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Stump.h">
       <Filter>ヘッダーファイル\Item</Filter>
     </ClInclude>
     <ClInclude Include="AxIcon.h">

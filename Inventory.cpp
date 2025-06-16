@@ -95,14 +95,7 @@ void Inventory::Update()
 	if (m_haveFoodCount != 0)
 	{
 		EatFood();
-	}
-
-	//•c–Ø‚ðA‚¦‚ê‚éˆÊ’u‚É—ˆ‚½‚ç
-	if (m_player->GetCanPlantSeedling())
-	{
-		PlantSeedling();
-	}
-	
+	}	
 }
 
 void Inventory::Draw()
@@ -224,11 +217,3 @@ void Inventory::EatFood()
 	}
 }
 
-void Inventory::PlantSeedling()
-{
-	//F‚ð‰Ÿ‚µ‚½‚ç•c–Ø‚ðA‚¦‚é
-	if (Input::GetInstance()->IsKeyDown(KEY_INPUT_F))
-	{
-		AddChild(new Seedling(m_ax, m_player, this, m_player->GetPosition()));
-	}
-}

@@ -4,7 +4,6 @@
 #include "ActorCollision3D.h"
 #include "Ax.h"
 #include "LoadPlayer.h"
-#include "Stump.h"
 
 Treder::Treder() : Actor3D("Treder"),
 m_model(MV1LoadModel("Resource/Treder/treder.mv1"))
@@ -13,6 +12,7 @@ m_model(MV1LoadModel("Resource/Treder/treder.mv1"))
 	m_collider = new BoxCollider3D(CanTredeRange);
 
 	m_transform.position = TrederPos;
+	m_transform.angle.x = 180;
 
 	MV1SetPosition(m_model, m_transform.position);
 }

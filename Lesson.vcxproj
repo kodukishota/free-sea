@@ -188,7 +188,6 @@
     <ClCompile Include="SellButton.cpp" />
     <ClCompile Include="SkillCheck.cpp" />
     <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="Stump.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="Treder.cpp" />
     <ClCompile Include="TredeUi.cpp" />
@@ -261,7 +260,6 @@
     <ClInclude Include="SkillCheak.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Sprite3D.h" />
-    <ClInclude Include="Stump.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="TredeItem.h" />
     <ClInclude Include="TredeUi.h" />

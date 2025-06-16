@@ -56,8 +56,7 @@ LoadPlayer::LoadPlayer(
 	m_hungerLevel(FullStomach),
 	m_isWarmthFlag(false),
 	m_warmthTemperatureCoolDown(0),
-	m_hungerTime(0),
-	m_canPlantSeedling(false)
+	m_hungerTime(0)
 {
 	//-----アニメーションの作成-----
 	// アニメーションクラスをリスト化する
@@ -214,13 +213,8 @@ void LoadPlayer::Update()
 		if (m_fellDown)
 		{
 			m_cutTree = false;
-			m_fellDown = true;
+			m_fellDown = false;
 		}
-	}
-
-	if (m_transform.position.x <= -2600)
-	{
-		m_canPlantSeedling = true;
 	}
 
 	DownBodyTemperature();
@@ -546,16 +540,6 @@ void LoadPlayer::OnCollision(const Actor3D* other)
 		{
 			m_nowTrede = true;
 		}
-	}
-
-	//一度植えた木の近くや苗木の近くでは植えれない
-	if (other->GetName() == "Tree" || other->GetName() == "Seedling")
-	{
-		m_canPlantSeedling = false;
-	}
-	else if (other->GetName() == "FirePlace")
-	{
-		m_canPlantSeedling = true;
 	}
 }
 

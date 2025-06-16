@@ -32,4 +32,24 @@ protected:
 
 public:
 	Tree(Ax* ax,LoadPlayer* player,Inventory* inventory,Vector3 position);
+
+	Vector3 GetPosition()
+	{
+		return m_transform.position;
+	}
+
+	bool GetIsDeth()
+	{
+		return m_isDeth;
+	}
+
+	void ResetIsDeth()
+	{
+		m_isDeth = false;
+	}
+
+	void DestroyMe()
+	{
+		Destroy();
+	}
 };

@@ -29,9 +29,8 @@
 #include "Wallet.h"
 #include "Menu.h"
 #include "LoadFoodData.h"
+#include "TreeFactory.h"
 #include "DxLib.h"
-
-#include"Stump.h"
 
 #include "Item.h"
 
@@ -75,7 +74,6 @@ void SceneGame::Initialize()
 
 	//スキルチェックUi
 	m_skillCheck = new SkillCheck(m_loadPlayer);
-	uiLayer->AddChild(m_skillCheck);
 
 	//斧
 	m_ax = new Ax(m_loadPlayer, m_cam, m_skillCheck);
@@ -86,8 +84,12 @@ void SceneGame::Initialize()
 
 	//インベントリ
 	m_inventory = new Inventory(m_loadPlayer,m_loadFoodData,m_ax);
-	uiLayer->AddChild(m_inventory);
 
+	m_treeFactory = new TreeFactory(m_ax, m_loadPlayer, m_inventory);
+	uiLayer->AddChild(m_treeFactory);
+
+	uiLayer->AddChild(m_skillCheck);
+	uiLayer->AddChild(m_inventory);
 	//体温Ui
 	m_uiBodyTemperature = new UiBodyTemperature(m_loadPlayer);
 	uiLayer->AddChild(m_uiBodyTemperature);
@@ -99,10 +101,6 @@ void SceneGame::Initialize()
 	//暖炉
 	m_firePlace = new FirePlace(m_loadPlayer,m_inventory);
 	actorLayer->AddChild(m_firePlace);
-
-	//木
-	m_tree = new Tree(m_ax, m_loadPlayer,m_inventory,Vector3(-3000,0,-500));
-	actorLayer->AddChild(m_tree);
 
 	//トレーダー
 	m_treder = new Treder();
