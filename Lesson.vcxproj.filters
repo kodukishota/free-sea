@@ -175,6 +175,12 @@
     <ClCompile Include="TreeFactory.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="WorldTime.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Bed.cpp">
+      <Filter>ソースファイル\Home</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -395,6 +401,12 @@
     </ClInclude>
     <ClInclude Include="TreeFactory.h">
       <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldTime.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Bed.h">
+      <Filter>ヘッダーファイル\Home</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

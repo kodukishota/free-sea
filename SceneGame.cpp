@@ -30,6 +30,7 @@
 #include "Menu.h"
 #include "LoadFoodData.h"
 #include "TreeFactory.h"
+#include "WorldTime.h"
 #include "DxLib.h"
 
 #include "Item.h"
@@ -65,6 +66,9 @@ void SceneGame::Initialize()
 	m_loadPlayer = new LoadPlayer(m_collisionStage,Vector3(-500, 0, -500));
 	actorLayer->AddChild(m_loadPlayer);
 	
+	m_worldTime = new WorldTime(m_loadPlayer);
+
+
 	m_menu = new Menu(m_loadPlayer);
 	uiLayer->AddChild(m_menu);
 
@@ -90,6 +94,8 @@ void SceneGame::Initialize()
 
 	uiLayer->AddChild(m_skillCheck);
 	uiLayer->AddChild(m_inventory);
+
+	uiLayer->AddChild(m_worldTime);
 	//‘Ì‰·Ui
 	m_uiBodyTemperature = new UiBodyTemperature(m_loadPlayer);
 	uiLayer->AddChild(m_uiBodyTemperature);

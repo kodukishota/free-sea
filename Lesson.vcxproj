@@ -147,6 +147,7 @@
     <ClCompile Include="Audio3D.cpp" />
     <ClCompile Include="Ax.cpp" />
     <ClCompile Include="AxIcon.cpp" />
+    <ClCompile Include="Bed.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="BuyButton.cpp" />
     <ClCompile Include="EatButton.cpp" />
@@ -197,6 +198,7 @@
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="Wallet.cpp" />
+    <ClCompile Include="WorldTime.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
@@ -208,6 +210,7 @@
     <ClInclude Include="Audio3D.h" />
     <ClInclude Include="Ax.h" />
     <ClInclude Include="AxIcon.h" />
+    <ClInclude Include="Bed.h" />
     <ClInclude Include="BoxCollider2D.h" />
     <ClInclude Include="BoxCollider3D.h" />
     <ClInclude Include="Button.h" />
@@ -272,6 +275,7 @@
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="Wallet.h" />
+    <ClInclude Include="WorldTime.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

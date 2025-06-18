@@ -26,6 +26,7 @@ class SellButton;
 class Menu;
 class LoadFoodData;
 class TreeFactory;
+class WorldTime;
 
 class AxIcon;
 
@@ -55,6 +56,7 @@ private:
 	Menu* m_menu;
 	LoadFoodData* m_loadFoodData;
 	TreeFactory* m_treeFactory;
+	WorldTime* m_worldTime;
 
 	AxIcon* m_axIcon;
 
@@ -85,6 +87,7 @@ public:
 		m_menu(nullptr),
 		m_loadFoodData(nullptr),
 		m_treeFactory(nullptr),
+		m_worldTime(nullptr),
 		
 	
 		m_axIcon(nullptr){};

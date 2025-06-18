@@ -27,10 +27,11 @@ Inventory::Inventory(LoadPlayer* player, LoadFoodData* loadFoodData, Ax* ax) :
 	m_eatButton(nullptr),
 	m_food(),
 	m_haveSeedlingCount(0),
-	m_ax(ax)
+	m_ax(ax),
+	m_shiftIconCount(0)
 {
-	m_axInventoryUi.Register("inventory_ui1.png");
-	m_foodInventoryUi.Register("inventory_ui1.png");
+	m_axInventoryUi.Register("inventory_ui.png");
+	m_foodInventoryUi.Register("inventory_ui.png");
 	m_takeItemUi.Register("take_item.png");
 	m_woodIcon.Register("wood_icon.png");
 

@@ -1,0 +1,35 @@
+#pragma once
+#include "Node.h"
+#include "Vector2.h"
+#include "Sprite.h"
+
+class LoadPlayer;
+
+class WorldTime : public Node
+{
+private:
+	static constexpr Vector2 FontSize = Vector2(20, 35);	// 数字1文字の幅・高さ
+	static constexpr int FontMargin = 5;					// 数字と数字の間の余白
+
+	int m_worldDays;			//世界を過ごした日にち
+	float m_worldTimeMinutes;	//世界を過ごした分
+	float m_worldTimeHour;		//世界を過ごした時
+
+	int m_timeFontId;	// 数字フォント
+
+	LoadPlayer* m_player;
+
+protected:
+	virtual void Release() override;
+	virtual void Update() override;
+	virtual void Draw() override;
+
+public:
+	WorldTime(LoadPlayer* player);
+
+	//ベットで寝たら時間を飛ばす
+	void SleepSpendTime();
+
+	//仮眠した時に時間を飛ばす
+	void NapSpendTime();
+};
