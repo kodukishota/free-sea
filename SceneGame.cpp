@@ -31,6 +31,7 @@
 #include "LoadFoodData.h"
 #include "TreeFactory.h"
 #include "WorldTime.h"
+#include "Bed.h"
 #include "DxLib.h"
 
 #include "Item.h"
@@ -51,11 +52,11 @@ void SceneGame::Initialize()
 	m_rootNode->AddChild(uiLayer);
 	
 	// ステージの見た目を描画
-	//m_drawStageView = new DrawStageView("stage_view_2.mv1");
-	//uiLayer->AddChild(m_drawStageView);
+	m_drawStageView = new DrawStageView("colloder_stage_view.mv1");
+	uiLayer->AddChild(m_drawStageView);
 
 	// ステージの当たり判定を作成
-	m_collisionStage = new CollisionStage("Resource/stage.mv1", "Resource/stage_wall.mv1", Vector3(0, 0, 0));
+	m_collisionStage = new CollisionStage("Resource/colloder_stage.mv1", "Resource/colloder_stage_wall.mv1", Vector3(0, 0, 0));
 	uiLayer->AddChild(m_collisionStage);
 
 	//食べ物の情報をCSVから取得
@@ -65,16 +66,15 @@ void SceneGame::Initialize()
 	// プレイヤー
 	m_loadPlayer = new LoadPlayer(m_collisionStage,Vector3(-500, 0, -500));
 	actorLayer->AddChild(m_loadPlayer);
-	
-	m_worldTime = new WorldTime(m_loadPlayer);
-
-
-	m_menu = new Menu(m_loadPlayer);
-	uiLayer->AddChild(m_menu);
-
 	// カメラ
 	m_cam = new Camera(m_loadPlayer, m_collisionStage);
 	actorLayer->AddChild(m_cam);
+	
+	m_worldTime = new WorldTime(m_loadPlayer);
+
+	//ベッド
+	m_bed = new Bed(m_loadPlayer, m_worldTime);
+	uiLayer->AddChild(m_bed);
 
 	//スキルチェックUi
 	m_skillCheck = new SkillCheck(m_loadPlayer);
@@ -89,13 +89,17 @@ void SceneGame::Initialize()
 	//インベントリ
 	m_inventory = new Inventory(m_loadPlayer,m_loadFoodData,m_ax);
 
+	//木工場
 	m_treeFactory = new TreeFactory(m_ax, m_loadPlayer, m_inventory);
 	uiLayer->AddChild(m_treeFactory);
 
-	uiLayer->AddChild(m_skillCheck);
-	uiLayer->AddChild(m_inventory);
+	//メニュー画面
+	m_menu = new Menu(m_loadPlayer);
+	uiLayer->AddChild(m_menu);
 
+	uiLayer->AddChild(m_skillCheck);
 	uiLayer->AddChild(m_worldTime);
+
 	//体温Ui
 	m_uiBodyTemperature = new UiBodyTemperature(m_loadPlayer);
 	uiLayer->AddChild(m_uiBodyTemperature);
@@ -107,13 +111,8 @@ void SceneGame::Initialize()
 	//暖炉
 	m_firePlace = new FirePlace(m_loadPlayer,m_inventory);
 	actorLayer->AddChild(m_firePlace);
-
-	//トレーダー
-	m_treder = new Treder();
-	actorLayer->AddChild(m_treder);
 	
 	m_wallet = new Wallet(m_loadPlayer);
-
 	//トレードUI系
 	m_sellButton = new SellButton(m_loadPlayer,m_inventory);
 	m_tredeUi = new TredeUi(m_loadPlayer,m_sellButton,m_wallet,m_inventory, m_loadFoodData);
@@ -121,30 +120,11 @@ void SceneGame::Initialize()
 
 	uiLayer->AddChild(m_wallet);
 	uiLayer->AddChild(m_sellButton);
+	uiLayer->AddChild(m_inventory);
 
-	/*
-#ifdef _DEBUG
-	//アイテム
-	m_item = new Item(1, Vector3(300, 0, 0),m_inventory,m_loadPlayer);
-	actorLayer->AddChild(m_item);//アイテム
-	m_item = new Item(0, Vector3(300, 0, 0),m_inventory, m_loadPlayer);
-	actorLayer->AddChild(m_item);
-
-	m_item = new Item(3, Vector3(300, 0, 0), m_inventory, m_loadPlayer);
-	actorLayer->AddChild(m_item);
-	m_item = new Item(4, Vector3(300, 0, 200), m_inventory, m_loadPlayer);
-	actorLayer->AddChild(m_item);
-	m_item = new Item(0, Vector3(300, 0, 500), m_inventory, m_loadPlayer);
-	actorLayer->AddChild(m_item);
-	m_item = new Item(2, Vector3(500, 0, 200), m_inventory, m_loadPlayer);
-	actorLayer->AddChild(m_item);
-	m_item = new Item(6, Vector3(500, 0, 500), m_inventory, m_loadPlayer);
-	actorLayer->AddChild(m_item);
-	m_item = new Item(7, Vector3(400, 0, 500), m_inventory, m_loadPlayer);
-	actorLayer->AddChild(m_item);
-
-#endif // _DEBUG
-	*/
+	//トレーダー
+	m_treder = new Treder(m_tredeUi);
+	actorLayer->AddChild(m_treder);
 	
 	// スクリーンに掛けるフィルター
 	m_screenFilter = new ScreenFilter(m_loadPlayer);

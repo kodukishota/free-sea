@@ -6,13 +6,13 @@
 class Ax;
 class LoadPlayer;
 class Inventory;
-class Tree;
 class Seedling;
+class Tree;
 
 class TreeFactory : public Node
 {
 private:
-	static constexpr float CanCutRangeHalf = 300;		//•c–Ø‚ğA‚¦‚é‚Æ‚«‚ÌA‚¦‚ê‚éŠÔŠu
+	static constexpr float CanCutRange = 600;		//•c–Ø‚ğA‚¦‚é‚Æ‚«‚ÌA‚¦‚ê‚éŠÔŠu
 	static constexpr float CanPlantRangeXPos = -2400;	//–Ø‚ğ¶‚â‚¹‚éÀ•W‚Ì’[
 
 
@@ -20,6 +20,8 @@ private:
 
 	bool m_canPlantSeedling;	//•c–Ø‚ğA‚¦‚é‚±‚Æ‚ª‚Å‚«‚é‚©
 	bool m_finishedGrowing;		//¬’·‚ªI‚í‚Á‚½‚©
+
+	bool m_finishCut;	//”°‚èI‚í‚Á‚½‚©
 
 	std::vector<Tree*> m_treeList;
 	std::vector<Seedling*> m_seedlingList;

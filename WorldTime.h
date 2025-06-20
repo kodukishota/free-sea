@@ -28,8 +28,14 @@ public:
 	WorldTime(LoadPlayer* player);
 
 	//ƒxƒbƒg‚ÅQ‚½‚çŠÔ‚ğ”ò‚Î‚·
-	void SleepSpendTime();
+	void SleepSpendTime()
+	{
+		m_worldTimeMinutes += 480;
+	}
 
 	//‰¼–°‚µ‚½‚ÉŠÔ‚ğ”ò‚Î‚·
-	void NapSpendTime();
+	void NapSpendTime()
+	{
+		m_worldTimeMinutes += 180;
+	}
 };

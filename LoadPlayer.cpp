@@ -56,7 +56,9 @@ LoadPlayer::LoadPlayer(
 	m_hungerLevel(FullStomach),
 	m_isWarmthFlag(false),
 	m_warmthTemperatureCoolDown(0),
-	m_hungerTime(0)
+	m_hungerTime(0),
+	m_nowTrede(false),
+	m_isSleep(false)
 {
 	//-----アニメーションの作成-----
 	// アニメーションクラスをリスト化する
@@ -105,10 +107,10 @@ void LoadPlayer::Load()
 	ChangeVolumeSoundMem(128, m_seDamage);
 
 	// 走る音
-	m_seRun = LoadSoundMem("Resource/sound/player_run.mp3");
+	//m_seRun = LoadSoundMem("Resource/sound/player_run.mp3");
 
 	// 歩く音
-	m_seWalk = LoadSoundMem("Resource/sound/player_walk.mp3");
+	//m_seWalk = LoadSoundMem("Resource/sound/player_walk.mp3");
 
 	Actor3D::Load();
 }
@@ -529,16 +531,19 @@ void LoadPlayer::OnCollision(const Actor3D* other)
 		}
 	}
 
-	if (other->GetName() == "FirePlace")
-	{
- 		m_isWarmthFlag = true;
-	}
-
 	if (other->GetName() == "Treder")
 	{
-		if (Input::GetInstance()->IsKeyPress(KEY_INPUT_F) && !m_isMenu)
+		if (Input::GetInstance()->IsKeyDown(KEY_INPUT_F) && !m_isMenu)
 		{
 			m_nowTrede = true;
+		}
+	}
+
+	if (other->GetName() == "Bed")
+	{
+		if (Input::GetInstance()->IsKeyDown(KEY_INPUT_F))
+		{
+			m_isSleep = true;
 		}
 	}
 }
@@ -649,5 +654,28 @@ void LoadPlayer::StaminaManagement()
 			m_stamina = MaxStamina;
 			m_duration = 0;
 		}
+	}
+}
+
+bool LoadPlayer::CanInteractObject(Vector3 objectPos, float interactRange, Vector3 offSet)
+{
+	//プレイヤーがX座標の中にいるか
+	if (offSet.x + objectPos.x + interactRange / 2 >= GetPosition().x &&
+		offSet.x + objectPos.x - interactRange / 2 <= GetPosition().x)
+	{
+		//プレイヤーがY座標の中にいるか
+		if (offSet.z + objectPos.z + interactRange / 2 >= GetPosition().z &&
+			offSet.z + objectPos.z - interactRange / 2 <= GetPosition().z)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else
+	{
+		return false;
 	}
 }

@@ -28,7 +28,8 @@ Inventory::Inventory(LoadPlayer* player, LoadFoodData* loadFoodData, Ax* ax) :
 	m_food(),
 	m_haveSeedlingCount(0),
 	m_ax(ax),
-	m_shiftIconCount(0)
+	m_shiftIconCount(0),
+	m_seEat(0)
 {
 	m_axInventoryUi.Register("inventory_ui.png");
 	m_foodInventoryUi.Register("inventory_ui.png");
@@ -44,6 +45,8 @@ void Inventory::Load()
 	//seを設定
 	m_seInventory = LoadSoundMem("Resource/sound/move_takeUi.mp3");
 	ChangeVolumeSoundMem(128, m_seInventory);
+	m_seEat = LoadSoundMem("Resource/sound/eat_se.mp3");
+	ChangeVolumeSoundMem(128, m_seEat);
 
 	m_fontTextureId = ImageLoader::GetInstance()->Load("score_font.png");
 
@@ -56,6 +59,7 @@ void Inventory::Load()
 void Inventory::Release()
 {
 	DeleteSoundMem(m_seInventory);
+	DeleteSoundMem(m_seEat);
 
 	ImageLoader::GetInstance()->Delete("score_font.png");
 
@@ -196,6 +200,8 @@ void Inventory::EatFood()
 
 			if (m_eatButton->GetCheckOnClick())
 			{
+				PlaySoundMem(m_seEat, DX_PLAYTYPE_BACK);
+
 				//食べるボタンを押したら空腹ゲージを回復
 				m_player->EatingFood(m_foodList[m_takeFood]->GetRecoveryHungry());
 

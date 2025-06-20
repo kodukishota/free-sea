@@ -3,6 +3,7 @@
 #include "BoxCollider3D.h"
 #include "ActorCollision3D.h"
 #include "Ax.h"
+#include "Quaternion.h"
 #include "LoadPlayer.h"
 #include "Effect.h"
 #include "Time.h"
@@ -18,11 +19,11 @@ m_fireDuration(FireDuration),
 m_isFire(false)
 {
 	//�͈͂̐ݒ�
-	m_collider = new BoxCollider3D(CanWarmthRange , WarmthRangeOffset);
+	m_collider = new BoxCollider3D(WarmthRangeView, WarmthRangeOffset);
 
 	m_transform.position = FirePlacePos;
 
-	MV1SetPosition(m_model, m_transform.position);
+	Quaternion::RotateAxisY(m_model,160, m_transform.position);
 
 	m_effect = new Effect("Resource/home/fire.efk",10,50);
 }
@@ -69,6 +70,15 @@ void FirePlace::Update()
 			m_fireDuration = FireDuration;
 		}
 	}
+
+	if (m_player->CanInteractObject(m_transform.position, WarmthRange) && m_isFire)
+	{
+		m_player->WarmthBodyTemperature();
+	}
+	else
+	{
+		m_player->DontWarmth();
+	}
 }
 
 void FirePlace::Draw()
@@ -76,12 +86,4 @@ void FirePlace::Draw()
 	MV1DrawModel(m_model);
 
 	Actor3D::Draw();
-}
-
-void FirePlace::OnCollision(const Actor3D* other)
-{
-	if (other->GetName() == "Player" && m_isFire)
-	{
-		m_player->WarmthBodyTemperature();
-	}
 }

@@ -2,6 +2,8 @@
 #include "Actor3D.h"
 #include "Vector3.h"
 
+class TredeUi;
+
 class Treder : public Actor3D
 {
 private:
@@ -10,6 +12,8 @@ private:
 
 	int m_model;
 
+	TredeUi* m_tredeUi;
+
 protected:
 	virtual void Update() override;
 	virtual void Draw() override;
@@ -17,5 +21,5 @@ protected:
 	virtual void Release() override;
 
 public:
-	Treder();
+	Treder(TredeUi* tredeUi);
 };

@@ -52,6 +52,7 @@ private:
 	int m_itemNum;		//アイテムの番号格納用
 
 	int m_seInventory;	//サウンド
+	int m_seEat;
 
 	int m_fontTextureId;	// 数字フォント
 	Transform m_haveWeightTransform;	// 姿勢

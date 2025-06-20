@@ -390,12 +390,6 @@
     <ClInclude Include="EatButton.h">
       <Filter>ヘッダーファイル\Player</Filter>
     </ClInclude>
-    <ClInclude Include="EffectManager.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Effect.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Seedling.h">
       <Filter>ヘッダーファイル\Item</Filter>
     </ClInclude>
@@ -407,6 +401,12 @@
     </ClInclude>
     <ClInclude Include="Bed.h">
       <Filter>ヘッダーファイル\Home</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>ヘッダーファイル\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectManager.h">
+      <Filter>ヘッダーファイル\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -457,6 +457,9 @@
     </Filter>
     <Filter Include="ソースファイル\Trede">
       <UniqueIdentifier>{52436fd6-e118-4b39-8ecd-a0f8f93bd3f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\Effect">
+      <UniqueIdentifier>{4565e3ce-5dcc-43b9-be27-0c007983ff1c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

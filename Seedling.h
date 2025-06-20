@@ -10,7 +10,7 @@ class Tree;
 class Seedling : public Actor3D
 {
 private:
-	static constexpr float GrowthTime = 2;
+	static constexpr float GrowthTime = 2;	 //•c–Ø‚ª–Ø‚É¬’·‚·‚éŠÔ
 
 	int m_model;
 

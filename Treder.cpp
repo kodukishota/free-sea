@@ -4,18 +4,20 @@
 #include "ActorCollision3D.h"
 #include "Ax.h"
 #include "LoadPlayer.h"
+#include "TredeUi.h"
 
-Treder::Treder() : Actor3D("Treder"),
-m_model(MV1LoadModel("Resource/Treder/treder.mv1"))
+Treder::Treder(TredeUi* tredeUi) : Actor3D("Treder"),
+m_model(MV1LoadModel("Resource/Treder/treder.mv1")),
+m_tredeUi(tredeUi)
 {
-	//E‚¦‚é”ÍˆÍ‚ÌÝ’è
 	m_collider = new BoxCollider3D(CanTredeRange);
 
 	m_transform.position = TrederPos;
 	m_transform.angle.y = 180;
 
-	MV1SetPosition(m_model, m_transform.position);
-	MV1SetRotationXYZ(m_model,Vector3(0,100,0));
+	m_tredeUi->SetTrederPos(m_transform.position);
+
+	Quaternion::RotateAxisY(m_model, 70, m_transform.position);
 }
 
 void Treder::Load()

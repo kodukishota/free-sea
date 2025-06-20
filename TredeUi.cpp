@@ -8,7 +8,8 @@
 #include "BuyButton.h"
 #include "Inventory.h"
 
-TredeUi::TredeUi(LoadPlayer* player,
+TredeUi::TredeUi(
+	LoadPlayer* player,
 	SellButton* sellButton,
 	Wallet* wallet,
 	Inventory* inventory,
@@ -21,7 +22,8 @@ TredeUi::TredeUi(LoadPlayer* player,
 	m_seSell(0),
 	m_selectProductNum(0),
 	m_selectFlag(false),
-	m_loadFoodData(loadFoodData)
+	m_loadFoodData(loadFoodData),
+	m_seBuy(0)
 {
 	m_sprite.Register("background.png");
 	m_transform.position = UiPos;
@@ -42,6 +44,8 @@ void TredeUi::Load()
 	//seを設定
 	m_seSell = LoadSoundMem("Resource/sound/sell_se.mp3");
 	ChangeVolumeSoundMem(128, m_seSell);
+	m_seBuy = LoadSoundMem("Resource/sound/buy_se.mp3");
+	ChangeVolumeSoundMem(128, m_seBuy);
 
 	m_sprite.Load();
 	m_selectProductUi.Load();
@@ -50,6 +54,8 @@ void TredeUi::Load()
 void TredeUi::Release()
 {
 	DeleteSoundMem(m_seSell);
+	DeleteSoundMem(m_seBuy);
+
 	m_sprite.Release();
 	m_selectProductUi.Release();
 }
@@ -58,7 +64,6 @@ void TredeUi::Update()
 {
 	m_sprite.Update();
 	m_selectProductUi.Update();
-
 
 	m_nowTredeFlag = m_player->GetNowTrede();
 	
@@ -71,6 +76,9 @@ void TredeUi::Update()
 	//木を売る
 	if (m_sellButton->GetCheckOnClick() && m_inventory->GetHaveWoodCount() != 0)
 	{
+		//売った時のサウンドを再生
+		PlaySoundMem(m_seSell, DX_PLAYTYPE_BACK);
+
 		m_wallet->InWalletMoney(10);
 
 		m_inventory->LostHaveWood(1);
@@ -109,6 +117,13 @@ void TredeUi::Draw()
 			m_selectProductUi.Draw
 			(m_selectProduct[m_selectProductNum]->GetTransform());
 		}
+	}
+
+	if (m_player->CanInteractObject(m_trederPos, CanTredeRange))
+	{
+		SetFontSize(30);
+
+		DrawString(720, 600, "F:トレード", GetColor(255, 255, 255));
 	}
 }
 
@@ -172,6 +187,8 @@ void TredeUi::BuyProduct()
 	//商品を選んだ状態で購入ボタンを押したら購入
 	if (m_buyButton->GetCheckOnClick())
 	{
+		//買ったときのサウンド再生
+		PlaySoundMem(m_seBuy, DX_PLAYTYPE_BACK);
 		//お金の消費
 		m_wallet->LostMoney(m_productData[m_selectProductNum].m_needMoney);
 		//買った食べ物のアイコンを設定したり

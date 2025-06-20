@@ -17,6 +17,7 @@ private:
 	static constexpr int ConsumptionDurability = 5;	//Á–Õ‘Ï‹v’l
 
 	int m_model;
+	int m_seCut;
 
 	float m_durabilityValue;		//‘Ï‹v’l
 	int m_attackDamage;				//UŒ‚—Í

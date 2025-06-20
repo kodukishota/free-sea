@@ -65,17 +65,11 @@ void TreeFactory::SearchCutTree()
 	for (int i = 0; i <= m_treeList.size() - 1; i++)
 	{
 		//プレイヤーがX座標の中にいるか
-		if (m_treeList[i]->GetPosition().x + CanCutRangeHalf >= m_player->GetPosition().x &&
-			m_treeList[i]->GetPosition().x - CanCutRangeHalf <= m_player->GetPosition().x)
-		{
-			//プレイヤーがY座標の中にいるか
-			if (m_treeList[i]->GetPosition().z + CanCutRangeHalf >= m_player->GetPosition().z &&
-				m_treeList[i]->GetPosition().z - CanCutRangeHalf <= m_player->GetPosition().z)
-			{
-				m_cutTreeNum = i;
-				//木の近くでは苗木を埋められないように
-				m_canPlantSeedling = false;
-			}
+		if (m_player->CanInteractObject(m_treeList[i]->GetPosition(), CanCutRange))
+		{			
+			m_cutTreeNum = i;
+			//木の近くでは苗木を埋められないように
+			m_canPlantSeedling = false;
 		}
 	}
 }
@@ -134,16 +128,24 @@ void TreeFactory::FallDownTree()
 		//木を伐り終えたら
 		if (m_treeList[i]->GetIsDeth())
 		{
+			m_player->FellDownTree();
+
+			m_treeList[i]->ResetIsDeth();
+
 			//木を削除
 			m_treeList[m_cutTreeNum]->DestroyMe();
 			//木リストから削除
 			m_treeList.erase(m_treeList.begin() + m_cutTreeNum);
 
-			m_player->FellDownTree();
-
 			m_cutTreeNum = 0;
 
-			m_treeList[i]->ResetIsDeth();
+			m_finishCut = true;
+		}
+
+		if (m_finishCut)
+		{
+			break;
+			m_finishCut = false;
 		}
 	}
 }
@@ -154,17 +156,10 @@ void TreeFactory::CanPlantSeedling()
 	{
 		for (int i = 0; i <= m_treeList.size() - 1; i++)
 		{
-			//プレイヤーがX座標の中にいるか
-			if (m_treeList[i]->GetPosition().x + CanCutRangeHalf >= m_player->GetPosition().x &&
-				m_treeList[i]->GetPosition().x - CanCutRangeHalf <= m_player->GetPosition().x)
+			if (m_player->CanInteractObject(m_treeList[i]->GetPosition(), CanCutRange))
 			{
-				//プレイヤーがY座標の中にいるか
-				if (m_treeList[i]->GetPosition().z + CanCutRangeHalf >= m_player->GetPosition().z &&
-					m_treeList[i]->GetPosition().z - CanCutRangeHalf <= m_player->GetPosition().z)
-				{
-					//木の近くでは苗木を埋められないように
-					m_canPlantSeedling = false;
-				}
+				//木の近くでは苗木を埋められないように
+				m_canPlantSeedling = false;
 			}
 		}
 	}
@@ -173,17 +168,10 @@ void TreeFactory::CanPlantSeedling()
 	{
 		for (int i = 0; i <= m_seedlingList.size() - 1; i++)
 		{
-			//プレイヤーがX座標の中にいるか
-			if (m_seedlingList[i]->GetPosition().x + CanCutRangeHalf >= m_player->GetPosition().x &&
-				m_seedlingList[i]->GetPosition().x - CanCutRangeHalf <= m_player->GetPosition().x)
+			if (m_player->CanInteractObject(m_seedlingList[i]->GetPosition(), CanCutRange))
 			{
-				//プレイヤーがY座標の中にいるか
-				if (m_seedlingList[i]->GetPosition().z + CanCutRangeHalf >= m_player->GetPosition().z &&
-					m_seedlingList[i]->GetPosition().z - CanCutRangeHalf <= m_player->GetPosition().z)
-				{
-					//苗木の近くでは苗木を埋められないように
-					m_canPlantSeedling = false;
-				}
+				//苗木の近くでは苗木を埋められないように
+				m_canPlantSeedling = false;		
 			}
 		}
 	}

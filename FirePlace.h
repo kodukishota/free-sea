@@ -9,7 +9,8 @@ class Inventory;
 class FirePlace : public Actor3D
 {
 private:
-	static constexpr Vector3 CanWarmthRange = Vector3(600, 300, 600);	//‰·‚Þ‚±‚Æ‚ª‚Å‚«‚é”ÍˆÍ
+	static constexpr Vector3 WarmthRangeView = Vector3(600, 300, 600);	//‰·‚Þ‚±‚Æ‚ª‚Å‚«‚é”ÍˆÍ
+	static constexpr float WarmthRange = 800;	//‰·‚Þ‚±‚Æ‚ª‚Å‚«‚é”ÍˆÍ
 	static constexpr Vector3 WarmthRangeOffset = Vector3(0,150,-200 );	//‰·‚Þ‚±‚Æ‚ª‚Å‚«‚é”ÍˆÍ‚ð‚¸‚ç‚·
 
 	static constexpr Vector3 FirePlacePos = Vector3(0, 0, 0);
@@ -32,7 +33,6 @@ protected:
 	virtual void Draw() override;
 	virtual void Load() override;
 	virtual void Release() override;
-	virtual void OnCollision(const Actor3D* other) override;
 
 public:
 	FirePlace(LoadPlayer* player,Inventory* inventory);

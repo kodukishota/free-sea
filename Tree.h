@@ -1,7 +1,6 @@
 #pragma once
 #include"Actor3D.h"
 #include"Vector3.h"
-#include"DxLib.h"
 
 class Ax;
 class LoadPlayer;

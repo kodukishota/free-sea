@@ -14,19 +14,25 @@ Ax::Ax(LoadPlayer* player, Camera* camera, SkillCheck* skillCheck) : Actor3D("Ax
 	m_camera(camera),
 	m_isCutTreeFlag(false),
 	m_skillCheck(skillCheck),
-	m_cutTreeValue(0)
+	m_cutTreeValue(0),
+	m_seCut(0)
 {	
 }
 
 void Ax::Load()
 {
 	Actor3D::Load();
+
+	m_seCut = LoadSoundMem("Resource/sound/cut_tree_se.mp3");
+	ChangeVolumeSoundMem(128, m_seCut);
 }
 
 void Ax::Release()
 {
 	// プレイヤーのモデルを削除
 	MV1DeleteModel(m_model);
+
+	DeleteSoundMem(m_seCut);
 
 	Actor3D::Release();
 }
@@ -45,11 +51,6 @@ void Ax::Update()
 	if (m_player->GetCutTree())
 	{
 		CutTree();
-	}
-
-	if (Input::GetInstance()->IsKeyDown(KEY_INPUT_4))
-	{
-		m_player->DownBodyTemperature();
 	}
 
 	Actor3D::Update();
@@ -82,6 +83,8 @@ void Ax::CutTree()
 		m_attackDamage = AttackDamage;
 		m_consumptionDurability = ConsumptionDurability;
 		m_cutTreeValue = 1;
+
+		PlaySoundMem(m_seCut, DX_PLAYTYPE_BACK);
 
 		//押した位置がGoodやPerfectの中で押されているか
 		if (m_skillCheck->GetPrefectFlag())

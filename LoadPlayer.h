@@ -35,7 +35,7 @@ private:
 	static constexpr float Gravity = 9.8f;		// 重力加速度
 	static constexpr Vector3 SpawnPos = Vector3(850, 100, 850);	// ステージにスポーンする場所
 	static constexpr Vector3 ColOffset = Vector3(0, 90, 0);	// コライダーのオフセット
-	static constexpr Vector3 ColSize = Vector3(150, 180, 150);	// コライダーのサイズ
+	static constexpr Vector3 ColSize = Vector3(50, 180, 50);	// コライダーのサイズ
 	static constexpr int MaxHp = 100;	// 体力の最大値
 
 	static constexpr float MaxBodyTemperature = 100;	//プレイヤーの最大体温
@@ -81,6 +81,8 @@ private:
 	bool m_fellDown;	//木を伐り終えたか
 
 	bool m_isMenu;		//メニューを開いているか
+
+	bool m_isSleep;		//寝たか
 
 	Camera* m_camNode;
 	CollisionStage* m_collisionStage;
@@ -206,7 +208,7 @@ public:
 
 	void FellDownTree()
 	{
-		m_fellDown = true;
+		m_cutTree = false;
 	}
 
 	float GetBodyTempature()
@@ -255,4 +257,21 @@ public:
 	{
 		m_hungerLevel += recoveryHungry;
 	}
+
+	bool GetIsSleep()
+	{
+		return m_isSleep;
+	} 
+
+	void ResetIsSleep()
+	{
+		m_isSleep = false;
+	}
+
+	void DontWarmth()
+	{
+		m_isWarmthFlag = false;
+	}
+
+	bool CanInteractObject(Vector3 objectPos,float interactRange,Vector3 offSet = Vector3(0,0,0));
 };
