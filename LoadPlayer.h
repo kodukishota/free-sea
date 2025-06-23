@@ -40,9 +40,14 @@ private:
 
 	static constexpr float MaxBodyTemperature = 100;	//プレイヤーの最大体温
 
-	static constexpr float DownHungerLevelValue = 5;			//おなかが減る量の初期値
+	static constexpr float DownHungerLevelValue = 5;	//おなかが減る量の初期値
 	static constexpr float DownHungerLevelTime = 5;		//おなかが減る時間の初期値
 	static constexpr int FullStomach = 100;		//プレイヤーの満腹時
+
+	static constexpr int IncreasedSleepiness = 2;		//眠気の増加量
+	static constexpr int IncreasedSleepinessTime = 5;	//眠気の増加量する時間
+	static constexpr int FirstSleepiness = 100;		//眠気がないとき
+
 
 	// スタミナ関連
 	static constexpr float MaxStamina = 100;	// 走るのに必要なスタミナの最大値
@@ -69,8 +74,10 @@ private:
 	float m_fallStartY;	// 落下し始めの高さ
 
 	float m_hungerLevel;	//空腹度
+	float m_sleepiness;		//眠気
 
-	float m_hungerTime;	//おなかが減るクールダウン
+	float m_hungerTime;		//おなかが減るクールダウン
+	float m_sleepinessTime;	//眠気が増えるクールダウン
 
 	int m_seDamage;	// 攻撃を受けたときのSE
 
@@ -162,6 +169,8 @@ public:
 	void DownBodyTemperature();
 
 	void WarmthBodyTemperature();
+
+	void PlayerSleepiness();
 
 	bool IsJump()
 	{
@@ -262,6 +271,16 @@ public:
 	{
 		return m_isSleep;
 	} 
+
+	float GetSleepiness()
+	{
+		return m_sleepiness;
+	}
+
+	float GetMaxSleepiness()
+	{
+		return FirstSleepiness;
+	}
 
 	void ResetIsSleep()
 	{

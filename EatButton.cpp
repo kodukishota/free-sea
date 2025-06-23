@@ -5,7 +5,7 @@
 #include "DxLib.h"
 
 EatButton::EatButton(LoadPlayer* player) :
-	Actor("SellButton", "sell_button.png", Position),
+	Actor("EatButton", "eat_button.png", Position),
 	m_button(Size, MOUSE_INPUT_LEFT, std::bind(&EatButton::OnClick, this)),
 	m_checkOnClick(false),
 	m_player(player),

@@ -19,6 +19,7 @@ struct ProductData
 	char m_flavorText[256];
 	int m_needMoney;
 	int m_productId;
+	int m_productKindId;
 };
 
 class TredeUi : public Node

@@ -195,6 +195,7 @@
     <ClCompile Include="Tree.cpp" />
     <ClCompile Include="TreeFactory.cpp" />
     <ClCompile Include="UiBodyTemperature.cpp" />
+    <ClCompile Include="UiSleepiness.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="Wallet.cpp" />
@@ -272,6 +273,7 @@
     <ClInclude Include="Tree.h" />
     <ClInclude Include="TreeFactory.h" />
     <ClInclude Include="UiBodyTemperature.h" />
+    <ClInclude Include="UiSleepiness.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="Wallet.h" />

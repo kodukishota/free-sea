@@ -14,23 +14,39 @@ void UiBodyTemperature::Update()
 	m_bodyTemperature = m_player->GetBodyTempature() / m_player->GetMaxBodyTempature();
 
 
-	m_rightX = static_cast<int>(GaugeLeft + (GaugeWidth * m_bodyTemperature));
+	if (!m_player->GetIsMenu())
+	{
+		m_rightX = static_cast<int>(GaugeLeft + (GaugeWidth * m_bodyTemperature));
+	}
+	else
+	{
+		m_rightX = static_cast<int>(InMenuGaugeLeft + (InMenuGaugeWidth * m_bodyTemperature));
+	}
 
+	
 	if (m_rightX <= GaugeLeft)
 	{
 		m_rightX = GaugeLeft;
 	}
+	
 
-	if (m_bodyTemperature != 100)
-	{
-		int hoge = 0;
-	}
+
 }
 
 void UiBodyTemperature::Draw()
 {
-	// Œ»İ‚Ì‘Ì‰·ƒQ[ƒW
-	DrawBox(GaugeLeft, GaugeY, GaugeRight, GaugeY + GaugeHeight, GetColor(255, 100, 0), true);
-	// ‘Ì‰·ƒQ[ƒW‚Ì”wŒi
-	DrawBox(GaugeRight, GaugeY, m_rightX, GaugeY + GaugeHeight, GetColor(255, 255, 255), true);
+	if (!m_player->GetIsMenu())
+	{
+		// Œ»İ‚Ì‘Ì‰·ƒQ[ƒW
+		DrawBox(GaugeLeft, GaugeY, GaugeRight, GaugeY + GaugeHeight, GetColor(255, 100, 0), true);
+		// ‘Ì‰·ƒQ[ƒW‚Ì”wŒi
+		DrawBox(GaugeRight, GaugeY, m_rightX, GaugeY + GaugeHeight, GetColor(255, 255, 255), true);
+	}
+	else
+	{
+		// Œ»İ‚Ì‘Ì‰·ƒQ[ƒW
+		DrawBox(InMenuGaugeLeft, InMenuGaugeY, InMenuGaugeRight, InMenuGaugeY + GaugeHeight, GetColor(255, 100, 0), true);
+		// ‘Ì‰·ƒQ[ƒW‚Ì”wŒi
+		DrawBox(InMenuGaugeRight, InMenuGaugeY, m_rightX, InMenuGaugeY + GaugeHeight, GetColor(255, 255, 255), true);
+	}
 }

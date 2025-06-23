@@ -12,6 +12,7 @@ class LoadPlayer;
 class EatButton;
 class Food;
 class Ax;
+class SkillCheck;
 
 class Inventory : public Node
 {
@@ -34,11 +35,13 @@ private:
 
 	int m_maxHaveItem;
 
-	int m_haveFoodCount;	//アイテムを持ってる数
+	int m_haveFoodCount;	//たべものを持ってる数
 	int m_haveWoodCount;	//木を持っている数
 	int m_haveSeedlingCount;	//苗木を持っている数
-
-	int m_takeFood;			//今何のアイテムを持っているか
+	int m_haveAxCount;		//斧を持っている数
+	
+	int m_takeFood;	//今何のアイテムを持っているか
+	int m_takeAx;	//今何番目の斧を持っているか
 
 	bool m_canGetItem;			//アイテムを拾えるか
 	bool m_gettingItem;			//アイテムを拾ったか
@@ -59,11 +62,12 @@ private:
 
 	//アイテム格納用
 	std::vector<Food*> m_foodList;
+	std::vector<Ax*> m_axList;
 	Sprite m_axInventoryUi;
 	Sprite m_foodInventoryUi;
 	Sprite m_takeItemUi;
 	Sprite m_woodIcon;
-	Transform m_axInventoryPos;	// 姿勢
+	Transform m_axInventoryPos;		// 姿勢
 	Transform m_foodInventoryPos;	// 姿勢
 	Transform m_takeItemTransform;	// 姿勢
 	Transform m_haveWoodTransform;	// 姿勢
@@ -73,6 +77,7 @@ private:
 	EatButton* m_eatButton;
 	Food* m_food;
 	Ax* m_ax;
+	SkillCheck* m_skillCheck;
 
 protected:
 	virtual void Load() override;
@@ -81,7 +86,7 @@ protected:
 	virtual void Draw() override;
 
 public:
-	Inventory(LoadPlayer* player,LoadFoodData* loadFoodData, Ax* ax);
+	Inventory(LoadPlayer* player,LoadFoodData* loadFoodData,SkillCheck* skillCheck);
 
 	bool CanGetItem()
 	{
@@ -132,10 +137,26 @@ public:
 	{
 		m_shiftIconCount++;
 	}
+ 
+	std::vector<Ax*> GetAxList()
+	{
+		return m_axList;
+	}
 
+	int GetTakeAx()
+	{
+		return m_takeAx;
+	}
+ 
 	//買った食べ物をメニューで表示させる
-	void CreateFoodIcon(int foodId);
+	void BuyFood(int foodId);
+
+	//斧を買った時のアイコンを表示したり
+	void BuyAx(int axId);
 
 	//選択した食べ物を食べる
 	void EatFood();
+
+	//マウスホイールで斧を選択する
+	void SelectAx();
 };

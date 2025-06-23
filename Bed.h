@@ -8,8 +8,9 @@ class WorldTime;
 class Bed : public Actor3D
 {
 private:
-	static constexpr Vector3 BedPosition = Vector3(-500, 50, -400);
+	static constexpr Vector3 BedPosition = Vector3(-1100, 50, -400);
 	static constexpr Vector3 CanSleepRnage = Vector3(500, 500, 500);	//ベットにインタラクトできる範囲
+	static constexpr Vector3 CanSleepRnageOffset = Vector3(100, 0, 0);	//ベットにインタラクトできる範囲
 
 	bool m_canSleep;	//寝れることができるか
 

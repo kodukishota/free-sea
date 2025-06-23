@@ -58,7 +58,9 @@ LoadPlayer::LoadPlayer(
 	m_warmthTemperatureCoolDown(0),
 	m_hungerTime(0),
 	m_nowTrede(false),
-	m_isSleep(false)
+	m_isSleep(false),
+	m_sleepiness(FirstSleepiness),
+	m_sleepinessTime(0)
 {
 	//-----アニメーションの作成-----
 	// アニメーションクラスをリスト化する
@@ -180,12 +182,6 @@ void LoadPlayer::Update()
 		m_transform.position = SpawnPos;
 		m_hp = MaxHp;
 	}
-
-	// press "0" => 自殺
-	if (Input::GetInstance()->IsKeyDown(KEY_INPUT_0))
-	{
-		m_hp = 0;
-	}
 #endif // _DEBUG
 
 	if (m_hp <= 0)
@@ -221,6 +217,7 @@ void LoadPlayer::Update()
 
 	DownBodyTemperature();
 	DownHungerLevel();
+	PlayerSleepiness();
 
 	// アニメーションの切り替え
 	ChangeAnimLerp();
@@ -515,10 +512,18 @@ void LoadPlayer::Draw()
 	// アニメーション再生
 	PlayAnim();
 
+#ifdef _DEBUG
 	DrawFormatString(0, 500, GetColor(255, 255, 255),
 		"体温%f",
 		m_bodyTemperature
 	);
+	DrawFormatString(0, 550, GetColor(255, 255, 255),
+		"眠気%f",
+		m_sleepiness
+	);
+
+#endif // _DEBUG
+
 }
 
 void LoadPlayer::OnCollision(const Actor3D* other)
@@ -614,6 +619,28 @@ void LoadPlayer::DownHungerLevel()
 	{
 		m_hungerLevel -= DownHungerLevelValue;
 		m_hungerTime = 0;
+	}
+
+	if (m_hungerLevel >= FullStomach)
+	{
+		m_hungerLevel = FullStomach;
+	}
+}
+
+void LoadPlayer::PlayerSleepiness()
+{
+	m_sleepinessTime += Time::GetInstance()->GetDeltaTime();
+
+	if ((m_sleepiness >= 0 && m_sleepinessTime >= IncreasedSleepinessTime))
+	{
+		m_sleepiness -= IncreasedSleepiness;
+		m_sleepinessTime = 0;
+	}
+
+	//寝たら眠気を無くす
+	if (m_isSleep)
+	{
+		m_sleepiness = 100;
 	}
 }
 

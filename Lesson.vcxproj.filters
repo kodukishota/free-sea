@@ -181,6 +181,9 @@
     <ClCompile Include="Bed.cpp">
       <Filter>ソースファイル\Home</Filter>
     </ClCompile>
+    <ClCompile Include="UiSleepiness.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -407,6 +410,9 @@
     </ClInclude>
     <ClInclude Include="EffectManager.h">
       <Filter>ヘッダーファイル\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="UiSleepiness.h">
+      <Filter>ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

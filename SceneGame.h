@@ -18,6 +18,7 @@ class SkillCheck;
 class Ax;
 class Tree;
 class UiBodyTemperature;
+class UiSleepiness;
 class HungerLevelUi;
 class FirePlace;
 class Treder;
@@ -49,6 +50,7 @@ private:
 	Ax* m_ax;
 	Tree* m_tree;
 	UiBodyTemperature* m_uiBodyTemperature;
+	UiSleepiness* m_uiSleepiness;
 	HungerLevelUi* m_hungerlevelUi;
 	FirePlace* m_firePlace;
 	Treder* m_treder;
@@ -81,6 +83,7 @@ public:
 		m_ax(nullptr),
 		m_tree(nullptr),
 		m_uiBodyTemperature(nullptr),
+		m_uiSleepiness(nullptr),
 		m_hungerlevelUi(nullptr),
 		m_firePlace(nullptr),
 		m_treder(nullptr),

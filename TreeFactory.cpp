@@ -15,7 +15,7 @@ TreeFactory::TreeFactory(Ax* ax, LoadPlayer* player, Inventory* inventory) :
 	m_finishedGrowing(false),
 	m_canPlantSeedling(false)
 {
-	m_tree = new Tree(m_ax, m_player, m_inventory, Vector3(-3000, 0, -500));
+	m_tree = new Tree(m_player, m_inventory, Vector3(-3000, 0, -500));
 
 	AddChild(m_tree);
 
@@ -93,7 +93,7 @@ void TreeFactory::FinishedGrowing()
 	{
 		if (m_seedlingList[i]->GetIsGrow())
 		{
-			m_tree = new Tree(m_ax,
+			m_tree = new Tree(
 				m_player,
 				m_inventory,
 				m_seedlingList[i]->GetPosition());

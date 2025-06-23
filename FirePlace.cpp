@@ -19,7 +19,7 @@ m_fireDuration(FireDuration),
 m_isFire(false)
 {
 	//�͈͂̐ݒ�
-	m_collider = new BoxCollider3D(WarmthRangeView, WarmthRangeOffset);
+	m_collider = new BoxCollider3D(WarmthRangeView);
 
 	m_transform.position = FirePlacePos;
 

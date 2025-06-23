@@ -2,7 +2,6 @@
 #include"Actor3D.h"
 #include"Vector3.h"
 
-class Ax;
 class LoadPlayer;
 class Inventory;
 
@@ -17,7 +16,6 @@ private:
 
 	int m_helth;	//‘Ì—Í
 
-	Ax* m_ax;
 	LoadPlayer* m_player;
 	Inventory* m_inventory;
 
@@ -30,7 +28,7 @@ protected:
 	virtual void Release() override;
 
 public:
-	Tree(Ax* ax,LoadPlayer* player,Inventory* inventory,Vector3 position);
+	Tree(LoadPlayer* player,Inventory* inventory,Vector3 position);
 
 	Vector3 GetPosition()
 	{

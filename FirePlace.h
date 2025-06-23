@@ -9,9 +9,8 @@ class Inventory;
 class FirePlace : public Actor3D
 {
 private:
-	static constexpr Vector3 WarmthRangeView = Vector3(600, 300, 600);	//‰·‚Þ‚±‚Æ‚ª‚Å‚«‚é”ÍˆÍ
-	static constexpr float WarmthRange = 800;	//‰·‚Þ‚±‚Æ‚ª‚Å‚«‚é”ÍˆÍ
-	static constexpr Vector3 WarmthRangeOffset = Vector3(0,150,-200 );	//‰·‚Þ‚±‚Æ‚ª‚Å‚«‚é”ÍˆÍ‚ð‚¸‚ç‚·
+	static constexpr Vector3 WarmthRangeView = Vector3(2000, 300, 2000);	//‰·‚Þ‚±‚Æ‚ª‚Å‚«‚é”ÍˆÍ
+	static constexpr float WarmthRange = 2000;	//‰·‚Þ‚±‚Æ‚ª‚Å‚«‚é”ÍˆÍ
 
 	static constexpr Vector3 FirePlacePos = Vector3(0, 0, 0);
 

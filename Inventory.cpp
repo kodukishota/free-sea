@@ -9,7 +9,7 @@
 #include "Seedling.h"
 #include "Ax.h"
 
-Inventory::Inventory(LoadPlayer* player, LoadFoodData* loadFoodData, Ax* ax) :
+Inventory::Inventory(LoadPlayer* player, LoadFoodData* loadFoodData, SkillCheck* skillCheck) :
 	m_maxHaveItem(10),
 	m_haveFoodCount(0),
 	m_canGetItem(false),
@@ -27,9 +27,11 @@ Inventory::Inventory(LoadPlayer* player, LoadFoodData* loadFoodData, Ax* ax) :
 	m_eatButton(nullptr),
 	m_food(),
 	m_haveSeedlingCount(0),
-	m_ax(ax),
+	m_ax(nullptr),
 	m_shiftIconCount(0),
-	m_seEat(0)
+	m_seEat(0),
+	m_skillCheck(skillCheck),
+	m_takeAx(0)
 {
 	m_axInventoryUi.Register("inventory_ui.png");
 	m_foodInventoryUi.Register("inventory_ui.png");
@@ -38,6 +40,9 @@ Inventory::Inventory(LoadPlayer* player, LoadFoodData* loadFoodData, Ax* ax) :
 
 	m_eatButton = new EatButton(m_player);
 	AddChild(m_eatButton);
+
+	BuyAx(0);
+	BuyAx(0);
 }
 
 void Inventory::Load()
@@ -76,7 +81,7 @@ void Inventory::Update()
 	m_takeItemUi.Update();
 	m_woodIcon.Update();
 
-	//アイテムを拾うことができるか
+	//アイテムを買うことができるか
 	if (m_haveFoodCount < m_maxHaveItem)
 	{
 		m_canGetItem = true;
@@ -90,6 +95,8 @@ void Inventory::Update()
 	if (!m_player->GetIsMenu())
 	{
 		m_haveWoodTransform.position = WoodIconPos;
+
+		SelectAx();
 	}
 	else
 	{
@@ -101,6 +108,11 @@ void Inventory::Update()
 	{
 		EatFood();
 	}	
+
+	if (m_player->GetCutTree())
+	{
+		m_axList[m_takeAx]->CutTree();
+	}
 }
 
 void Inventory::Draw()
@@ -129,6 +141,7 @@ void Inventory::Draw()
 		}
 	}	
 
+	//選んでいる食べ物が何かの協調枠の表示
 	for (int i = 0; i <= m_haveFoodCount - 1; i++)
 	{
 		if (m_haveFoodCount != 0)
@@ -139,6 +152,17 @@ void Inventory::Draw()
 
 				m_takeItemUi.Draw(m_takeItemTransform);
 			}
+		}
+	}
+
+	//選んでいる斧が何かの協調枠の表示
+	for (int i = 0; i <= m_haveAxCount - 1; i++)
+	{
+		if (m_haveAxCount != 0)
+		{
+			m_takeItemTransform.position = m_axList[m_takeAx]->GetDrawPos();
+
+			m_takeItemUi.Draw(m_takeItemTransform);
 		}
 	}
 
@@ -167,7 +191,7 @@ void Inventory::Draw()
 	} while (nowHaveWoodCount > 0);
 }
 
-void Inventory::CreateFoodIcon(int foodId)
+void Inventory::BuyFood(int foodId)
 {
 	if (m_haveFoodCount <= m_maxHaveItem)
 	{
@@ -186,6 +210,18 @@ void Inventory::CreateFoodIcon(int foodId)
 
 		m_haveFoodCount++;
 	}
+}
+
+void Inventory::BuyAx(int axId)
+{
+	m_ax = new Ax(m_player, m_skillCheck,m_haveAxCount);
+
+	AddChild(m_ax);
+
+	//持っている食べ物リストにいれる
+	m_axList.push_back(m_ax);
+
+	m_haveAxCount++;
 }
 
 void Inventory::EatFood()
@@ -224,3 +260,17 @@ void Inventory::EatFood()
 	}
 }
 
+void Inventory::SelectAx()
+{
+	m_takeAx += Input::GetInstance()->GetMouseWheelRot();
+
+	//持っている斧より次を選択できないように
+	if (m_takeAx > m_haveAxCount - 1)
+	{
+		m_takeAx = 0;
+	}
+	if (m_takeAx < 0)
+	{
+		m_takeAx = m_haveAxCount - 1;
+	}
+}

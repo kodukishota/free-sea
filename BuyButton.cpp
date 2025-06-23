@@ -7,7 +7,7 @@
 #include "Time.h"
 
 BuyButton::BuyButton(LoadPlayer* player,Wallet* wallet,TredeUi* tredeUi) :
-	Actor("SellButton", "sell_button.png", Position),
+	Actor("BuyButton", "buy_button.png", Position),
 	m_button(Size, MOUSE_INPUT_LEFT, std::bind(&BuyButton::OnClick, this)),
 	m_checkOnClick(false),
 	m_player(player),

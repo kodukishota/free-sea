@@ -4,19 +4,21 @@
 #include "Camera.h"
 #include "Input.h"
 #include "SkillCheak.h"
+#include "AxIcon.h"
 
-Ax::Ax(LoadPlayer* player, Camera* camera, SkillCheck* skillCheck) : Actor3D("Ax"),
+Ax::Ax(LoadPlayer* player, SkillCheck* skillCheck, int haveCount) : Actor3D("Ax"),
 	m_durabilityValue(FirstDurabilityValue),
 	m_attackDamage(AttackDamage),
 	m_consumptionDurability(ConsumptionDurability),
 	m_model(MV1LoadModel("Resource/Ax/Ax.mv1")),
 	m_player(player),
-	m_camera(camera),
 	m_isCutTreeFlag(false),
 	m_skillCheck(skillCheck),
-	m_cutTreeValue(0),
 	m_seCut(0)
 {	
+	m_axIcon = new AxIcon(this, haveCount);
+
+	AddChild(m_axIcon);
 }
 
 void Ax::Load()
@@ -42,16 +44,9 @@ void Ax::Update()
 	m_transform.position = m_player->GetPosition() + OffSet;
 	//m_transform.position = m_camera->CamFrontVec();
 
-	m_transform.angle = m_camera->CamFrontVec();//+ OffSet;
-
 	//MV1SetPosition(m_model, m_transform.position);
 	Quaternion::RotateAxisY(m_model, m_transform.angle.y, m_transform.position);
 	MV1SetRotationXYZ(m_model, m_transform.angle);
-
-	if (m_player->GetCutTree())
-	{
-		CutTree();
-	}
 
 	Actor3D::Update();
 }
@@ -82,14 +77,12 @@ void Ax::CutTree()
 	{
 		m_attackDamage = AttackDamage;
 		m_consumptionDurability = ConsumptionDurability;
-		m_cutTreeValue = 1;
 
 		PlaySoundMem(m_seCut, DX_PLAYTYPE_BACK);
 
 		//‰Ÿ‚µ‚½ˆÊ’u‚ªGood‚âPerfect‚Ì’†‚Å‰Ÿ‚³‚ê‚Ä‚¢‚é‚©
 		if (m_skillCheck->GetPrefectFlag())
 		{
-			m_attackDamage = m_attackDamage * 2;
 			m_consumptionDurability = m_consumptionDurability * 0.5f;
 			m_cutTreeValue = 1.5f;
 
@@ -97,7 +90,6 @@ void Ax::CutTree()
 		}
 		else if (m_skillCheck->GetGoodFlag())
 		{
-			m_attackDamage = m_attackDamage;
 			m_consumptionDurability = m_consumptionDurability;
 			m_cutTreeValue = 1;
 
@@ -105,7 +97,6 @@ void Ax::CutTree()
 		}
 		else if(m_skillCheck->GetBadFlag())
 		{
-			 m_attackDamage = m_attackDamage * 0.5f;
 			 m_consumptionDurability = m_consumptionDurability * 1.5f;
 			 m_cutTreeValue = 0.5f;
 

@@ -12,6 +12,12 @@ private:
 	static constexpr int GaugeHeight = 20;	// ゲージの高さ
 	static constexpr int GaugeWidth = GaugeRight - GaugeLeft;	// ゲージの幅
 
+	//メニュー時
+	static constexpr int InMenuGaugeLeft = 105;
+	static constexpr int InMenuGaugeRight = 405;
+	static constexpr int InMenuGaugeY = 90;
+	static constexpr int InMenuGaugeWidth = InMenuGaugeRight - InMenuGaugeLeft;	// ゲージの幅
+
 	int m_rightX;	// ゲージの右のX座標
 
 	LoadPlayer* m_player;

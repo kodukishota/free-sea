@@ -119,11 +119,15 @@ void TredeUi::Draw()
 		}
 	}
 
+	//近くなったら説明文を描画
 	if (m_player->CanInteractObject(m_trederPos, CanTredeRange))
 	{
-		SetFontSize(30);
+		if (!m_player->GetIsMenu() && !m_player->GetNowTrede())
+		{
+			SetFontSize(30);
 
-		DrawString(720, 600, "F:トレード", GetColor(255, 255, 255));
+			DrawString(720, 600, "F:トレード", GetColor(255, 255, 255));
+		}
 	}
 }
 
@@ -138,9 +142,9 @@ void TredeUi::LoadBuyItem()
 
 	for (int i = 0; i <= static_cast<int>(TredeItem::Length) - 1; i++)
 	{
-		FileRead_scanf(fileHandle, "%[^,],%[^,],%[^,],%d,%d",
-			m_productData[i].m_itemName, m_productData[i].m_iconName,
-			m_productData[i].m_flavorText, &m_productData[i].m_needMoney,&m_productData[i].m_productId);//読み込み
+		FileRead_scanf(fileHandle, "%[^,],%[^,],%[^,],%d,%d,%d",
+			m_productData[i].m_itemName, m_productData[i].m_iconName,m_productData[i].m_flavorText, 
+			&m_productData[i].m_needMoney,&m_productData[i].m_productId,&m_productData[i].m_productKindId);//読み込み
 	}
 
 	//ファイルを閉じる
@@ -191,7 +195,15 @@ void TredeUi::BuyProduct()
 		PlaySoundMem(m_seBuy, DX_PLAYTYPE_BACK);
 		//お金の消費
 		m_wallet->LostMoney(m_productData[m_selectProductNum].m_needMoney);
-		//買った食べ物のアイコンを設定したり
-		m_inventory->CreateFoodIcon(m_productData[m_selectProductNum].m_productId);		
+
+		if (m_productData[m_selectProductNum].m_productKindId == 0)
+		{
+			//買った食べ物のアイコンを設定したり
+			m_inventory->BuyFood(m_productData[m_selectProductNum].m_productId);
+		}
+		if (m_productData[m_selectProductNum].m_productKindId == 1)
+		{
+
+		}
 	}
 }

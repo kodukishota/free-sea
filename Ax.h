@@ -4,8 +4,8 @@
 #include"Sprite.h"
 
 class LoadPlayer;
-class Camera;
 class SkillCheck;
+class AxIcon;
 
 class Ax : public Actor3D
 {
@@ -15,6 +15,8 @@ private:
 	static constexpr float FirstDurabilityValue = 100;	//ëœãvóÕ
 	static constexpr int AttackDamage = 5;				//çUåÇóÕ
 	static constexpr int ConsumptionDurability = 5;	//è¡ñ’ëœãvíl
+
+	Vector2 m_drawPos;
 
 	int m_model;
 	int m_seCut;
@@ -28,8 +30,8 @@ private:
 	float m_cutTreeValue; //î∞Ç¡ÇΩñÿÇÃî{ó¶
 
 	LoadPlayer* m_player;
-	Camera* m_camera;
 	SkillCheck* m_skillCheck;
+	AxIcon* m_axIcon;
 
 protected:
 	virtual void Update() override;
@@ -38,7 +40,7 @@ protected:
 	virtual void Release() override;
 
 public:
-	Ax( LoadPlayer* player, Camera* camera, SkillCheck* skillCheck);
+	Ax( LoadPlayer* player, SkillCheck* skillCheck,int haveCount);
 
 	//ñÿÇî∞ÇÈ
 	void CutTree();
@@ -71,5 +73,15 @@ public:
 	float GetCutTreeMagnification()
 	{
 		return m_cutTreeValue;
+	}
+
+	void SetDrawPos(Vector2 drawPos)
+	{
+		m_drawPos = drawPos;
+	}
+
+	Vector2 GetDrawPos()
+	{
+		return m_drawPos;
 	}
 };

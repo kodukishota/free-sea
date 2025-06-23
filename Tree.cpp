@@ -6,10 +6,9 @@
 #include "LoadPlayer.h"
 #include "Inventory.h"
 
-Tree::Tree(Ax* ax, LoadPlayer* player, Inventory* inventory,Vector3 Position) : Actor3D("Tree"),
+Tree::Tree(LoadPlayer* player, Inventory* inventory,Vector3 Position) : Actor3D("Tree"),
 	m_helth(FristHelth),
 	m_model(MV1LoadModel("Resource/Tree/tree.mv1")),
-	m_ax(ax),
 	m_player(player),
 	m_inventory(inventory),
 	m_isDeth(false)
@@ -39,16 +38,19 @@ void Tree::Update()
 {
 	Actor3D::Update();
 
-	//伐られたら体力を減らしてインべントリに木をいれる
-	if (m_ax->GetIsCutTree())
+	if (!m_inventory->GetAxList().empty())
 	{
-		m_helth -= m_ax->GetCutDamage();
+		//伐られたら体力を減らしてインべントリに木をいれるf
+		if (m_inventory->GetAxList()[m_inventory->GetTakeAx()]->GetIsCutTree())
+		{
+			m_helth -= m_inventory->GetAxList()[m_inventory->GetTakeAx()]->GetCutDamage();
 
-		int takeWoodValue = CutTreeTakeValue * m_ax->GetCutTreeMagnification();
+			int takeWoodValue = CutTreeTakeValue * m_inventory->GetAxList()[m_inventory->GetTakeAx()]->GetCutTreeMagnification();
 
-		m_inventory->TakeCutWood(takeWoodValue);
+			m_inventory->TakeCutWood(takeWoodValue);
 
-		m_ax->OffIsCutTree();
+			m_inventory->GetAxList()[m_inventory->GetTakeAx()]->OffIsCutTree();
+		}
 	}
 
 	//体力がゼロになったら

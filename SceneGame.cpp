@@ -21,6 +21,7 @@
 #include "AxIcon.h"
 #include "Tree.h"
 #include "UiBodyTemperature.h"
+#include "UiSleepiness.h"
 #include "HungerLevelUi.h"
 #include "FirePlace.h"
 #include "Treder.h"
@@ -79,15 +80,9 @@ void SceneGame::Initialize()
 	//スキルチェックUi
 	m_skillCheck = new SkillCheck(m_loadPlayer);
 
-	//斧
-	m_ax = new Ax(m_loadPlayer, m_cam, m_skillCheck);
-	actorLayer->AddChild(m_ax);
-
-	m_axIcon = new AxIcon(m_ax);
-	uiLayer->AddChild(m_axIcon);
 
 	//インベントリ
-	m_inventory = new Inventory(m_loadPlayer,m_loadFoodData,m_ax);
+	m_inventory = new Inventory(m_loadPlayer,m_loadFoodData,m_skillCheck);
 
 	//木工場
 	m_treeFactory = new TreeFactory(m_ax, m_loadPlayer, m_inventory);
@@ -107,6 +102,10 @@ void SceneGame::Initialize()
 	//空腹度Ui
 	m_hungerlevelUi = new HungerLevelUi(m_loadPlayer);
 	uiLayer->AddChild(m_hungerlevelUi);
+
+	//眠気Ui
+	m_uiSleepiness = new UiSleepiness(m_loadPlayer);
+	uiLayer->AddChild(m_uiSleepiness);
 
 	//暖炉
 	m_firePlace = new FirePlace(m_loadPlayer,m_inventory);

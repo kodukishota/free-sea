@@ -5,14 +5,14 @@
 #include "BoxCollider3D.h"
 #include "ActorCollision3D.h"
 
-Bed::Bed(LoadPlayer* player, WorldTime* worldTime) : Actor3D("Bed"),
+Bed::Bed(LoadPlayer* player, WorldTime* worldTime) : Actor3D("Bed", BedPosition),
 	m_model(MV1LoadModel("Resource/home/bed.mv1")),
 	m_canSleep(false),
 	m_player(player),
 	m_worldTime(worldTime)
 {
 	//ƒxƒbƒh”ÍˆÍ‚ÌÝ’è
-	m_collider = new BoxCollider3D(CanSleepRnage, BedPosition);
+	m_collider = new BoxCollider3D(CanSleepRnage , CanSleepRnageOffset);
 
 	Quaternion::RotateAxisY(m_model, 160, BedPosition);
 }
@@ -47,7 +47,7 @@ void Bed::Draw()
 	MV1DrawModel(m_model);
 	Actor3D::Draw();
 
-	if (m_player->CanInteractObject(BedPosition, CanSleepRnage.x))
+	if (m_player->CanInteractObject(BedPosition, CanSleepRnage.x, CanSleepRnageOffset))
 	{
 		SetFontSize(30);
 

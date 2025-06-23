@@ -23,6 +23,8 @@ private:
 
 	int m_rightX;	// ゲージの右のX座標
 
+	int m_haveCount;
+
 	float m_Durability;	// 耐久力の残りの比率
 
 	Ax* m_ax;
@@ -34,5 +36,10 @@ protected:
 	virtual void Draw() override;
 
 public:
-	AxIcon(Ax* ax);
+	AxIcon(Ax* ax,int haveCount);
+
+	Vector2 GetDrawPos()
+	{
+		return m_axIconTsransform.position;
+	}
 };
