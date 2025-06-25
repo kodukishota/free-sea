@@ -71,6 +71,11 @@ void SceneGame::Initialize()
 	m_cam = new Camera(m_loadPlayer, m_collisionStage);
 	actorLayer->AddChild(m_cam);
 	
+	//メニュー画面
+	m_menu = new Menu(m_loadPlayer);
+	uiLayer->AddChild(m_menu);
+
+	//世界の時間
 	m_worldTime = new WorldTime(m_loadPlayer);
 
 	//ベッド
@@ -80,17 +85,12 @@ void SceneGame::Initialize()
 	//スキルチェックUi
 	m_skillCheck = new SkillCheck(m_loadPlayer);
 
-
 	//インベントリ
 	m_inventory = new Inventory(m_loadPlayer,m_loadFoodData,m_skillCheck);
 
 	//木工場
 	m_treeFactory = new TreeFactory(m_ax, m_loadPlayer, m_inventory);
 	uiLayer->AddChild(m_treeFactory);
-
-	//メニュー画面
-	m_menu = new Menu(m_loadPlayer);
-	uiLayer->AddChild(m_menu);
 
 	uiLayer->AddChild(m_skillCheck);
 	uiLayer->AddChild(m_worldTime);
@@ -111,6 +111,7 @@ void SceneGame::Initialize()
 	m_firePlace = new FirePlace(m_loadPlayer,m_inventory);
 	actorLayer->AddChild(m_firePlace);
 	
+	//財布
 	m_wallet = new Wallet(m_loadPlayer);
 	//トレードUI系
 	m_sellButton = new SellButton(m_loadPlayer,m_inventory);

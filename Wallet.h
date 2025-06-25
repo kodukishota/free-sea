@@ -10,7 +10,8 @@ class Wallet : public Node
 private:
 	static constexpr Vector2 WalletSize = Vector2(40, 11);	// SCORE画像の幅・高さ
 	static constexpr Vector2 FontSize = Vector2(20, 35);	// 数字1文字の幅・高さ
-	static constexpr Vector2 WalletPos = Vector2(210, 80);		// 画面右上からの差分
+	static constexpr Vector2 TredeWalletPos = Vector2(210, 80);		// トレード時の所持金表示位置
+	static constexpr Vector2 MenuWalletPos = Vector2(600, 130);		// メニュー時の所持金表示位置
 	static constexpr int FontMargin = 5;					// 数字と数字の間の余白
 
 	Sprite m_walletImg;		// Wallet画像

@@ -13,11 +13,16 @@ WorldTime::WorldTime(LoadPlayer* player)	:
 {
 
 	m_timeFontId = ImageLoader::GetInstance()->Load("score_font.png");
+
+	m_timerUi = ImageLoader::GetInstance()->Load("timer.png");
+	m_spendDaysUi = ImageLoader::GetInstance()->Load("spend_days.png");
 }
 
 void WorldTime::Release()
 {
 	ImageLoader::GetInstance()->Delete("score_font.png");
+	ImageLoader::GetInstance()->Delete("timer.png");
+	ImageLoader::GetInstance()->Delete("spend_days.png");
 }
 
 void WorldTime::Update()
@@ -34,7 +39,6 @@ void WorldTime::Draw()
 {
 	if (m_player->GetIsMenu())
 	{
-
 		//Œ»İ‚Ì(•ª)‚Ì”‚ğ•`‰æ
 		Vector2 nowTimeMinutesUiPos = Vector2(1300, 100);
 		nowTimeMinutesUiPos.y += FontMargin;
@@ -98,5 +102,31 @@ void WorldTime::Draw()
 			nowTimeHour /= 10;
 			nowTimeHourDigit++;		// Ÿ‚ÌŒ…‚Ö
 		} while (nowTimeHour > 0);
+
+		DrawGraph(SpendDaysUiPos.x, SpendDaysUiPos.y, m_spendDaysUi, true);
+
+		//‰ß‚²‚µ‚½“ú”‚ğ•`‰æ
+		Vector2 nowWorldDaysPos = SpendDaysUiPos + Vector2(210, 50);
+		nowWorldDaysPos.y += FontMargin;
+		int nowWorldDays = m_worldDays;
+		int nowWorldDaysDigit = 1;
+		do
+		{
+			int value = nowWorldDays % 10;	// 1‚ÌˆÊ‚Ì’l‚ğæ‚èo‚·
+
+			DrawRectGraph(
+				static_cast<int>(nowWorldDaysPos.x - FontSize.x * nowWorldDaysDigit), static_cast<int>(nowWorldDaysPos.y),
+				static_cast<int>(FontSize.x) * value, 0,
+				static_cast<int>(FontSize.x), static_cast<int>(FontSize.y),
+				m_timeFontId,
+				true
+			);
+
+			nowWorldDays /= 10;
+			nowWorldDaysDigit++;		// Ÿ‚ÌŒ…‚Ö
+		} while (nowWorldDays > 0);
+
+		DrawGraph(TimerPos.x, TimerPos.y, m_timerUi,true);
 	}
+
 }

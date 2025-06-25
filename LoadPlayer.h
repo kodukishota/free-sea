@@ -79,6 +79,8 @@ private:
 	float m_hungerTime;		//おなかが減るクールダウン
 	float m_sleepinessTime;	//眠気が増えるクールダウン
 
+	bool m_isTired;	//疲労しているか
+
 	int m_seDamage;	// 攻撃を受けたときのSE
 
 	bool m_isDeath;	// 死亡フラグ
@@ -290,6 +292,11 @@ public:
 	void DontWarmth()
 	{
 		m_isWarmthFlag = false;
+	}
+
+	bool GetIsTired()
+	{
+		return m_isTired;
 	}
 
 	bool CanInteractObject(Vector3 objectPos,float interactRange,Vector3 offSet = Vector3(0,0,0));

@@ -17,10 +17,11 @@ class SkillCheck;
 class Inventory : public Node
 {
 private:
-	static constexpr Vector2 TakeItemUiPos = Vector2(60,890);
-	static constexpr Vector2 AxInventoryUiPos = Vector2(60, 890);
-	static constexpr Vector2 AxMenuInventoryUiPos = Vector2(150, 300);
-	static constexpr Vector2 FoodInventoryUiPos = Vector2(150, 800);
+	//現在持っている斧を強調表示するUIの初期位置
+	static constexpr Vector2 TakeItemUiPos = Vector2(60,890);		
+	static constexpr Vector2 AxInventoryUiPos = Vector2(60, 890);		//斧の枠の位置
+	static constexpr Vector2 AxMenuInventoryUiPos = Vector2(150, 300);	//斧の枠の位置メニュー時
+	static constexpr Vector2 FoodInventoryUiPos = Vector2(150, 800);	//食べ物欄の枠の位置
 	static constexpr Vector2 WoodIconPos = Vector2(370, 890);
 	static constexpr Vector2 WoodMenuIconPos = Vector2(160, 400);
 	static constexpr Vector2 FontSize = Vector2(20, 35);	// 数字1文字の幅・高さ

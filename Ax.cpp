@@ -14,9 +14,10 @@ Ax::Ax(LoadPlayer* player, SkillCheck* skillCheck, int haveCount) : Actor3D("Ax"
 	m_player(player),
 	m_isCutTreeFlag(false),
 	m_skillCheck(skillCheck),
-	m_seCut(0)
+	m_seCut(0),
+	m_cutTreeValue(0)
 {	
-	m_axIcon = new AxIcon(this, haveCount);
+	m_axIcon = new AxIcon(this, haveCount,m_player);
 
 	AddChild(m_axIcon);
 }

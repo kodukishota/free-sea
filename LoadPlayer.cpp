@@ -59,8 +59,9 @@ LoadPlayer::LoadPlayer(
 	m_hungerTime(0),
 	m_nowTrede(false),
 	m_isSleep(false),
-	m_sleepiness(FirstSleepiness),
-	m_sleepinessTime(0)
+	m_sleepiness(0),
+	m_sleepinessTime(0),
+	m_isTired(false)
 {
 	//-----アニメーションの作成-----
 	// アニメーションクラスをリスト化する
@@ -642,11 +643,25 @@ void LoadPlayer::PlayerSleepiness()
 	{
 		m_sleepiness = 100;
 	}
+
+	if (m_sleepiness <= 0)
+	{
+		m_isTired = true;
+	}
+	else
+	{
+		m_isTired = false;
+	}
 }
 
 // スタミナ管理
 void LoadPlayer::StaminaManagement()
 {
+	if (m_isTired)
+	{
+		m_stamina = 0;
+	}
+
 	if (m_isDash)
 	{
 		m_staminaDecrease = StaminaDecreaseAmount;

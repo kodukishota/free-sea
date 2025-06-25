@@ -9,7 +9,6 @@ Wallet::Wallet(LoadPlayer* player) :
 	m_haveMoney(0),
 	m_player(player)
 {
-	m_transform.position = WalletPos;
 	m_transform.scale = 0.3f;
 	m_walletImg.Register("wallet.png");
 }
@@ -29,11 +28,20 @@ void Wallet::Release()
 void Wallet::Update()
 {
 	m_walletImg.Update();
+
+	if (m_player->GetIsMenu())
+	{
+		m_transform.position = MenuWalletPos;
+	}
+	else if (m_player->GetNowTrede())
+	{
+		m_transform.position = TredeWalletPos;
+	}
 }
 
 void Wallet::Draw()
 {
-	if (m_player->GetNowTrede())
+	if (m_player->GetNowTrede() || m_player->GetIsMenu())
 	{
 		// Wallet‚ð•`‰æ
 		m_walletImg.Draw(m_transform);
