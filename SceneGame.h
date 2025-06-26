@@ -29,6 +29,8 @@ class LoadFoodData;
 class TreeFactory;
 class WorldTime;
 class Bed;
+class HomeLight;
+class SunLight;
 
 class AxIcon;
 
@@ -61,6 +63,8 @@ private:
 	TreeFactory* m_treeFactory;
 	WorldTime* m_worldTime;
 	Bed* m_bed;
+	HomeLight* m_homeLight;
+	SunLight* m_sunLight;
 
 	AxIcon* m_axIcon;
 
@@ -94,7 +98,8 @@ public:
 		m_treeFactory(nullptr),
 		m_worldTime(nullptr),
 		m_bed(nullptr),
-		
+		m_homeLight(nullptr),
+		m_sunLight(nullptr),
 	
 		m_axIcon(nullptr){};
 

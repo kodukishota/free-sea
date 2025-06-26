@@ -33,6 +33,8 @@
 #include "TreeFactory.h"
 #include "WorldTime.h"
 #include "Bed.h"
+#include "HomeLight.h"
+#include "SunLight.h"
 #include "DxLib.h"
 
 #include "Item.h"
@@ -60,6 +62,9 @@ void SceneGame::Initialize()
 	m_collisionStage = new CollisionStage("Resource/colloder_stage.mv1", "Resource/colloder_stage_wall.mv1", Vector3(0, 0, 0));
 	uiLayer->AddChild(m_collisionStage);
 
+	m_homeLight = new HomeLight();
+	uiLayer->AddChild(m_homeLight);
+
 	//食べ物の情報をCSVから取得
 	m_loadFoodData = new LoadFoodData();
 	uiLayer->AddChild(m_loadFoodData);
@@ -77,6 +82,9 @@ void SceneGame::Initialize()
 
 	//世界の時間
 	m_worldTime = new WorldTime(m_loadPlayer);
+
+	m_sunLight = new SunLight(m_worldTime);
+	uiLayer->AddChild(m_sunLight);
 
 	//ベッド
 	m_bed = new Bed(m_loadPlayer, m_worldTime);
@@ -149,6 +157,12 @@ SceneBase* SceneGame::Update()
 	if (Input::GetInstance()->IsKeyDown(KEY_INPUT_T))
 	{
 		return new SceneTitle();
+	}
+
+	//ゲームクリアシーンへ遷移
+	if (m_worldTime->GetIsClear())
+	{
+		
 	}
 
 	if(!m_loadPlayer->GetNowTrede() && !m_loadPlayer ->GetIsMenu())

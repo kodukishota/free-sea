@@ -59,7 +59,7 @@ LoadPlayer::LoadPlayer(
 	m_hungerTime(0),
 	m_nowTrede(false),
 	m_isSleep(false),
-	m_sleepiness(0),
+	m_sleepiness(FirstSleepiness),
 	m_sleepinessTime(0),
 	m_isTired(false)
 {
@@ -566,17 +566,24 @@ void LoadPlayer::CountFallHeight()
 }
 
 // プレイヤーの体力を減らす処理
-void LoadPlayer::DecreaseHP(int damage)
+void LoadPlayer::ColdPlayer()
 {
-	m_hp -= damage;
-
-	// SE:被ダメージ
-	PlaySoundMem(m_seDamage, DX_PLAYTYPE_BACK);
-
-	if (m_hp <= 0)
+	if (m_isCold)
 	{
-		m_hp = 0;
+		m_dethCountDown = Time::GetInstance()->GetDeltaTime();
 	}
+	else
+	{
+		m_dethCountDown = 0;
+	}
+
+	PlaySoundMem(m_seDamage, DX_PLAYTYPE_BACK);
+	
+	if (m_dethCountDown <= 10)
+	{
+		m_isDeath = true;
+	}
+
 }
 
 //体温減少
@@ -600,7 +607,13 @@ void LoadPlayer::DownBodyTemperature()
 void LoadPlayer::WarmthBodyTemperature()
 {
 	m_warmthTemperatureCoolDown += Time::GetInstance()->GetDeltaTime();
-	
+
+	//疲れていておなかがすいていたら体温の減りを早くする
+	if (m_isTired || m_isHungry)
+	{
+		m_downTemperature = FirstDownTemperature + 5;
+	}
+
 	//五秒毎ごとに体温が増える
 	if (m_warmthTemperatureCoolDown >= FirstDownTemperatureTime &&
 		m_bodyTemperature < MaxBodyTemperature)
@@ -608,6 +621,15 @@ void LoadPlayer::WarmthBodyTemperature()
 		m_bodyTemperature += m_downTemperature;
 		m_warmthTemperatureCoolDown = 0;
 		m_isWarmthFlag = false;
+	}
+
+	if (m_bodyTemperature <= 0)
+	{
+		m_isCold = true;
+	}
+	else
+	{
+		m_isCold = false;
 	}
 }
 
@@ -625,6 +647,15 @@ void LoadPlayer::DownHungerLevel()
 	if (m_hungerLevel >= FullStomach)
 	{
 		m_hungerLevel = FullStomach;
+	}
+
+	if (m_hungerLevel <= 0)
+	{
+		m_isHungry = true;
+	}
+	else
+	{
+		m_isHungry = false;
 	}
 }
 
@@ -657,7 +688,7 @@ void LoadPlayer::PlayerSleepiness()
 // スタミナ管理
 void LoadPlayer::StaminaManagement()
 {
-	if (m_isTired)
+	if (m_isTired || m_isHungry)
 	{
 		m_stamina = 0;
 	}

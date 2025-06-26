@@ -45,7 +45,8 @@ void ScreenFilter::Draw()
 	//int pal = MaxPal - static_cast<int>(MaxPal * ratio);
 
 	// ‰æ‘œ‚ð”¼“§–¾‚Å•\Ž¦
-	//SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
+
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 60);
 
 	if (m_player->GetIsTired())
 	{

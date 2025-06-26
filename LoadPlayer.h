@@ -79,7 +79,11 @@ private:
 	float m_hungerTime;		//おなかが減るクールダウン
 	float m_sleepinessTime;	//眠気が増えるクールダウン
 
+	bool m_isCold;		//体温が冷え切っているか
+	bool m_isHungry;	//おなかがすいているか
 	bool m_isTired;	//疲労しているか
+
+	float m_dethCountDown;	//冷え切った時の死亡するまでのクールダウン
 
 	int m_seDamage;	// 攻撃を受けたときのSE
 
@@ -165,8 +169,8 @@ public:
 	// 落下した高さを計算する
 	void CountFallHeight();
 
-	// プレイヤーの体力を減らす処理
-	void DecreaseHP(int damage);
+	// プレイヤーが冷え切った時
+	void ColdPlayer();
 
 	void DownBodyTemperature();
 

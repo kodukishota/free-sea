@@ -184,6 +184,12 @@
     <ClCompile Include="UiSleepiness.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="HomeLight.cpp">
+      <Filter>ソースファイル\Home</Filter>
+    </ClCompile>
+    <ClCompile Include="SunLight.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -412,6 +418,12 @@
       <Filter>ヘッダーファイル\Effect</Filter>
     </ClInclude>
     <ClInclude Include="UiSleepiness.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeLight.h">
+      <Filter>ヘッダーファイル\Home</Filter>
+    </ClInclude>
+    <ClInclude Include="SunLight.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>

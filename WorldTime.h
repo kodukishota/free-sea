@@ -11,8 +11,9 @@ private:
 	static constexpr Vector2 FontSize = Vector2(20, 35);	// ”š1•¶š‚Ì•E‚‚³
 
 	static constexpr Vector2 TimerPos = Vector2(1251, 105);
-
 	static constexpr Vector2 SpendDaysUiPos = Vector2(1050, 170);
+
+	static constexpr int ClearDays = 15;	//¶‚«c‚ç‚È‚¯‚ê‚Î‚¢‚¯‚È‚¢“ú”
 
 	static constexpr int FontMargin = 5;					// ”š‚Æ”š‚ÌŠÔ‚Ì—]”’
 
@@ -45,5 +46,17 @@ public:
 	void NapSpendTime()
 	{
 		m_worldTimeMinutes += 180;
+	}
+
+	float GetWorldTimeMinutes()
+	{
+		return m_worldTimeMinutes;
+	}
+
+	bool ClearSpendDays();
+
+	bool GetIsClear()
+	{
+		return ClearSpendDays;
 	}
 };

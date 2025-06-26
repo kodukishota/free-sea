@@ -2,12 +2,13 @@
 #include "Time.h"
 #include "ImageLoader.h"
 #include "LoadPlayer.h"
+#include "Input.h"
 #include <DxLib.h>
 
 WorldTime::WorldTime(LoadPlayer* player)	:
 	m_worldDays(0),
 	m_worldTimeHour(0),
-	m_worldTimeMinutes(0),
+	m_worldTimeMinutes(720),
 	m_player(player),
 	m_timeFontId(0)
 {
@@ -33,6 +34,11 @@ void WorldTime::Update()
 	m_worldTimeHour = m_worldTimeMinutes / 60;
 	//“ú‚É‚¿‚Ìİ’è
 	m_worldDays = m_worldTimeHour / 24;
+
+	if (Input::GetInstance()->IsKeyDown(KEY_INPUT_9))
+	{
+		m_worldTimeMinutes += 60;
+	}
 }
 
 void WorldTime::Draw()
@@ -74,13 +80,13 @@ void WorldTime::Draw()
 		//Œ»İ‚Ì()‚Ì”‚ğ•`‰æ
 		Vector2 nowTimeHourUiPos = Vector2(1250, 100);
 		nowTimeHourUiPos.y += FontMargin;
-		int nowTimeHour = static_cast<int>(m_worldTimeHour) % 24;
+		int nowTimeHour = (static_cast<int>(m_worldTimeHour) - 5) % 24 ;
 		int nowTimeHourDigit = 1;
 		do
 		{
 			int value = nowTimeHour % 10;	// 1‚ÌˆÊ‚Ì’l‚ğæ‚èo‚·
 
-			if (static_cast<int>(m_worldTimeHour) % 24 < 10)
+			if ((static_cast<int>(m_worldTimeHour)-5) % 24 < 10)
 			{
 				DrawRectGraph(
 					static_cast<int>(nowTimeHourUiPos.x - FontSize.x * 2), static_cast<int>(nowTimeHourUiPos.y),
@@ -129,4 +135,16 @@ void WorldTime::Draw()
 		DrawGraph(TimerPos.x, TimerPos.y, m_timerUi,true);
 	}
 
+}
+
+bool WorldTime::ClearSpendDays()
+{
+	if (m_worldDays >= ClearDays)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
