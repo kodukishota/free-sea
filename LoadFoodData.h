@@ -11,6 +11,10 @@ public:
 		Bread,
 		Onigiri,
 		Burger,
+		ChillCrab,
+		MeatPie,
+		ChillSausage,
+		FriedChicken,
 
 		Length
 	};
@@ -27,9 +31,9 @@ public:
 
 		for (int i = 0; i <= static_cast<int>(KindOfFood::Length) - 1; i++)
 		{
-			FileRead_scanf(fileHandle, "%[^,],%[^,],%[^,],%d",
-				m_foodData[i].m_foodName, m_foodData[i].m_iconName,
-				m_foodData[i].m_flavorText, &m_foodData[i].m_recoveryHungry);//ì«Ç›çûÇ›
+			FileRead_scanf(fileHandle, "%[^,],%[^,],%[^,],%d,%d",
+				m_foodData[i].m_foodName, m_foodData[i].m_iconName,m_foodData[i].m_flavorText,
+				&m_foodData[i].m_recoveryHungry, &m_foodData[i].m_warmthValue);//ì«Ç›çûÇ›
 		}
 
 		//ÉtÉ@ÉCÉãÇï¬Ç∂ÇÈ

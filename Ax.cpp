@@ -6,16 +6,16 @@
 #include "SkillCheak.h"
 #include "AxIcon.h"
 
-Ax::Ax(LoadPlayer* player, SkillCheck* skillCheck, int haveCount) : Actor3D("Ax"),
+Ax::Ax(LoadPlayer* player, SkillCheck* skillCheck, int haveCount,int axId) : Actor3D("Ax"),
 	m_durabilityValue(FirstDurabilityValue),
 	m_attackDamage(AttackDamage),
-	m_consumptionDurability(ConsumptionDurability),
-	m_model(MV1LoadModel("Resource/Ax/Ax.mv1")),
+	m_consumptionDurability(ConsumptionDurability[axId]),
 	m_player(player),
 	m_isCutTreeFlag(false),
 	m_skillCheck(skillCheck),
 	m_seCut(0),
-	m_cutTreeValue(0)
+	m_cutTreeValue(CutTreeValue[axId]),
+	m_axId(axId)
 {	
 	m_axIcon = new AxIcon(this, haveCount,m_player);
 
@@ -32,9 +32,6 @@ void Ax::Load()
 
 void Ax::Release()
 {
-	// プレイヤーのモデルを削除
-	MV1DeleteModel(m_model);
-
 	DeleteSoundMem(m_seCut);
 
 	Actor3D::Release();
@@ -42,20 +39,13 @@ void Ax::Release()
 
 void Ax::Update()
 {
-	m_transform.position = m_player->GetPosition() + OffSet;
-	//m_transform.position = m_camera->CamFrontVec();
-
-	//MV1SetPosition(m_model, m_transform.position);
-	Quaternion::RotateAxisY(m_model, m_transform.angle.y, m_transform.position);
-	MV1SetRotationXYZ(m_model, m_transform.angle);
+	m_transform.position = m_player->GetPosition() + GodSetPos;
 
 	Actor3D::Update();
 }
 
 void Ax::Draw()
 {
-	MV1DrawModel(m_model);
-
 #ifdef _DEBUG
 		DrawFormatString(0, 300, GetColor(255, 255, 255),
 			"Ax Vector3(%.0f, %.0f, %.0f)",
@@ -76,30 +66,27 @@ void Ax::CutTree()
 {
 	if (m_skillCheck->GetIsClick())
 	{
-		m_attackDamage = AttackDamage;
-		m_consumptionDurability = ConsumptionDurability;
-
 		PlaySoundMem(m_seCut, DX_PLAYTYPE_BACK);
 
 		//押した位置がGoodやPerfectの中で押されているか
 		if (m_skillCheck->GetPrefectFlag())
 		{
 			m_consumptionDurability = m_consumptionDurability * 0.5f;
-			m_cutTreeValue = 1.5f;
+			m_cutTreeValue *= 1.5f;
 
 			m_skillCheck->ResetPrefectFlag();
 		}
 		else if (m_skillCheck->GetGoodFlag())
 		{
 			m_consumptionDurability = m_consumptionDurability;
-			m_cutTreeValue = 1;
+			m_cutTreeValue *= 1;
 
 			m_skillCheck->ResetGoodFlag();
 		}
 		else if(m_skillCheck->GetBadFlag())
 		{
 			 m_consumptionDurability = m_consumptionDurability * 1.5f;
-			 m_cutTreeValue = 0.5f;
+			 m_cutTreeValue *= 0.5f;
 
 			 m_skillCheck->ResetBadFlag();
 		}

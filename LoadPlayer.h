@@ -88,7 +88,7 @@ private:
 	int m_seDamage;	// 攻撃を受けたときのSE
 
 	bool m_isDeath;	// 死亡フラグ
-	bool m_finish;	// 体力が0になったかどうか
+	bool m_finish;	// 死亡アニメーションが終わったか
 
 	bool m_cutTree;		//木を伐り始めたか
 	bool m_fellDown;	//木を伐り終えたか
@@ -211,7 +211,7 @@ public:
 	}
 
 	// 体力が0になったか
-	bool IsFinsh()
+	bool GetIsFinsh()
 	{
 		return m_finish;
 	}

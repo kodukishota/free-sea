@@ -10,7 +10,8 @@ WorldTime::WorldTime(LoadPlayer* player)	:
 	m_worldTimeHour(0),
 	m_worldTimeMinutes(720),
 	m_player(player),
-	m_timeFontId(0)
+	m_timeFontId(0),
+	m_isClear(false)
 {
 
 	m_timeFontId = ImageLoader::GetInstance()->Load("score_font.png");
@@ -35,10 +36,15 @@ void WorldTime::Update()
 	//“ú‚É‚¿‚ÌÝ’è
 	m_worldDays = m_worldTimeHour / 24;
 
+	//ƒNƒŠƒA”»’è‚ðs‚Á‚Ä–á‚¤
+	ClearSpendDays();
+
+#ifdef _DEBUG
 	if (Input::GetInstance()->IsKeyDown(KEY_INPUT_9))
 	{
 		m_worldTimeMinutes += 60;
 	}
+#endif // _DEBUG
 }
 
 void WorldTime::Draw()
@@ -137,14 +143,14 @@ void WorldTime::Draw()
 
 }
 
-bool WorldTime::ClearSpendDays()
+void WorldTime::ClearSpendDays()
 {
 	if (m_worldDays >= ClearDays)
 	{
-		return true;
+		m_isClear = true;
 	}
 	else
 	{
-		return false;
+		m_isClear = false;
 	}
 }

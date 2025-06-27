@@ -39,7 +39,6 @@
 
 #include "Item.h"
 
-
 // 初期化
 void SceneGame::Initialize()
 {
@@ -83,6 +82,7 @@ void SceneGame::Initialize()
 	//世界の時間
 	m_worldTime = new WorldTime(m_loadPlayer);
 
+	//太陽
 	m_sunLight = new SunLight(m_worldTime);
 	uiLayer->AddChild(m_sunLight);
 
@@ -165,7 +165,12 @@ SceneBase* SceneGame::Update()
 		
 	}
 
-	if(!m_loadPlayer->GetNowTrede() && !m_loadPlayer ->GetIsMenu())
+	if (m_loadPlayer->GetIsFinsh())
+	{
+
+	}
+
+	if(!m_loadPlayer->GetNowTrede() && !m_loadPlayer->GetIsMenu())
 	{
 		// マウスカーソルを非表示にする
 		SetMouseDispFlag(false);

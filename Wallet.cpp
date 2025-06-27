@@ -2,6 +2,7 @@
 #include "Screen.h"
 #include "ImageLoader.h"
 #include "LoadPlayer.h"
+#include "Input.h"
 #include "DxLib.h"
 
 Wallet::Wallet(LoadPlayer* player) :
@@ -37,6 +38,15 @@ void Wallet::Update()
 	{
 		m_transform.position = TredeWalletPos;
 	}
+
+#ifdef _DEBUG
+	if (Input::GetInstance()->IsKeyDown(8))
+	{
+		m_haveMoney += 100;
+	}
+
+#endif // _DEBUG
+
 }
 
 void Wallet::Draw()

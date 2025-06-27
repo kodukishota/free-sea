@@ -7,6 +7,7 @@
 #include "Wallet.h"
 #include "BuyButton.h"
 #include "Inventory.h"
+#include "ImageLoader.h"
 
 TredeUi::TredeUi(
 	LoadPlayer* player,
@@ -102,15 +103,15 @@ void TredeUi::Draw()
 		{
 			SetFontSize(30);
 
-			DrawString(1000, 300,
+			DrawString(800, 300,
 				m_productData[m_selectProductNum].m_itemName,
 				GetColor(255, 255, 255));
 
-			DrawFormatString(1000, 400, GetColor(255, 255, 255),
+			DrawFormatString(800, 400, GetColor(255, 255, 255),
 				"必要金額 %d $",
 				m_productData[m_selectProductNum].m_needMoney); 
 
-			DrawString(1000, 500,
+			DrawString(800, 500,
 				m_productData[m_selectProductNum].m_flavorText,
 				GetColor(255, 255, 255));
 
@@ -154,8 +155,6 @@ void TredeUi::LoadBuyItem()
 //商品を並べる
 void TredeUi::ProductDisplay()
 {
-	//m_productUi.Register(m_productData->m_iconName);
-
 	m_productTransform.position = ProductUiPos;
 
 	for (int i = 0; i <= static_cast<int>(TredeItem::Length) - 1; i++)
@@ -169,6 +168,18 @@ void TredeUi::ProductDisplay()
 		AddChild(m_selectProduct[i]);
 
 		m_productTransform.position += Vector2(0, 100);
+
+		m_displayCount++;
+
+		//商品を一行並べたら次の段に行く
+		if (m_displayCount >= 7)
+		{
+			m_productTransform.position.y = ProductUiPos.y;
+
+			m_productTransform.position += Vector2(150, 0);
+
+			m_displayCount = 0;
+		}
 	}
 }
 
@@ -203,7 +214,11 @@ void TredeUi::BuyProduct()
 		}
 		if (m_productData[m_selectProductNum].m_productKindId == 1)
 		{
-
+			m_inventory->BuyAx(m_productData[m_selectProductNum].m_productId);
+		}
+		if (m_productData[m_selectProductNum].m_productKindId == 2)
+		{
+			m_inventory->BuySeedling();
 		}
 	}
 }

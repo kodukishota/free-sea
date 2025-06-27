@@ -36,7 +36,6 @@ Inventory::Inventory(LoadPlayer* player, LoadFoodData* loadFoodData, SkillCheck*
 	m_axInventoryUi.Register("inventory_ui.png");
 	m_foodInventoryUi.Register("inventory_ui.png");
 	m_takeItemUi.Register("take_item.png");
-	m_woodIcon.Register("wood_icon.png");
 
 	m_eatButton = new EatButton(m_player);
 	AddChild(m_eatButton);
@@ -55,10 +54,12 @@ void Inventory::Load()
 
 	m_fontTextureId = ImageLoader::GetInstance()->Load("score_font.png");
 
+	m_seedlingIcon = ImageLoader::GetInstance()->Load("seedling_icon.png");
+	m_woodIcon = ImageLoader::GetInstance()->Load("wood_icon.png");
+
 	m_axInventoryUi.Load();
 	m_foodInventoryUi.Load();
 	m_takeItemUi.Load();
-	m_woodIcon.Load();
 }
 
 void Inventory::Release()
@@ -68,10 +69,12 @@ void Inventory::Release()
 
 	ImageLoader::GetInstance()->Delete("score_font.png");
 
+	ImageLoader::GetInstance()->Delete("seedling_icon.png");
+	ImageLoader::GetInstance()->Delete("wood_icon.png");
+
 	m_axInventoryUi.Release();
 	m_foodInventoryUi.Release();
 	m_takeItemUi.Release();
-	m_woodIcon.Release();
 }
 
 void Inventory::Update()
@@ -79,7 +82,6 @@ void Inventory::Update()
 	m_axInventoryUi.Update();
 	m_foodInventoryUi.Update();
 	m_takeItemUi.Update();
-	m_woodIcon.Update();
 
 	//アイテムを買うことができるか
 	if (m_haveFoodCount < m_maxHaveItem)
@@ -94,25 +96,30 @@ void Inventory::Update()
 	//メニューを開いた時に持っている木の数を表示してくれるUiの位置を変更
 	if (!m_player->GetIsMenu())
 	{
-		m_haveWoodTransform.position = WoodIconPos;
-
 		SelectAx();
 	}
-	else
-	{
-		m_haveWoodTransform.position = WoodMenuIconPos;
-	}
 
-	
 	if (m_haveFoodCount != 0)
 	{
 		EatFood();
-	}	
+	}
+	else
+	{
+		m_selectFood = false;
+	}
 
 	if (m_player->GetCutTree())
 	{
 		m_axList[m_takeAx]->CutTree();
 	}
+
+#ifdef _DEBUG
+
+	if (Input::GetInstance()->IsKeyDown(KEY_INPUT_8))
+	{
+		m_haveWoodCount += 10;
+	}
+#endif // _DEBUG
 }
 
 void Inventory::Draw()
@@ -166,11 +173,29 @@ void Inventory::Draw()
 		}
 	}
 
-	//持っている木の描画
-	m_woodIcon.Draw(m_haveWoodTransform);
+	//現在の持っている苗木の数を描画
+	Vector2 nowHaveSeedlingUiPos = SeedlingIconPos + Vector2(180, 15);
+	nowHaveSeedlingUiPos.y += FontMargin;
+	int nowHaveSeedlingCount = m_haveSeedlingCount;
+	int nowHaveSeedlingDigit = 1;
+	do
+	{
+		int value = nowHaveSeedlingCount % 10;	// 1の位の値を取り出す
+
+		DrawRectGraph(
+			static_cast<int>(nowHaveSeedlingUiPos.x - FontSize.x * nowHaveSeedlingDigit), static_cast<int>(nowHaveSeedlingUiPos.y),
+			static_cast<int>(FontSize.x) * value, 0,
+			static_cast<int>(FontSize.x), static_cast<int>(FontSize.y),
+			m_fontTextureId,
+			true
+		);
+
+		nowHaveSeedlingCount /= 10;
+		nowHaveSeedlingDigit++;		// 次の桁へ
+	} while (nowHaveSeedlingCount > 0);
 
 	//現在の持っている木の数を描画
-	Vector2 nowHaveWoodCountUiPos = m_haveWoodTransform.position + Vector2(110, -23);
+	Vector2 nowHaveWoodCountUiPos = WoodIconPos + Vector2(180, 15);
 	nowHaveWoodCountUiPos.y += FontMargin;
 	int nowHaveWoodCount = m_haveWoodCount;
 	int nowhaveWoodDigit = 1;
@@ -189,6 +214,23 @@ void Inventory::Draw()
 		nowHaveWoodCount /= 10;
 		nowhaveWoodDigit++;		// 次の桁へ
 	} while (nowHaveWoodCount > 0);
+
+	//選択している食べ物の情報を描画
+	if (m_selectFood)
+	{
+		SetFontSize(30);
+
+		DrawString(600, 300,
+			m_foodList[m_takeFood]->GetFoodName(),
+			GetColor(255, 255, 255));
+
+		DrawString(600, 400,
+			m_foodList[m_takeFood]->GetFlavorText(),
+			GetColor(255, 255, 255));
+	}
+
+	DrawGraph(WoodIconPos.x, WoodIconPos.y, m_woodIcon,true);
+	DrawGraph(SeedlingIconPos.x, SeedlingIconPos.y, m_seedlingIcon,true);
 }
 
 void Inventory::BuyFood(int foodId)
@@ -203,7 +245,7 @@ void Inventory::BuyFood(int foodId)
 			m_eatButton,
 			this);
 
-		GetParent()->AddChild(m_food);
+		AddChild(m_food);
 
 		//持っている食べ物リストにいれる
 		m_foodList.push_back(m_food);
@@ -214,11 +256,11 @@ void Inventory::BuyFood(int foodId)
 
 void Inventory::BuyAx(int axId)
 {
-	m_ax = new Ax(m_player, m_skillCheck,m_haveAxCount);
+	m_ax = new Ax(m_player, m_skillCheck,m_haveAxCount,axId);
 
 	AddChild(m_ax);
 
-	//持っている食べ物リストにいれる
+	//斧リストにいれる
 	m_axList.push_back(m_ax);
 
 	m_haveAxCount++;
@@ -249,11 +291,14 @@ void Inventory::EatFood()
 
 				m_haveFoodCount--;
 			}
+
+			m_selectFood = true;
 		}
 
 		//食べたアイテムより後ろにあるアイコンを前にずらす
 		if (m_shiftIconCount >= m_haveFoodCount)
 		{
+			m_selectFood = false;
 			m_eatFoodFlag = false;
 			m_shiftIconCount = 0;
 		}

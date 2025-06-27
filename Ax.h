@@ -11,14 +11,18 @@ class Ax : public Actor3D
 {
 private:
 	//ƒOƒbƒh‚ÌˆÊ’u
-	static constexpr Vector3 OffSet = Vector3(50,50,-30);
+	static constexpr Vector3 GodSetPos = Vector3(50,50,-30);
+	static constexpr int AxKind = 3;				//•€‚Ìí—Ş”
+
 	static constexpr float FirstDurabilityValue = 100;	//‘Ï‹v—Í
 	static constexpr int AttackDamage = 5;				//UŒ‚—Í
-	static constexpr int ConsumptionDurability = 5;	//Á–Õ‘Ï‹v’l
+	static constexpr int ConsumptionDurability[AxKind] = { 5, 4, 3};	//Á–Õ‘Ï‹v’l
+	static constexpr float CutTreeValue[AxKind] = { 1, 1.3, 1.5};	//Œ³‚Ì–Ø‚Ìæ‚ê‚é”{—¦
 
 	Vector2 m_drawPos;
 
-	int m_model;
+	int m_axId;		//©g‚ª‚Ç‚Ìí—Ş‚Ì•€‚È‚Ì‚©‚ğ¯•Ê‚·‚é‚æ‚¤
+
 	int m_seCut;
 
 	float m_durabilityValue;		//‘Ï‹v’l
@@ -40,7 +44,7 @@ protected:
 	virtual void Release() override;
 
 public:
-	Ax( LoadPlayer* player, SkillCheck* skillCheck,int haveCount);
+	Ax( LoadPlayer* player, SkillCheck* skillCheck,int haveCount,int axId);
 
 	//–Ø‚ğ”°‚é
 	void CutTree();

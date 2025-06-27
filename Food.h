@@ -15,6 +15,7 @@ struct FoodData
 	char m_iconName[256];
 	char m_flavorText[256];
 	int m_recoveryHungry;
+	int m_warmthValue;
 };
 
 class Food : public Node
@@ -95,5 +96,15 @@ public:
 	Vector2 GetDrawPos()
 	{
 		return m_iconPos.position;
+	}
+
+	const char* GetFoodName()
+	{
+		return m_foodName;
+	}
+
+	const char* GetFlavorText()
+	{
+		return m_flavorText;
 	}
 };

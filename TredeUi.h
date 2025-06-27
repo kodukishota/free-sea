@@ -30,13 +30,19 @@ public:
 		Bread,
 		Onigiri,
 		Burger,
+		ChillCrab,
+		MeatPie,
+		ChillSausage,
+		FriedChicken,
+		Ax,
+		Seedling,
 
 		Length
 	};
 private:
 
 	static constexpr Vector2 UiPos = Vector2(720, 430);
-	static constexpr Vector2 ProductUiPos = Vector2(720, 200);
+	static constexpr Vector2 ProductUiPos = Vector2(520, 150);
 	static constexpr float CanTredeRange = 700;
 
 	Vector3 m_trederPos;
@@ -48,6 +54,8 @@ private:
 	Transform m_productTransform;
 	Sprite m_selectProductUi;
 
+	int m_sellWoodUi;
+
 	int m_selectProductValue;	//選んでいる商品の価格
 
 	bool m_nowTredeFlag;	//現在トレードをしているか
@@ -57,6 +65,8 @@ private:
 
 	bool m_selectFlag;		//商品を選んでいるか
 	int m_selectProductNum;	//選んでいる商品は何か
+
+	int m_displayCount;	//商品を一列に何個並べたか
 
 	LoadPlayer* m_player;
 	SellButton* m_sellButton;

@@ -61,7 +61,10 @@ LoadPlayer::LoadPlayer(
 	m_isSleep(false),
 	m_sleepiness(FirstSleepiness),
 	m_sleepinessTime(0),
-	m_isTired(false)
+	m_isTired(false),
+	m_isCold(false),
+	m_isHungry(false),
+	m_dethCountDown(0)
 {
 	//-----アニメーションの作成-----
 	// アニメーションクラスをリスト化する
@@ -185,24 +188,7 @@ void LoadPlayer::Update()
 	}
 #endif // _DEBUG
 
-	if (m_hp <= 0)
-	{
-		if(!m_finish) m_finish = true;
-
-		if (m_nowAnim != Anim::Death)
-		{
-			// 死亡アニメーションを再生
-			ChangeAnimQuick(Anim::Death);
-			m_camNode->ModeChange();
-		}
-
-		if (m_attachAnimList[static_cast<int>(m_nowAnim)]->FinishAnim())
-		{
-			// 死亡アニメーションが終了したら死亡フラグを立てる
-			m_isDeath = true;
-		}
-	}
-	else
+	if(!m_isDeath)
 	{
 		if (!m_nowTrede && !m_isMenu)
 		{
@@ -213,6 +199,20 @@ void LoadPlayer::Update()
 		{
 			m_cutTree = false;
 			m_fellDown = false;
+		}
+	}
+	else
+	{
+		if (m_nowAnim != Anim::Death)
+		{
+			// 死亡アニメーションを再生
+			ChangeAnimQuick(Anim::Death);
+			m_camNode->ModeChange();
+		}
+
+		if (m_attachAnimList[static_cast<int>(m_nowAnim)]->FinishAnim())
+		{
+			if (!m_finish) m_finish = true;
 		}
 	}
 
@@ -565,25 +565,24 @@ void LoadPlayer::CountFallHeight()
 	m_fallStartY = 0;
 }
 
-// プレイヤーの体力を減らす処理
+// プレイヤーが凍える処理
 void LoadPlayer::ColdPlayer()
 {
 	if (m_isCold)
 	{
 		m_dethCountDown = Time::GetInstance()->GetDeltaTime();
+
+		PlaySoundMem(m_seDamage, DX_PLAYTYPE_BACK);
 	}
 	else
 	{
 		m_dethCountDown = 0;
 	}
-
-	PlaySoundMem(m_seDamage, DX_PLAYTYPE_BACK);
 	
 	if (m_dethCountDown <= 10)
 	{
 		m_isDeath = true;
 	}
-
 }
 
 //体温減少

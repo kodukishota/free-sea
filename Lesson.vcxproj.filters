@@ -190,6 +190,9 @@
     <ClCompile Include="SunLight.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="WinterClothes.cpp">
+      <Filter>ソースファイル\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -425,6 +428,9 @@
     </ClInclude>
     <ClInclude Include="SunLight.h">
       <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="WinterClothes.h">
+      <Filter>ヘッダーファイル\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -48,7 +48,7 @@ void TreeFactory::Update()
 	}
 
 	//苗木を植えれる位置に来たら
-	if (m_canPlantSeedling)
+	if (m_canPlantSeedling && m_inventory->GetHaveSeedlingCount() >= 0)
 	{
 		PlantSeedling();
 	}
@@ -60,6 +60,7 @@ void TreeFactory::Update()
 	}
 }
 
+//プレイヤーがどこの木を伐っているか
 void TreeFactory::SearchCutTree()
 {
 	for (int i = 0; i <= m_treeList.size() - 1; i++)
@@ -82,11 +83,15 @@ void TreeFactory::PlantSeedling()
 		m_seedling = new Seedling(m_ax, m_player, m_inventory, this, m_player->GetPosition());
 
 		AddChild(m_seedling);
-
+		//苗木リストにいれる
 		m_seedlingList.push_back(m_seedling);
+
+		//苗木の所持数を減らす
+		m_inventory->UseSeedling();
 	}
 }
  
+//苗木が成長しきった処理
 void TreeFactory::FinishedGrowing()
 {
 	for (int i = 0; i <= m_seedlingList.size() - 1; i++)

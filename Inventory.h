@@ -22,7 +22,8 @@ private:
 	static constexpr Vector2 AxInventoryUiPos = Vector2(60, 890);		//斧の枠の位置
 	static constexpr Vector2 AxMenuInventoryUiPos = Vector2(150, 300);	//斧の枠の位置メニュー時
 	static constexpr Vector2 FoodInventoryUiPos = Vector2(150, 800);	//食べ物欄の枠の位置
-	static constexpr Vector2 WoodIconPos = Vector2(370, 890);
+	static constexpr Vector2 WoodIconPos = Vector2(320, 850);
+	static constexpr Vector2 SeedlingIconPos = Vector2(500, 850);
 	static constexpr Vector2 WoodMenuIconPos = Vector2(160, 400);
 	static constexpr Vector2 FontSize = Vector2(20, 35);	// 数字1文字の幅・高さ
 	static constexpr int FontMargin = 5;					// 数字と数字の間の余白
@@ -48,6 +49,7 @@ private:
 	bool m_gettingItem;			//アイテムを拾ったか
 	bool m_dropItemCompletion;
 
+	bool m_selectFood;		//アイテムを選択しているか
 	int m_eatFoodPosNum;	//食べた食べ物の描画されている順番の番号
 	bool m_eatFoodFlag;		//食べ物を食べたか
 
@@ -64,14 +66,16 @@ private:
 	//アイテム格納用
 	std::vector<Food*> m_foodList;
 	std::vector<Ax*> m_axList;
+
 	Sprite m_axInventoryUi;
 	Sprite m_foodInventoryUi;
 	Sprite m_takeItemUi;
-	Sprite m_woodIcon;
 	Transform m_axInventoryPos;		// 姿勢
 	Transform m_foodInventoryPos;	// 姿勢
 	Transform m_takeItemTransform;	// 姿勢
-	Transform m_haveWoodTransform;	// 姿勢
+
+	int m_woodIcon;
+	int m_seedlingIcon;
 
 	LoadFoodData* m_loadFoodData;
 	LoadPlayer* m_player;
@@ -147,6 +151,23 @@ public:
 	int GetTakeAx()
 	{
 		return m_takeAx;
+	}
+
+	int GetHaveSeedlingCount()
+	{
+		return m_haveSeedlingCount;
+	}
+
+	//苗木を植えたときに苗木の所持数を減らす
+	void UseSeedling()
+	{
+		m_haveSeedlingCount--;
+	}
+
+	//苗木を購入したとき
+	void BuySeedling()
+	{
+		m_haveSeedlingCount++;
 	}
  
 	//買った食べ物をメニューで表示させる

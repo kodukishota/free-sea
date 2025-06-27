@@ -26,6 +26,8 @@ private:
 	int m_timerUi;
 	int m_spendDaysUi;
 
+	bool m_isClear;
+
 	LoadPlayer* m_player;
 
 protected:
@@ -53,10 +55,10 @@ public:
 		return m_worldTimeMinutes;
 	}
 
-	bool ClearSpendDays();
+	void ClearSpendDays();
 
 	bool GetIsClear()
 	{
-		return ClearSpendDays;
+		return m_isClear;
 	}
 };

@@ -24,18 +24,11 @@ Food::Food(int foodNum,
 	m_drawPosNum(drawPosNum),
 	m_inventory(inventory)
 {
-	/*
 	//名前の設定
-	m_itemName = item->m_itemName;
-	//売った時の金額設定
-	m_sellMoney = item->m_sellMoney;
-	//アイテムの重さ設定
-	m_itemWeight = item->m_weight;
-	//アイコンのテクスチャID
-	m_iconName = item->m_iconName;
+	m_foodName = m_foodData.m_foodName;
 	//フレーバーテキストの設定
-	m_flavorText = item->m_flavorText;
-	*/
+	m_flavorText = m_foodData.m_flavorText;
+	
 	m_iconUi.Register(m_foodData.m_iconName);
 
 	m_recoveryHungry = m_foodData.m_recoveryHungry;
