@@ -1,5 +1,7 @@
 #include "SceneGame.h"
 #include "SceneTitle.h"
+#include "SceneGameClear.h"
+#include "SceneGameOver.h"
 #include "Screen.h"
 #include "Input.h"
 #include "Node.h"
@@ -75,10 +77,7 @@ void SceneGame::Initialize()
 	m_cam = new Camera(m_loadPlayer, m_collisionStage);
 	actorLayer->AddChild(m_cam);
 	
-	//メニュー画面
-	m_menu = new Menu(m_loadPlayer);
-	uiLayer->AddChild(m_menu);
-
+	
 	//世界の時間
 	m_worldTime = new WorldTime(m_loadPlayer);
 
@@ -94,11 +93,16 @@ void SceneGame::Initialize()
 	m_skillCheck = new SkillCheck(m_loadPlayer);
 
 	//インベントリ
-	m_inventory = new Inventory(m_loadPlayer,m_loadFoodData,m_skillCheck);
+	m_inventory = new Inventory(m_loadPlayer,m_loadFoodData,m_skillCheck);	
 
 	//木工場
 	m_treeFactory = new TreeFactory(m_ax, m_loadPlayer, m_inventory);
 	uiLayer->AddChild(m_treeFactory);
+
+
+	//メニュー画面
+	m_menu = new Menu(m_loadPlayer);
+	uiLayer->AddChild(m_menu);
 
 	uiLayer->AddChild(m_skillCheck);
 	uiLayer->AddChild(m_worldTime);
@@ -153,21 +157,24 @@ SceneBase* SceneGame::Update()
 {
 	// ノードの更新
 	m_rootNode->TreeUpdate();
-	
+
+#ifdef _DEBUG
 	if (Input::GetInstance()->IsKeyDown(KEY_INPUT_T))
 	{
 		return new SceneTitle();
 	}
+#endif // _DEBUG
+
 
 	//ゲームクリアシーンへ遷移
 	if (m_worldTime->GetIsClear())
 	{
-		
+		return new SceneGameClear();
 	}
 
 	if (m_loadPlayer->GetIsFinsh())
 	{
-
+		return new SceneGameOver();
 	}
 
 	if(!m_loadPlayer->GetNowTrede() && !m_loadPlayer->GetIsMenu())

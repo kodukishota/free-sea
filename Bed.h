@@ -1,6 +1,7 @@
 #pragma once
 #include "Actor3D.h"
 #include "Vector3.h"
+#include "Vector2.h"
 
 class LoadPlayer;
 class WorldTime;
@@ -12,9 +13,13 @@ private:
 	static constexpr Vector3 CanSleepRnage = Vector3(500, 500, 500);	//ベットにインタラクトできる範囲
 	static constexpr Vector3 CanSleepRnageOffset = Vector3(100, 0, 0);	//ベットにインタラクトできる範囲
 
+	static constexpr Vector2 SleepUiPos = Vector2(620, 700);
+
 	bool m_canSleep;	//寝れることができるか
 
 	int m_model;
+
+	int m_sleepUi;
 
 	LoadPlayer* m_player;
 	WorldTime* m_worldTime;

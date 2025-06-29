@@ -13,6 +13,7 @@ class AxIcon : public Node
 private:
 	static constexpr Vector2 SetPos = Vector2(60, 890);
 	static constexpr Vector2 IsMenuSetPos = Vector2(150, 300);
+	static constexpr Vector2 IconSize = Vector2(100, 100);
 
 	Sprite m_axIconUi;
 	Transform m_axIconTsransform;
@@ -38,6 +39,7 @@ private:
 
 	Ax* m_ax;
 	LoadPlayer* m_player;
+	Inventory* m_inventory;
 
 protected:
 	virtual void Load() override;
@@ -46,10 +48,15 @@ protected:
 	virtual void Draw() override;
 
 public:
-	AxIcon(Ax* ax,int haveCount,LoadPlayer* player);
+	AxIcon(Ax* ax,int haveCount,LoadPlayer* player, Inventory* inventory);
 
 	Vector2 GetDrawPos()
 	{
 		return m_axIconTsransform.position;
+	}
+
+	void ShiftDrawPos()
+	{
+		m_haveCount--;
 	}
 };

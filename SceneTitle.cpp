@@ -14,15 +14,8 @@ void SceneTitle::Initialize()
 	// ”wŒi
 	m_rootNode->AddChild(new Actor(
 		"Background",
-		"title_background.png",
+		"title.png",
 		Screen::Center
-	));
-
-	// ƒ^ƒCƒgƒ‹ƒƒS
-	m_rootNode->AddChild(new Actor(
-		"Logo",
-		"title_logo.png",
-		Screen::TopCenter + Vector2(0, Screen::Height / 3)
 	));
 
 	// PressAnyButton

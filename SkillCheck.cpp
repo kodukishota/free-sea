@@ -9,7 +9,8 @@ m_positionDecision(false),
 m_player(player),
 m_prefectFlag(false),
 m_goodFlag(false),
-m_badFlag(false)
+m_badFlag(false),
+m_isClick(false)
 {
 	m_skillCheckUi.Register("check_bar_ui.png");
 	m_skillCheckHandleUi.Register("check_handle.png");
@@ -37,7 +38,7 @@ void SkillCheck::Release()
 
 void SkillCheck::Update()
 {
-	if (m_player->GetCutTree())
+	if (m_player->GetCutTree() && !m_player->GetDontHaveAx())
 	{
 		CutTreeSkillCheck();
 	}
@@ -50,7 +51,7 @@ void SkillCheck::Update()
 
 void SkillCheck::Draw()
 {
-	if (m_player->GetCutTree())
+	if (m_player->GetCutTree() && !m_player->GetDontHaveAx())
 	{
 		m_skillCheckUi.Draw(m_skillCheckUiPos);
 		m_checkGoodHandleUi.Draw(m_checkGoodHandleUiPos);

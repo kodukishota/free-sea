@@ -24,7 +24,8 @@ TredeUi::TredeUi(
 	m_selectProductNum(0),
 	m_selectFlag(false),
 	m_loadFoodData(loadFoodData),
-	m_seBuy(0)
+	m_seBuy(0),
+	m_tredeUi(0)
 {
 	m_sprite.Register("background.png");
 	m_transform.position = UiPos;
@@ -48,6 +49,8 @@ void TredeUi::Load()
 	m_seBuy = LoadSoundMem("Resource/sound/buy_se.mp3");
 	ChangeVolumeSoundMem(128, m_seBuy);
 
+	m_tredeUi = ImageLoader::GetInstance()->Load("trede_ui.png");
+
 	m_sprite.Load();
 	m_selectProductUi.Load();
 }
@@ -56,6 +59,8 @@ void TredeUi::Release()
 {
 	DeleteSoundMem(m_seSell);
 	DeleteSoundMem(m_seBuy);
+
+	ImageLoader::GetInstance()->Delete("trede_ui.png");
 
 	m_sprite.Release();
 	m_selectProductUi.Release();
@@ -125,9 +130,7 @@ void TredeUi::Draw()
 	{
 		if (!m_player->GetIsMenu() && !m_player->GetNowTrede())
 		{
-			SetFontSize(30);
-
-			DrawString(720, 600, "F:ÉgÉåÅ[Éh", GetColor(255, 255, 255));
+			DrawGraph(static_cast<int>(TredeUiPos.x), static_cast<int>(TredeUiPos.y), m_tredeUi, true);
 		}
 	}
 }

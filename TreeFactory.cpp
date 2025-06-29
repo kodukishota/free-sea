@@ -4,6 +4,7 @@
 #include "Inventory.h"
 #include "Input.h"
 #include "Seedling.h"
+#include "ImageLoader.h"
 
 TreeFactory::TreeFactory(Ax* ax, LoadPlayer* player, Inventory* inventory) :
 	m_ax(ax),
@@ -13,13 +14,28 @@ TreeFactory::TreeFactory(Ax* ax, LoadPlayer* player, Inventory* inventory) :
 	m_tree(nullptr),
 	m_seedling(nullptr),
 	m_finishedGrowing(false),
-	m_canPlantSeedling(false)
+	m_canPlantSeedling(false),
+	m_cutUi(0)
 {
-	m_tree = new Tree(m_player, m_inventory, Vector3(-3000, 0, -500));
 
-	AddChild(m_tree);
+	for (int i = 0; i <= FirstTreeValue - 1; i++)
+	{
+		m_tree = new Tree(m_player, m_inventory, FirstTreePos[i]);
+	
+		AddChild(m_tree);
+	
+		AddTreeList(m_tree);
+	}
+}
 
-	AddTreeList(m_tree);
+void TreeFactory::Load()
+{
+	m_cutUi = ImageLoader::GetInstance()->Load("cut_ui.png");
+}
+
+void TreeFactory::Release()
+{
+	ImageLoader::GetInstance()->Delete("cut_ui.png");
 }
 
 void TreeFactory::Update()
@@ -48,7 +64,7 @@ void TreeFactory::Update()
 	}
 
 	//ïcñÿÇêAÇ¶ÇÍÇÈà íuÇ…óàÇΩÇÁ
-	if (m_canPlantSeedling && m_inventory->GetHaveSeedlingCount() >= 0)
+	if (m_canPlantSeedling && m_inventory->GetHaveSeedlingCount() > 0)
 	{
 		PlantSeedling();
 	}
@@ -57,6 +73,18 @@ void TreeFactory::Update()
 	{
 		//ïcñÿÇ™àÁÇøèIÇÌÇ¡ÇΩÇÁ
 		FinishedGrowing();
+	}
+}
+
+void TreeFactory::Draw()
+{
+	for (int i = 0; i <= m_treeList.size() - 1; i++)
+	{
+		if (m_player->CanInteractObject(m_treeList[i]->GetPosition(), CanCutRange) && 
+			!m_player->GetCutTree())
+		{
+			DrawGraph(static_cast<int>(CutUiPos.x), static_cast<int>(CutUiPos.y), m_cutUi, true);
+		}
 	}
 }
 

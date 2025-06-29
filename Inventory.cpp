@@ -31,7 +31,8 @@ Inventory::Inventory(LoadPlayer* player, LoadFoodData* loadFoodData, SkillCheck*
 	m_shiftIconCount(0),
 	m_seEat(0),
 	m_skillCheck(skillCheck),
-	m_takeAx(0)
+	m_takeAx(0),
+	m_breakAx(false)
 {
 	m_axInventoryUi.Register("inventory_ui.png");
 	m_foodInventoryUi.Register("inventory_ui.png");
@@ -93,10 +94,20 @@ void Inventory::Update()
 		m_canGetItem = false;
 	}
 
-	//メニューを開いた時に持っている木の数を表示してくれるUiの位置を変更
+	//メニューを開いた時に斧、持っている木の数を表示してくれるUiの位置を変更
 	if (!m_player->GetIsMenu())
 	{
 		SelectAx();
+
+		m_woodIconPos = WoodIconPos;
+
+		m_seedlingIconPos = SeedlingIconPos;
+	}
+	else
+	{
+		m_woodIconPos = MenuWoodIconPos;
+
+		m_seedlingIconPos = MenuSeedlingIconPos;
 	}
 
 	if (m_haveFoodCount != 0)
@@ -108,9 +119,21 @@ void Inventory::Update()
 		m_selectFood = false;
 	}
 
-	if (m_player->GetCutTree())
+	if (!m_axList.empty())
 	{
-		m_axList[m_takeAx]->CutTree();
+		BreakAx();
+
+		if (m_player->GetCutTree())
+		{
+			m_axList[m_takeAx]->CutTree();
+		}
+
+		m_player->SetDontHaveAx(false);
+	}
+	else
+	{
+		m_player->SetDontHaveAx(true);
+		m_player->FellDownTree();
 	}
 
 #ifdef _DEBUG
@@ -174,7 +197,7 @@ void Inventory::Draw()
 	}
 
 	//現在の持っている苗木の数を描画
-	Vector2 nowHaveSeedlingUiPos = SeedlingIconPos + Vector2(180, 15);
+	Vector2 nowHaveSeedlingUiPos = m_seedlingIconPos + Vector2(180, 15);
 	nowHaveSeedlingUiPos.y += FontMargin;
 	int nowHaveSeedlingCount = m_haveSeedlingCount;
 	int nowHaveSeedlingDigit = 1;
@@ -195,7 +218,7 @@ void Inventory::Draw()
 	} while (nowHaveSeedlingCount > 0);
 
 	//現在の持っている木の数を描画
-	Vector2 nowHaveWoodCountUiPos = WoodIconPos + Vector2(180, 15);
+	Vector2 nowHaveWoodCountUiPos = m_woodIconPos + Vector2(180, 15);
 	nowHaveWoodCountUiPos.y += FontMargin;
 	int nowHaveWoodCount = m_haveWoodCount;
 	int nowhaveWoodDigit = 1;
@@ -229,8 +252,8 @@ void Inventory::Draw()
 			GetColor(255, 255, 255));
 	}
 
-	DrawGraph(WoodIconPos.x, WoodIconPos.y, m_woodIcon,true);
-	DrawGraph(SeedlingIconPos.x, SeedlingIconPos.y, m_seedlingIcon,true);
+	DrawGraph(m_woodIconPos.x, m_woodIconPos.y, m_woodIcon,true);
+	DrawGraph(m_seedlingIconPos.x, m_seedlingIconPos.y, m_seedlingIcon,true);
 }
 
 void Inventory::BuyFood(int foodId)
@@ -256,7 +279,7 @@ void Inventory::BuyFood(int foodId)
 
 void Inventory::BuyAx(int axId)
 {
-	m_ax = new Ax(m_player, m_skillCheck,m_haveAxCount,axId);
+	m_ax = new Ax(m_player, m_skillCheck,m_haveAxCount,axId,this);
 
 	AddChild(m_ax);
 
@@ -317,5 +340,34 @@ void Inventory::SelectAx()
 	if (m_takeAx < 0)
 	{
 		m_takeAx = m_haveAxCount - 1;
+	}
+}
+
+void Inventory::BreakAx()
+{
+	for (int i = 0; i <= m_haveAxCount - 1; i++)
+	{
+		if (m_axList[i]->GetDurability() <= 0 && !m_breakAx)
+		{
+			if (m_haveAxCount <= 1)
+			{
+				m_player->FellDownTree();
+			}
+
+			m_axList[i]->MyDestroy();
+
+			m_axList.erase(m_axList.begin() + i);
+
+			m_haveAxCount--;
+
+			m_breakAx = true;
+		}
+
+		//壊れた斧の後ろあったアイコンを前にずらす
+		if (m_shiftIconCount >= m_haveAxCount)
+		{
+			m_breakAx = false;
+			m_shiftIconCount = 0;
+		}
 	}
 }

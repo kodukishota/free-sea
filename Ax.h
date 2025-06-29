@@ -5,6 +5,7 @@
 
 class LoadPlayer;
 class SkillCheck;
+class Inventory;
 class AxIcon;
 
 class Ax : public Actor3D
@@ -17,11 +18,12 @@ private:
 	static constexpr float FirstDurabilityValue = 100;	//‘Ï‹v—Í
 	static constexpr int AttackDamage = 5;				//UŒ‚—Í
 	static constexpr int ConsumptionDurability[AxKind] = { 5, 4, 3};	//Á–Õ‘Ï‹v’l
-	static constexpr float CutTreeValue[AxKind] = { 1, 1.3, 1.5};	//Œ³‚Ì–Ø‚Ìæ‚ê‚é”{—¦
+	static constexpr float CutTreeValue[AxKind] = { 1.0f, 1.3f, 1.5f};	//Œ³‚Ì–Ø‚Ìæ‚ê‚é”{—¦
 
 	Vector2 m_drawPos;
 
 	int m_axId;		//©g‚ª‚Ç‚Ìí—Ş‚Ì•€‚È‚Ì‚©‚ğ¯•Ê‚·‚é‚æ‚¤
+	int m_haveCount;
 
 	int m_seCut;
 
@@ -36,6 +38,7 @@ private:
 	LoadPlayer* m_player;
 	SkillCheck* m_skillCheck;
 	AxIcon* m_axIcon;
+	Inventory* m_inventory;
 
 protected:
 	virtual void Update() override;
@@ -44,7 +47,7 @@ protected:
 	virtual void Release() override;
 
 public:
-	Ax( LoadPlayer* player, SkillCheck* skillCheck,int haveCount,int axId);
+	Ax( LoadPlayer* player, SkillCheck* skillCheck,int haveCount,int axId, Inventory* inventory);
 
 	//–Ø‚ğ”°‚é
 	void CutTree();
@@ -87,5 +90,10 @@ public:
 	Vector2 GetDrawPos()
 	{
 		return m_drawPos;
+	}
+
+	void MyDestroy()
+	{
+		Destroy();
 	}
 };

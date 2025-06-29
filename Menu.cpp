@@ -26,7 +26,8 @@ void Menu::Release()
 
 void Menu::Update() 
 {
-	if (Input::GetInstance()->IsKeyDown(KEY_INPUT_TAB) && !m_player->GetNowTrede())
+	if (Input::GetInstance()->IsKeyDown(KEY_INPUT_TAB)|| Input::GetInstance()->IsKeyDown(KEY_INPUT_ESCAPE) 
+		&& !m_player->GetNowTrede())
 	{
 		m_player->SwitchIsMenu();
 	}

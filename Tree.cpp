@@ -40,7 +40,7 @@ void Tree::Update()
 
 	if (!m_inventory->GetAxList().empty())
 	{
-		//伐られたら体力を減らしてインべントリに木をいれるf
+		//伐られたら体力を減らしてインべントリに木をいれる
 		if (m_inventory->GetAxList()[m_inventory->GetTakeAx()]->GetIsCutTree())
 		{
 			m_helth -= m_inventory->GetAxList()[m_inventory->GetTakeAx()]->GetCutDamage();

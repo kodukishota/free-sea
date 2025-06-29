@@ -42,6 +42,7 @@ public:
 private:
 
 	static constexpr Vector2 UiPos = Vector2(720, 430);
+	static constexpr Vector2 TredeUiPos = Vector2(620, 700);
 	static constexpr Vector2 ProductUiPos = Vector2(520, 150);
 	static constexpr float CanTredeRange = 700;
 
@@ -67,6 +68,8 @@ private:
 	int m_selectProductNum;	//‘I‚ñ‚Å‚¢‚é¤•i‚Í‰½‚©
 
 	int m_displayCount;	//¤•i‚ğˆê—ñ‚É‰½ŒÂ•À‚×‚½‚©
+
+	int m_tredeUi;
 
 	LoadPlayer* m_player;
 	SellButton* m_sellButton;

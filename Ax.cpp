@@ -5,8 +5,9 @@
 #include "Input.h"
 #include "SkillCheak.h"
 #include "AxIcon.h"
+#include "Inventory.h"
 
-Ax::Ax(LoadPlayer* player, SkillCheck* skillCheck, int haveCount,int axId) : Actor3D("Ax"),
+Ax::Ax(LoadPlayer* player, SkillCheck* skillCheck, int haveCount,int axId,Inventory* inventory) : Actor3D("Ax"),
 	m_durabilityValue(FirstDurabilityValue),
 	m_attackDamage(AttackDamage),
 	m_consumptionDurability(ConsumptionDurability[axId]),
@@ -15,9 +16,11 @@ Ax::Ax(LoadPlayer* player, SkillCheck* skillCheck, int haveCount,int axId) : Act
 	m_skillCheck(skillCheck),
 	m_seCut(0),
 	m_cutTreeValue(CutTreeValue[axId]),
-	m_axId(axId)
+	m_axId(axId),
+	m_haveCount(haveCount),
+	m_inventory(inventory)
 {	
-	m_axIcon = new AxIcon(this, haveCount,m_player);
+	m_axIcon = new AxIcon(this, m_haveCount,m_player,m_inventory);
 
 	AddChild(m_axIcon);
 }
@@ -47,11 +50,6 @@ void Ax::Update()
 void Ax::Draw()
 {
 #ifdef _DEBUG
-		DrawFormatString(0, 300, GetColor(255, 255, 255),
-			"Ax Vector3(%.0f, %.0f, %.0f)",
-			m_transform.position.x, m_transform.position.y, m_transform.position.z
-		);
-
 		DrawFormatString(0, 350, GetColor(255, 255, 255),
 			"‘Ï‹v%f",
 			m_durabilityValue
@@ -66,6 +64,9 @@ void Ax::CutTree()
 {
 	if (m_skillCheck->GetIsClick())
 	{
+		m_cutTreeValue = CutTreeValue[m_axId];
+		m_consumptionDurability = ConsumptionDurability[m_axId];
+
 		PlaySoundMem(m_seCut, DX_PLAYTYPE_BACK);
 
 		//‰Ÿ‚µ‚½ˆÊ’u‚ªGood‚âPerfect‚Ì’†‚Å‰Ÿ‚³‚ê‚Ä‚¢‚é‚©

@@ -90,6 +90,7 @@ private:
 	bool m_isDeath;	// 死亡フラグ
 	bool m_finish;	// 死亡アニメーションが終わったか
 
+	bool m_dontHaveAx;
 	bool m_cutTree;		//木を伐り始めたか
 	bool m_fellDown;	//木を伐り終えたか
 
@@ -301,6 +302,16 @@ public:
 	bool GetIsTired()
 	{
 		return m_isTired;
+	}
+
+	bool GetDontHaveAx()
+	{
+		return m_dontHaveAx;
+	}
+
+	void SetDontHaveAx(bool dontHaveAx)
+	{
+		m_dontHaveAx = dontHaveAx;
 	}
 
 	bool CanInteractObject(Vector3 objectPos,float interactRange,Vector3 offSet = Vector3(0,0,0));

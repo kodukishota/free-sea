@@ -23,7 +23,9 @@ private:
 	static constexpr Vector2 AxMenuInventoryUiPos = Vector2(150, 300);	//斧の枠の位置メニュー時
 	static constexpr Vector2 FoodInventoryUiPos = Vector2(150, 800);	//食べ物欄の枠の位置
 	static constexpr Vector2 WoodIconPos = Vector2(320, 850);
+	static constexpr Vector2 MenuWoodIconPos = Vector2(125, 370);
 	static constexpr Vector2 SeedlingIconPos = Vector2(500, 850);
+	static constexpr Vector2 MenuSeedlingIconPos = Vector2(125, 450);
 	static constexpr Vector2 WoodMenuIconPos = Vector2(160, 400);
 	static constexpr Vector2 FontSize = Vector2(20, 35);	// 数字1文字の幅・高さ
 	static constexpr int FontMargin = 5;					// 数字と数字の間の余白
@@ -49,6 +51,8 @@ private:
 	bool m_gettingItem;			//アイテムを拾ったか
 	bool m_dropItemCompletion;
 
+	bool m_isCutTree;
+
 	bool m_selectFood;		//アイテムを選択しているか
 	int m_eatFoodPosNum;	//食べた食べ物の描画されている順番の番号
 	bool m_eatFoodFlag;		//食べ物を食べたか
@@ -56,6 +60,8 @@ private:
 	int m_shiftIconCount;
 
 	int m_itemNum;		//アイテムの番号格納用
+
+	bool m_breakAx;
 
 	int m_seInventory;	//サウンド
 	int m_seEat;
@@ -76,6 +82,9 @@ private:
 
 	int m_woodIcon;
 	int m_seedlingIcon;
+
+	Vector2 m_woodIconPos;
+	Vector2 m_seedlingIconPos;
 
 	LoadFoodData* m_loadFoodData;
 	LoadPlayer* m_player;
@@ -169,6 +178,16 @@ public:
 	{
 		m_haveSeedlingCount++;
 	}
+
+	bool GetBreakAx()
+	{
+		return m_breakAx;
+	}
+
+	bool GetIsCutTree()
+	{
+		return m_isCutTree;
+	}
  
 	//買った食べ物をメニューで表示させる
 	void BuyFood(int foodId);
@@ -181,4 +200,6 @@ public:
 
 	//マウスホイールで斧を選択する
 	void SelectAx();
+
+	void BreakAx();
 };

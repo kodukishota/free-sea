@@ -4,12 +4,14 @@
 #include "Quaternion.h"
 #include "BoxCollider3D.h"
 #include "ActorCollision3D.h"
+#include "ImageLoader.h"
 
 Bed::Bed(LoadPlayer* player, WorldTime* worldTime) : Actor3D("Bed", BedPosition),
 	m_model(MV1LoadModel("Resource/home/bed.mv1")),
 	m_canSleep(false),
 	m_player(player),
-	m_worldTime(worldTime)
+	m_worldTime(worldTime),
+	m_sleepUi(0)
 {
 	//ベッド範囲の設定
 	m_collider = new BoxCollider3D(CanSleepRnage , CanSleepRnageOffset);
@@ -19,12 +21,15 @@ Bed::Bed(LoadPlayer* player, WorldTime* worldTime) : Actor3D("Bed", BedPosition)
 
 void Bed::Load()
 {
+	m_sleepUi = ImageLoader::GetInstance()->Load("sleep_ui.png");
+
 	Actor3D::Load();
 }
 
 void Bed::Release()
 {
 	Actor3D::Release();
+	ImageLoader::GetInstance()->Delete("sleep_ui.png");
 
 	// プレイヤーのモデルを削除
 	MV1DeleteModel(m_model);
@@ -49,9 +54,6 @@ void Bed::Draw()
 
 	if (m_player->CanInteractObject(BedPosition, CanSleepRnage.x, CanSleepRnageOffset))
 	{
-		SetFontSize(30);
-
-		DrawString(720, 600, "F:寝る", GetColor(255, 255, 255));
+		DrawGraph(static_cast<int>(SleepUiPos.x), static_cast<int>(SleepUiPos.y), m_sleepUi, true);
 	}
-
 }

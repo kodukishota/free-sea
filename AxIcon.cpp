@@ -4,12 +4,13 @@
 #include "Ax.h"
 #include "LoadPlayer.h"
 
-AxIcon::AxIcon(Ax* ax,int haveCount,LoadPlayer* player) : 
+AxIcon::AxIcon(Ax* ax,int haveCount,LoadPlayer* player, Inventory* inventory) :
 	m_rightX(GaugeRight),
 	m_ax(ax),
 	m_Durability(0),
 	m_haveCount(haveCount),
-	m_player(player)
+	m_player(player),
+	m_inventory(inventory)
 {
 	m_axIconUi.Register("ax_icon.png");	
 }
@@ -27,6 +28,13 @@ void AxIcon::Release()
 void AxIcon::Update()
 {
 	m_axIconUi.Update();
+
+	if (m_inventory->GetBreakAx())
+	{
+		ShiftDrawPos();
+
+		m_inventory->AddShiftIconCount();
+	}
 
 	// Œ»Ý‚Ì‘Ï‹v—Í€‘Ï‹v—Í‚ÌÅ‘å’l‚ÅŽc‘Ï‹v—Í‚Ì”ä—¦‚ðŒvŽZ
 	m_Durability = m_ax->GetDurability() / m_ax->GetMaxDurability();

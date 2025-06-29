@@ -157,6 +157,8 @@
     <ClCompile Include="HomeLight.cpp" />
     <ClCompile Include="HungerLevelUi.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="SceneGameClear.cpp" />
+    <ClCompile Include="SceneGameOver.cpp" />
     <ClCompile Include="Seedling.cpp" />
     <ClCompile Include="SelectProduct.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -227,6 +229,8 @@
     <ClInclude Include="HungerLevelUi.h" />
     <ClInclude Include="LoadFoodData.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="SceneGameClear.h" />
+    <ClInclude Include="SceneGameOver.h" />
     <ClInclude Include="Seedling.h" />
     <ClInclude Include="SelectProduct.h" />
     <ClInclude Include="Camera.h" />
