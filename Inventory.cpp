@@ -299,6 +299,8 @@ void Inventory::EatFood()
 			m_takeFood = i;
 			m_eatFoodPosNum = m_foodList[m_takeFood]->GetDrawPosNum();
 
+			m_selectFood = true;
+
 			if (m_eatButton->GetCheckOnClick())
 			{
 				PlaySoundMem(m_seEat, DX_PLAYTYPE_BACK);
@@ -313,15 +315,14 @@ void Inventory::EatFood()
 				m_foodList.erase(m_foodList.begin() + m_takeFood);
 
 				m_haveFoodCount--;
-			}
 
-			m_selectFood = true;
+				m_selectFood = false;
+			}
 		}
 
 		//食べたアイテムより後ろにあるアイコンを前にずらす
 		if (m_shiftIconCount >= m_haveFoodCount)
 		{
-			m_selectFood = false;
 			m_eatFoodFlag = false;
 			m_shiftIconCount = 0;
 		}

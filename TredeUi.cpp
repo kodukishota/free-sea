@@ -89,7 +89,6 @@ void TredeUi::Update()
 
 		m_inventory->LostHaveWood(1);
 	}
-	
 
 	if (m_nowTredeFlag)
 	{

@@ -40,7 +40,7 @@ private:
 
 	static constexpr float MaxBodyTemperature = 100;	//プレイヤーの最大体温
 
-	static constexpr float DownHungerLevelValue = 5;	//おなかが減る量の初期値
+	static constexpr float DownHungerLevelValue = 2;	//おなかが減る量の初期値
 	static constexpr float DownHungerLevelTime = 5;		//おなかが減る時間の初期値
 	static constexpr int FullStomach = 100;		//プレイヤーの満腹時
 
@@ -48,14 +48,13 @@ private:
 	static constexpr int IncreasedSleepinessTime = 5;	//眠気の増加量する時間
 	static constexpr int FirstSleepiness = 100;		//眠気がないとき
 
-
 	// スタミナ関連
 	static constexpr float MaxStamina = 100;	// 走るのに必要なスタミナの最大値
 	static constexpr float StaminaRecoveryAmount = 10;	// スタミナの回復量
 	static constexpr float StaminaDecreaseAmount = 20;	// スタミナの消費量
 	static constexpr float TimeToRecoverStamina = 1;	// スタミナが回復し始めるまでの時間
 
-	static constexpr float FirstDownTemperature = 5;	//下がる体温の初期値
+	static constexpr float FirstDownTemperature = 2;	//下がる体温の初期値
 	static constexpr float FirstDownTemperatureTime = 5;//体温が下がる時間の初期値
 
 	Vector3 AxisY = Vector3(0.0f, 1.0f, 0.0f);	// 回転軸(Y軸で上方向)

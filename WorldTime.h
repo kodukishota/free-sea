@@ -13,7 +13,7 @@ private:
 	static constexpr Vector2 TimerPos = Vector2(1251, 105);
 	static constexpr Vector2 SpendDaysUiPos = Vector2(1050, 170);
 
-	static constexpr int ClearDays = 15;	//¶‚«c‚ç‚È‚¯‚ê‚Î‚¢‚¯‚È‚¢“ú”
+	static constexpr int ClearDays = 10;	//¶‚«c‚ç‚È‚¯‚ê‚Î‚¢‚¯‚È‚¢“ú”
 
 	static constexpr int FontMargin = 5;					// ”š‚Æ”š‚ÌŠÔ‚Ì—]”’
 
